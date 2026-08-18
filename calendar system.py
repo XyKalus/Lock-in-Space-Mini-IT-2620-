@@ -1,5 +1,7 @@
-import calendar
+import calendar 
+import datetime
 
+year = datetime.datetime.now().year
 # txtcal = calendar.TextCalendar(firstweekday=0)
 # print(txtcal)
 
@@ -12,7 +14,10 @@ import calendar
 # htmlcal = calendar.HTMLCalendar
 # print(htmlcal)
 
-year = int(input('enter the year: '))
-month = int(input('enter the month: '))
+# year = int(input('enter the year: '))
+# month = int(input('enter the month: '))
 
-print(calendar.month(year,month) )
+# print(calendar.month(year,month) )
+all_month = print(calendar.calendar(year))
+print(all_month)
+
