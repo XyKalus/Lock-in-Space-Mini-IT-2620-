@@ -192,10 +192,11 @@
 
 import datetime as dt
 
-target_datetime = dt.datetime(2030,1,2,12,30,1)
-current = dt.datetime.now()
+# target_datetime = dt.datetime(2030,1,2,12,30,1)
+# current = dt.datetime.now()
 
-if target_datetime < current :
-    print('passed')
-else : 
-    print('it is yet to come')
+# if target_datetime < current :
+#     print('passed')
+# else : 
+#     print('it is yet to come')
+
