@@ -192,11 +192,18 @@
 
 import datetime as dt
 
-# target_datetime = dt.datetime(2030,1,2,12,30,1)
+""" target_datetime = dt.datetime(2030,1,2,12,30,1)
 # current = dt.datetime.now()
 
 # if target_datetime < current :
 #     print('passed')
 # else : 
-#     print('it is yet to come')
+#     print('it is yet to come') """
 
+initial_date = input('type in your start date: ')
+DeltaOne = dt.datetime(f"{initial_date}")
+compared_date = input('type in your end date: ')
+DeltaTwo = dt.datetime(f"{compared_date}")
+
+final_date = dt.timedelta(DeltaTwo-DeltaOne)
+print(final_date)
