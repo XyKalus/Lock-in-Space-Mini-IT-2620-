@@ -209,14 +209,15 @@ print(calc)
 today = dt.date.today() 
 print(today)
 
-event_year = int(input('type in the event year: '))
-event_month = int(input('type in the event month: '))
+# event_year = int(input('type in the event year: '))
 event_day = int(input('type in the event day: '))
+event_second = int(input('type in the event second: '))
 
-event = event_year,event_month,event_day
+event = event_day,event_second
 print(event)
 
-diff = dt.timedelta(event_year,event_month,event_day)
+diff = (event_day,event_second)
 
-result = diff-today
-print(result)
+calcu = (event-today)
+result = dt.timedelta(calcu)
+print(calcu)
