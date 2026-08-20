@@ -200,10 +200,23 @@ import datetime as dt
 # else : 
 #     print('it is yet to come') """
 
-initial_date = input('type in your start date: ')
-DeltaOne = dt.datetime(f"{initial_date}")
-compared_date = input('type in your end date: ')
-DeltaTwo = dt.datetime(f"{compared_date}")
+test = dt.timedelta(2026,2,30)
+test2 = dt.timedelta (2025,2,30)  #year,month,day,hour,minutes,seconds
 
-final_date = dt.timedelta(DeltaTwo-DeltaOne)
-print(final_date)
+calc = test2-test
+print(calc)
+
+today = dt.date.today() 
+print(today)
+
+event_year = int(input('type in the event year: '))
+event_month = int(input('type in the event month: '))
+event_day = int(input('type in the event day: '))
+
+event = event_year,event_month,event_day
+print(event)
+
+diff = dt.timedelta(event_year,event_month,event_day)
+
+result = diff-today
+print(result)
