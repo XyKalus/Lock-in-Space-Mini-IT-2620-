@@ -1,33 +1,33 @@
 # # import calendar 
 # # import datetime
 
-# # year = datetime.datetime.now().year
-# # # txtcal = calendar.TextCalendar(firstweekday=0)
-# # # print(txtcal)
+# year = datetime.datetime.now().year
+# txtcal = calendar.TextCalendar(firstweekday=0)
+# print(txtcal)
 
-# # # days = list(calendar.day_name)
-# # # print(days)
+# days = list(calendar.day_name)
+# print(days)
 
-# # # calmonth = calendar.month_name
-# # # print(calmonth)
+# calmonth = calendar.month_name
+# print(calmonth)
 
-# # # htmlcal = calendar.HTMLCalendar
-# # # print(htmlcal)
+# htmlcal = calendar.HTMLCalendar
+# print(htmlcal)
 
-# # # year = int(input('enter the year: '))
-# # # month = int(input('enter the month: '))
+# year = int(input('enter the year: '))
+# month = int(input('enter the month: '))
 
-# # # print(calendar.month(year,month) )
-# # all_month = print(calendar.calendar(year))
-# # print(all_month)
+# print(calendar.month(year,month) )
+# all_month = print(calendar.calendar(year))
+# print(all_month)
 
-# # test = int(input('type the month'))
-# # monthy = datetime.month(test)
-# # termendous = calendar.calendar(monthy)
-# # print(termendous)
+# test = int(input('type the month'))
+# monthy = datetime.month(test)
+# termendous = calendar.calendar(monthy)
+# print(termendous)
 
 
-# """
+"""
 # Core event model for a calendar app.
 
 # Design idea:
@@ -43,7 +43,7 @@
 #   - persist events (JSON to start, SQLite later)
 #   - hook get_events_on_day() into your existing `calendar` module output
 #   - eventually swap print statements for a real UI
-# """
+#
 
 # from dataclasses import dataclass, field
 # from datetime import datetime, timedelta, date
@@ -58,7 +58,7 @@
 #     WEEKLY = "weekly"
 #     MONTHLY = "monthly"
 #     YEARLY = "yearly"
-
+"""
 
 # @dataclass
 # class Event:
@@ -201,28 +201,41 @@ from datetime import timedelta
 # else : 
 #     print('it is yet to come') """
 
-test = dt.timedelta(2026,2,30)
-test2 = dt.timedelta (2025,2,30)  #year,month,day,hour,minutes,seconds
+"""I have to have 2 DIFFERENT DATES THEN USE TIMEDELTA
+HOLY CRAP"""
 
-calc = test2-test
-print(calc)
+# test = dt.timedelta(2026,2,30)
+# test2 = dt.timedelta (2025,2,30)  
+# """year,month,day,hour,minutes,seconds"""
+
+# calc = test2-test
+# print(calc)
 
 today = dt.date.today() 
 print(today)
 
+Eyear = (int(input('enter your event year: ')))
+Emonth = (int(input('enter your event month: ')))
+Eday = (int(input('enter your event day: ')))
+date2 = dt.date(Eyear,Emonth,Eday)
+print(date2)
+
+
+calc = date2 - today
+
+print(calc)
+
 # event_year = int(input('type in the event year: '))
-event_year = (input('type in the event year: '))
-event_month = (input('type in the event month: '))
-event_day = (input('type in the event day: '))
+# event_year = (input('type in the event year: '))
+# event_month = (input('type in the event month: '))
+# event_day = (input('type in the event day: '))
 
-event = event_year+'-'+event_month+'-'+event_day
-print(event)
+# event = event_year+'-'+event_month+'-'+event_day
+# print(event)
 
 
-calcu = today - timedelta(days=event)
+# calcu = today - timedelta(days=event)
 # result = dt.timedelta(calcu)
-print(calcu)
+# print(calcu)
 
-"""I have to have 2 DIFFERENT DATES THEN USE TIMEDELTA
-HOLY CRAP"""
 
