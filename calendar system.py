@@ -191,6 +191,7 @@
 #             print(f"  {ev.title}: {s.strftime('%Y-%m-%d %H:%M')} -> {e.strftime('%Y-%m-%d %H:%M')}")
 
 import datetime as dt
+from datetime import timedelta
 
 """ target_datetime = dt.datetime(2030,1,2,12,30,1)
 # current = dt.datetime.now()
@@ -210,14 +211,17 @@ today = dt.date.today()
 print(today)
 
 # event_year = int(input('type in the event year: '))
-event_day = int(input('type in the event day: '))
-event_second = int(input('type in the event second: '))
+event_year = (input('type in the event year: '))
+event_month = (input('type in the event month: '))
+event_day = (input('type in the event day: '))
 
-event = event_day,event_second
+event = event_year+'-'+event_month+'-'+event_day
 print(event)
 
-diff = (event_day,event_second)
 
-calcu = (event-today)
-result = dt.timedelta(calcu)
+calcu = today - timedelta(days=event)
+# result = dt.timedelta(calcu)
 print(calcu)
+
+"""I have to have 2 DIFFERENT DATES THEN USE TIMEDELTA
+HOLY CRAP"""
