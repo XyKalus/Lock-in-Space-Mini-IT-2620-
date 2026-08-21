@@ -217,9 +217,21 @@ print(today)
 Eyear = (int(input('enter your event year: ')))
 Emonth = (int(input('enter your event month: ')))
 Eday = (int(input('enter your event day: ')))
+
+
+if Emonth > 12:
+    extra_years = (Emonth - 1) // 12
+    Eyear += extra_years
+    Emonth = ((Emonth - 1) % 12) + 1
+
+gus = dt.date.month(f"{Emonth}")
+print(gus)
+
+# if Eday > 32:
+#     extra_days = (Eday - 1)// dt.datetime.month(Emonth)
+
 date2 = dt.date(Eyear,Emonth,Eday)
 print(date2)
-
 
 calc = date2 - today
 
