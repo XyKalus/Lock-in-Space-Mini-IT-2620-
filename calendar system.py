@@ -225,3 +225,4 @@ print(calcu)
 
 """I have to have 2 DIFFERENT DATES THEN USE TIMEDELTA
 HOLY CRAP"""
+
