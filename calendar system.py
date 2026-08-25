@@ -219,17 +219,19 @@ Eyear = (int(input('enter your event year: ')))
 Emonth = (int(input('enter your event month: ')))
 Eday = (int(input('enter your event day: ')))
 
+EventDay = (Eyear, Emonth, Eday)
+print(EventDay)
 
 if Emonth > 12:
     extra_years = (Emonth - 1) // 12
     Eyear += extra_years
     Emonth = ((Emonth - 1) % 12) + 1
 
-gus = calendar.monthrange(Eyear,Emonth)
+empty, gus = calendar.monthrange(Eyear,Emonth)
 print(gus)
 
-# if Eday > 32:
-#     extra_days = (Eday - 1)// dt.datetime.month(Emonth)
+if Eday > gus:
+    extra_days = (Eday - 1)// dt.datetime.month(Emonth)
 
 date2 = dt.date(Eyear,Emonth,Eday)
 print(date2)
