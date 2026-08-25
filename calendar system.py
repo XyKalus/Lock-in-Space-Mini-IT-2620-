@@ -219,8 +219,7 @@ Eyear = (int(input('enter your event year: ')))
 Emonth = (int(input('enter your event month: ')))
 Eday = (int(input('enter your event day: ')))
 
-EventDay = (Eyear, Emonth, Eday)
-print(EventDay)
+
 
 if Emonth > 12:
     extra_years = (Emonth - 1) // 12
