@@ -192,6 +192,7 @@
 
 import datetime as dt
 from datetime import timedelta
+import calendar
 
 """ target_datetime = dt.datetime(2030,1,2,12,30,1)
 # current = dt.datetime.now()
@@ -224,7 +225,7 @@ if Emonth > 12:
     Eyear += extra_years
     Emonth = ((Emonth - 1) % 12) + 1
 
-gus = dt.date.month(f"{Emonth}")
+gus = calendar.monthrange(Eyear,Emonth)
 print(gus)
 
 # if Eday > 32:
