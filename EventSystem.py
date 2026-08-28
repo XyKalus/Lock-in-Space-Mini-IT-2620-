@@ -6,6 +6,7 @@ def eventsystem():
     today = dt.datetime.today() 
     print(today)
 
+    #this entire section is for the user to input their event times, the E in each variable represents "Event"
     Eyear = (int(input('enter your event year: ')))
     Emonth = (int(input('enter your event month: ')))
     Eday = (int(input('enter your event day: ')))
@@ -19,11 +20,12 @@ def eventsystem():
         Eyear += extra_years
         Emonth = ((Emonth - 1) % 12) + 1
 
-    empty, gus = calendar.monthrange(Eyear,Emonth) 
+    empty, DaysInMonth = calendar.monthrange(Eyear,Emonth) 
     #checks how many days are in the month selected, this is used to determine at what value (28,30 or 31) to change Emonth to the following the month
-    print(gus)
+    print(DaysInMonth) 
+    #"empty" is ignored because we only want to know the amount of days in EventMonth (Emonth), not EventYear (Eyear), its only purpose is so Eyear is never defined because it is not needed
 
-    if Eday > gus:
+    if Eday > DaysInMonth:
         extra_days = (Eday - 1)// dt.datetime.month(Emonth)
 
     date2 = dt.datetime(Eyear,Emonth,Eday,Ehour,Eminute)
