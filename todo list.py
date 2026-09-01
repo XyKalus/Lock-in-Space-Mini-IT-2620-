@@ -8,28 +8,99 @@ Basic features :
 
 """Saving should be in JSON, should I use lists to store the tasks?"""
 
+import shutil
+import json
+
 tasks = []
 
-def TaskInitialise():
-    print("=") #figure out how to make it span from one end of the terminal to the other
-    print("To-do list")
-    print('1.New task')
-    print('2.View tasks')
-    print('3.Delete tasks')
-    print('4.Mark all as complete')
 
-TaskInitialise()
+def TodoList():
+    while True: 
+        def TaskInitialise(): #The first thing that runs when you start the program, giving the user choice on what to do
 
-def TaskAdd(): #This function controls the adding of new tasks and tracks its completion
-    TaskAdder = input('Task name: ')
-    tasks.append({"task":TaskAdder, "completed":False})
-    print(f"{TaskAdder} added to the list!")
+            print("=" * shutil.get_terminal_size().columns)
+ #figure out how to make it span from one end of the terminal to the other
+            print("To-do list")
+            print('1.New task')
+            print('2.View tasks')
+            print('3.Delete tasks')
+            print('4.Mark all as complete')
+            print('5.Exit')
 
-StartDecide = input('Please choose from the following: ')
+        TaskInitialise()
 
-if StartDecide == '1' or "add".lower():
-    TaskAdd()
-else :
-    print('invalid input!')
+        def TaskAdd(): #This function controls the adding of new tasks and tracks its completion
+            TaskAdded = input('Task name: ')
+            tasks.append({"task":TaskAdded, "completed":False})
+            print(f"{TaskAdded} added to the list!")
 
-print(*tasks)
+            global x
+            x = {
+                "name":f"{TaskAdded}",
+                "status" : "Incomplete",
+            }
+
+            with open("tasklist.json", "w") as c:
+                json.dump(tasklist,c)
+            
+
+        def ViewTask ():
+            if len(tasks) == 0:
+                print('you currently have no tasks')
+            else:
+                print('here are your existing tasks:')
+                # print(*tasks)
+                json.loads(x)
+
+        def DeleteTask():
+            print(*tasks)
+            print('Please select which task to delete')
+            DeleteInput = input('enter a number: ')
+            tasks.pop(DeleteInput)
+
+        def ClearTask():
+            while True:
+                clearing = input('Are you sure to mark all as complete?(y/n): ')
+                if clearing.lower() == 'y' or clearing.lower() == 'yes':
+                    tasks.clear
+                    print('All tasks marked as completed!')
+                    print(tasks)
+                    break
+                elif clearing.lower() == 'n' or clearing.lower() == 'no':
+                    pass
+                    break
+                else:
+                    print('invalid input!')
+            
+
+        StartDecide = input('Please choose from the following: ')
+        p = StartDecide
+
+        if p == '1' or p.lower() == "add":
+            TaskAdd()
+        elif p == '2' or p.lower() == "view":
+            ViewTask()
+        elif p == "3" or p.lower() == "delete":
+            DeleteTask()
+        elif p == "4" or p.lower() == 'complete':
+            ClearTask()
+        elif p == "5" or p.lower() == "exit":
+            break
+        else :
+            print('invalid input!')
+
+        print(*tasks)
+
+TodoList()
+
+while True:
+    rerun = input('still working? (Y/N): ')
+    if rerun.lower() == 'y':
+        TodoList()
+        break
+    elif rerun.lower() == 'n':
+        print('Goodbye!')
+        break
+    else:
+        print('invalid input')
+        continue
