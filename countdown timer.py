@@ -5,6 +5,8 @@ from PyQt5.QtGui import QPainter, QColor, QPen, QFont
 from PyQt5.QtMultimedia import QMediaPlayer,QMediaContent,QMediaPlaylist
 
 
+
+
 class CircularTimerWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)

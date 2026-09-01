@@ -13,6 +13,7 @@ import json
 
 tasks = []
 
+
 def TodoList():
     while True: 
         def TaskInitialise(): #The first thing that runs when you start the program, giving the user choice on what to do
@@ -33,12 +34,21 @@ def TodoList():
             tasks.append({"task":TaskAdder, "completed":False})
             print(f"{TaskAdder} added to the list!")
 
+            global x
+            x = {
+                "name":f"{TaskAdder}",
+                "status" : "Incomplete",
+
+            }
+            
+
         def ViewTask ():
             if len(tasks) == 0:
                 print('you currently have no tasks')
             else:
                 print('here are your existing tasks:')
-                print(*tasks)
+                # print(*tasks)
+                json.loads(x)
 
         def DeleteTask():
             print(*tasks)
