@@ -8,6 +8,7 @@ Basic features :
 
 """Saving should be in JSON, should I use lists to store the tasks?"""
 
+import shutil
 import json
 
 tasks = []
@@ -15,7 +16,9 @@ tasks = []
 def TodoList():
     while True: 
         def TaskInitialise(): #The first thing that runs when you start the program, giving the user choice on what to do
-            print("=") #figure out how to make it span from one end of the terminal to the other
+
+            print("=" * shutil.get_terminal_size().columns)
+ #figure out how to make it span from one end of the terminal to the other
             print("To-do list")
             print('1.New task')
             print('2.View tasks')
@@ -31,16 +34,45 @@ def TodoList():
             print(f"{TaskAdder} added to the list!")
 
         def ViewTask ():
+            if len(tasks) == 0:
+                print('you currently have no tasks')
+            else:
+                print('here are your existing tasks:')
+                print(*tasks)
+
+        def DeleteTask():
             print(*tasks)
+            print('Please select which task to delete')
+            DeleteInput = input('enter a number: ')
+            tasks.pop(DeleteInput)
+
+        def ClearTask():
+            while True:
+                clearing = input('Are you sure to mark all as complete?(y/n): ')
+                if clearing.lower() == 'y' or clearing.lower() == 'yes':
+                    tasks.clear
+                    print('All tasks marked as completed!')
+                    print(tasks)
+                    break
+                elif clearing.lower() == 'n' or clearing.lower() == 'no':
+                    pass
+                    break
+                else:
+                    print('invalid input!')
+            
 
         StartDecide = input('Please choose from the following: ')
-        pop = StartDecide
+        p = StartDecide
 
-        if pop == '1' or pop.lower() == "add":
+        if p == '1' or p.lower() == "add":
             TaskAdd()
-        elif pop == '2' or pop.lower() == "view":
+        elif p == '2' or p.lower() == "view":
             ViewTask()
-        elif pop == "5" or pop.lower() == "exit":
+        elif p == "3" or p.lower() == "delete":
+            DeleteTask()
+        elif p == "4" or p.lower() == 'complete':
+            ClearTask()
+        elif p == "5" or p.lower() == "exit":
             break
         else :
             print('invalid input!')
@@ -50,11 +82,11 @@ def TodoList():
 TodoList()
 
 while True:
-    rerun = input('still working? (Y/N)')
-    if rerun == 'y':
+    rerun = input('still working? (Y/N): ')
+    if rerun.lower() == 'y':
         TodoList()
         break
-    elif rerun == 'n':
+    elif rerun.lower() == 'n':
         print('Goodbye!')
         break
     else:
