@@ -4,7 +4,7 @@ ID :
 Email : 
 """
 
-
+from EventSystem import eventsystem
 import sys
 import datetime
 from PyQt5.QtWidgets import (
@@ -68,3 +68,5 @@ if __name__ == "__main__":
     window = InteractiveCalendarApp()
     window.show()
     sys.exit(app.exec_())
+
+eventsystem()

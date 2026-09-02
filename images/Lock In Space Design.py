@@ -1,6 +1,7 @@
 import sys
 import os
 
+
 #BASED_DIR = os.part.dirname(os.path.abspath(__file__))
 
 ##def resource_path(path):
@@ -1627,3 +1628,4 @@ window.show()
 sys.exit(
     app.exec_()
 )
+
