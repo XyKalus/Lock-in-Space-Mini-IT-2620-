@@ -8,11 +8,13 @@ Basic features :
 
 """Saving should be in JSON, should I use lists to store the tasks?"""
 
+"""URGENT : work on GUI"""
+
 import shutil
 import json
 
 tasks = []
-print(help(tasks))
+# print(help(tasks))
 
 
 def TodoList():
