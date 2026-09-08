@@ -60,9 +60,6 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
     
 
    
-            
-        
-
 def main():
     app = QApplication(sys.argv)
     window = Events()
