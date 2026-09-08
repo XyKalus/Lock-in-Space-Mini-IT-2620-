@@ -1,4 +1,8 @@
 import sys
+import json
+import os
+from datetime import date
+
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QSpinBox, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import QTimer, Qt, QRectF,QUrl
 from PyQt5.QtGui import QPainter, QColor, QPen, QFont
@@ -81,6 +85,38 @@ class Timer(QWidget):
 
         self.initUI()
 
+    def load_total_time(self):
+        if not os.path.exists("study_progress.json"):
+            return{}
+
+        try:
+            with open("study_progress.json","r") as file:
+                return json.load(file)
+
+        except (json.JSONDecodeError,IOError):
+            return {}
+
+    def save_total_time(self,seconds):
+        if seconds <= 0:
+            return
+
+        today = str(date.today())
+
+        total_time = self.load_total_time()
+
+        if today not in total_time:
+            total_time[today] = 0
+
+        total_time[today] += seconds
+
+        try:
+            with open("study_progress.json","w") as file:
+                json.dump(total_time,file,indent=4)
+
+        except IOError as error:
+            print( "Could not save usage:",error)
+
+
     def initUI(self):
         self.setWindowTitle("CountDown Timer")
         self.move(700, 200)
@@ -134,6 +170,7 @@ class Timer(QWidget):
 
         if self.timer.isActive():
             self.timer.stop()
+            self.used_seconds = 0
             self.start_button.setText("Start")
 
             return
@@ -146,6 +183,7 @@ class Timer(QWidget):
         if not self.timer.isActive():
             self.remaining_seconds = minutes * 60
             self.total_seconds = self.remaining_seconds
+            self.used_seconds = 0
             self.player.stop()
             self.alarm_playing = False
             self.start_button.setText("Start")
@@ -157,11 +195,14 @@ class Timer(QWidget):
         minutes = self.minutesSpinBox.value()
         self.remaining_seconds = minutes * 60
         self.total_seconds = self.remaining_seconds
+        self.used_seconds = 0
         self.update_display()
 
     def countdown(self):
         if self.remaining_seconds > 0:
             self.remaining_seconds -= 1
+            self.used_seconds += 1
+            self.save_total_time(1)
 
         self.update_display()
         if self.remaining_seconds == 0:
