@@ -37,18 +37,11 @@
                 }
             },
             "room_items": {
-                "Morning Day": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/morning.png",
-                    "x": 117.0,
-                    "y": 121.99999999999994,
-                    "scale": 1.871929870878773,
-                    "category": "furniture"
-                },
-                "Cat Tree": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/cattoys.png",
-                    "x": 600.0,
-                    "y": 447.9999999999999,
-                    "scale": 1.4641000000000006,
+                "Book Rack": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bookrack.png",
+                    "x": 196.00000000000006,
+                    "y": 440.0,
+                    "scale": 1.6105100000000008,
                     "category": "furniture"
                 },
                 "Harry Potter Books": {
@@ -58,11 +51,18 @@
                     "scale": 1.4641000000000006,
                     "category": "furniture"
                 },
-                "Book Rack": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bookrack.png",
-                    "x": 196.00000000000006,
-                    "y": 440.0,
-                    "scale": 1.6105100000000008,
+                "Cat Tree": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/cattoys.png",
+                    "x": 600.0,
+                    "y": 447.9999999999999,
+                    "scale": 1.4641000000000006,
+                    "category": "furniture"
+                },
+                "Morning Day": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/morning.png",
+                    "x": 117.0,
+                    "y": 121.99999999999994,
+                    "scale": 1.871929870878773,
                     "category": "furniture"
                 }
             },
@@ -839,6 +839,50 @@
                     "x": 400.0,
                     "y": 380.0,
                     "scale": 2.0,
+                    "category": "furniture"
+                }
+            },
+            "last_claim": "2026-09-08"
+        },
+        {
+            "name": "kol",
+            "gender": "boy",
+            "coins": 50,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
+                    "category": "furniture"
+                },
+                "Haikal": {
+                    "image": "Ida/images/characters/C2.png",
+                    "category": "furniture"
+                }
+            },
+            "room_items": {
+                "door": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
+                    "x": 700.0,
+                    "y": 280.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
+                    "x": 5.0,
+                    "y": 500.0,
+                    "scale": 2.5,
                     "category": "furniture"
                 }
             },
