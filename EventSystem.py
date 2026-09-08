@@ -3,13 +3,19 @@ from datetime import timedelta
 import calendar
 import sys
 import PyQt5
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtGui import QIcon, QFont
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Set an event date')
         self.setGeometry(600,250,750,500) # (x,y,width,height)
+        self.setWindowIcon(QIcon("cat.png"))
+
+        label = QLabel("khalid loves femboys", self)
+        label.setFont(QFont('Arial',15))
+        
 
 def main():
     app = QApplication(sys.argv)
