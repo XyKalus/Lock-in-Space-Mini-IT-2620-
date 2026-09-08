@@ -92,25 +92,11 @@
                 }
             },
             "room_items": {
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
+                "Khaled": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/CCC3.png",
+                    "x": 712.0,
+                    "y": 346.0,
+                    "scale": 2.5937424601000023,
                     "category": "furniture"
                 },
                 "Harry Potter Books": {
@@ -120,11 +106,25 @@
                     "scale": 1.2100000000000002,
                     "category": "furniture"
                 },
-                "Khaled": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/CCC3.png",
-                    "x": 712.0,
-                    "y": 346.0,
-                    "scale": 2.5937424601000023,
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
+                    "x": 400.0,
+                    "y": 380.0,
+                    "scale": 2.0,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
+                    "x": 5.0,
+                    "y": 500.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
                     "category": "furniture"
                 }
             },
