@@ -550,6 +550,7 @@ class RoomItem(QGraphicsPixmapItem):
 # SHOP WINDOW
 # ============================================================
 
+
 class AnotherWindow(QDialog):
 
     def __init__(self, room_window):
@@ -1378,7 +1379,7 @@ class Window(QDialog):
         # INVENTORY BUTTON
 
         self.inventory_button = QPushButton(
-            "INVENTORY",
+            "INVENTORY LAA",
             self
         )
 
