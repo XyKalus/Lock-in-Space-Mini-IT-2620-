@@ -1,3 +1,10 @@
+""" Student name : Haikal Areef Bin Reezal
+ID : 253FC251BR
+
+placeholder text here for me to use 
+"""
+
+
 import datetime as dt
 from datetime import timedelta
 import calendar
@@ -5,6 +12,7 @@ import sys
 import PyQt5
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
 from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtCore import Qt #Qt is used for alignment
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -13,8 +21,14 @@ class MainWindow(QMainWindow):
         self.setGeometry(600,250,750,500) # (x,y,width,height)
         self.setWindowIcon(QIcon("cat.png"))
 
-        label = QLabel("test", self)
-        label.setFont(QFont('Arial',15))
+        label = QLabel("test", self) #for my understanding > self means the Window
+        label.setFont(QFont('Arial',50))
+        label.setGeometry(0,0,800,80) #(x,y,width,height)
+        label.setStyleSheet("color: black;"
+                            "background-color: white;") # this code is only here for testing, will either keep or change
+        label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+    
+        
         
 
 def main():
