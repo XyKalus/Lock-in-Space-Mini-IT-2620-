@@ -212,32 +212,32 @@ HOLY CRAP"""
 # calc = test2-test
 # print(calc)
 
-today = dt.date.today() 
-print(today)
+# today = dt.date.today() 
+# print(today)
 
-Eyear = (int(input('enter your event year: ')))
-Emonth = (int(input('enter your event month: ')))
-Eday = (int(input('enter your event day: ')))
+# Eyear = (int(input('enter your event year: ')))
+# Emonth = (int(input('enter your event month: ')))
+# Eday = (int(input('enter your event day: ')))
 
 
 
-if Emonth > 12:
-    extra_years = (Emonth - 1) // 12
-    Eyear += extra_years
-    Emonth = ((Emonth - 1) % 12) + 1
+# if Emonth > 12:
+#     extra_years = (Emonth - 1) // 12
+#     Eyear += extra_years
+#     Emonth = ((Emonth - 1) % 12) + 1
 
-empty, gus = calendar.monthrange(Eyear,Emonth)
-print(gus)
+# empty, gus = calendar.monthrange(Eyear,Emonth)
+# print(gus)
 
-if Eday > gus:
-    extra_days = (Eday - 1)// dt.datetime.month(Emonth)
+# if Eday > gus:
+#     extra_days = (Eday - 1)// dt.datetime.month(Emonth)
 
-date2 = dt.date(Eyear,Emonth,Eday)
-print(date2)
+# date2 = dt.date(Eyear,Emonth,Eday)
+# print(date2)
 
-calc = date2 - today
+# calc = date2 - today
 
-print(calc)
+# print(calc)
 
 # event_year = int(input('type in the event year: '))
 # event_year = (input('type in the event year: '))
@@ -252,4 +252,84 @@ print(calc)
 # result = dt.timedelta(calcu)
 # print(calcu)
 
+import sys
+import datetime
+from PyQt5.QtWidgets import (
+    QApplication, QWidget, QVBoxLayout, QHBoxLayout, 
+    QLabel, QCalendarWidget, QPushButton
+)
+from PyQt5.QtCore import QDate
+from PyQt5.QtGui import QFont, QFontDatabase
+
+from EventSystem import MainWindow, eventsystem
+
+class InteractiveCalendarApp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Interactive PyQt5 Calendar")
+        self.setGeometry(300, 150, 450, 400)
+
+         
+        font_id = QFontDatabase.addApplicationFont("Cave-Story.ttf")
+
+        if font_id != -1:
+            font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+
+        label = QLabel("title", self) #for my understanding > self means the Window
+        label.setFont(QFont(font_family,60))
+
+        layout = QVBoxLayout()
+
+        # Label to display the selected date
+        self.info_label = QLabel("Selected Date: None")
+        self.info_label.setFont(QFont(font_family, 11, QFont.Bold))
+        layout.addWidget(self.info_label)
+
+        # Interactive QCalendarWidget
+        self.calendar = QCalendarWidget(self)
+        self.calendar.setGridVisible(True)  # Shows grid lines between days
+        
+        # Connect date selection signal to slot function
+        self.calendar.selectionChanged.connect(self.on_date_selected)
+        layout.addWidget(self.calendar)
+
+        # Bottom Controls: Quick reset button
+        bottom_layout = QHBoxLayout()
+        today_btn = QPushButton("Go to Today")
+        today_btn.clicked.connect(self.go_to_today)
+        bottom_layout.addWidget(today_btn)
+
+        layout.addLayout(bottom_layout)
+
+        self.setLayout(layout)
+
+        # Display current date on startup
+        self.on_date_selected()
+
+    def on_date_selected(self):
+        """Triggered whenever the user clicks a date on the calendar."""
+        selected_qdate = self.calendar.selectedDate()
+        # Format QDate into a readable string (e.g., 'Tuesday, August 18, 2026')
+        formatted_date = selected_qdate.toString("dddd, MMMM d, yyyy")
+        self.info_label.setText(f"Selected Date: {formatted_date}")
+        self.open_main_window(QDate)
+
+    def go_to_today(self):
+        """Resets the calendar view and selection to today's date."""
+        today = QDate.currentDate()
+        self.calendar.setSelectedDate(today)
+
+    def open_main_window(self, date):
+        print("Double clicked date:", self)
+        self.popup_window = MainWindow()
+        self.popup_window.show()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = InteractiveCalendarApp()
+    window.show()
+    sys.exit(app.exec_())
 

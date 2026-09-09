@@ -32,7 +32,7 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
         if font_id != -1:
             font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
 
-        label = QLabel("amogus ding dong", self) #for my understanding > self means the Window
+        label = QLabel("title", self) #for my understanding > self means the Window
         label.setFont(QFont(font_family,60))
         label.setGeometry(0,0,90,90) #(x,y,width,height)
         label.setStyleSheet("color: black;"
@@ -61,14 +61,14 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
             
         
 
-def main():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())       
+# def main():
+#     app = QApplication(sys.argv)
+#     window = MainWindow()
+#     window.show()
+#     sys.exit(app.exec_())       
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
 
 def eventsystem():
