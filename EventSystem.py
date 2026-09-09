@@ -13,7 +13,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(600,250,750,500) # (x,y,width,height)
         self.setWindowIcon(QIcon("cat.png"))
 
-        label = QLabel("khalid loves femboys", self)
+        label = QLabel("test", self)
         label.setFont(QFont('Arial',15))
         
 
