@@ -8,25 +8,47 @@ placeholder text here for me to use
 import datetime as dt
 from datetime import timedelta
 import calendar
-import sys
+import sys, os
 import PyQt5
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
-from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
+from PyQt5.QtGui import QIcon, QFont, QFontDatabase
 from PyQt5.QtCore import Qt #Qt is used for alignment
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow): #self in the entire function refers to the "MainWindow" class (adding this here as a reminder to myself)
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Set an event date')
+        self.setWindowTitle('Set an event date') # title of the window
         self.setGeometry(600,250,750,500) # (x,y,width,height)
-        self.setWindowIcon(QIcon("cat.png"))
+        self.setWindowIcon(QIcon("cat.png")) #Window Icon (the thing you see on the top left)
+        self.initUI() #initialise the "layout" manager
 
-        label = QLabel("test", self) #for my understanding > self means the Window
-        label.setFont(QFont('Arial',50))
-        label.setGeometry(0,0,800,80) #(x,y,width,height)
+    def initUI(self): #you can't normally make a layout manager inside of MainWindow, the method is : Create a main.central widget > Create the layout manager within the widget, the main widget is then added to the window (in this case (MainWindow class)), learning sources : Bro Code (YouTube)
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+
+        
+        font_id = QFontDatabase.addApplicationFont("Cave-Story.ttf")
+
+        if font_id != -1:
+            font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+
+        label = QLabel("amogus ding dong", self) #for my understanding > self means the Window
+        label.setFont(QFont(font_family,60))
+        label.setGeometry(0,0,0,0) #(x,y,width,height)
         label.setStyleSheet("color: black;"
                             "background-color: white;") # this code is only here for testing, will either keep or change
-        label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
+
+        event_adder = QPushButton('Add event', self)
+        event_adder.setGeometry (150,200,400,200) #(x,y,width,height)
+        event_adder.setFont(QFont(font_family,60))
+
+        layout = QGridLayout()
+
+        layout.addWidget(label)
+        layout.addWidget(event_adder)
+
+        central_widget.setLayout(layout)
     
         
         
