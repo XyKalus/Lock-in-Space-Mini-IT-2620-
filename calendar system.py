@@ -315,13 +315,15 @@ class InteractiveCalendarApp(QWidget):
         # Format QDate into a readable string (e.g., 'Tuesday, August 18, 2026')
         formatted_date = selected_qdate.toString("dddd, MMMM d, yyyy")
         self.info_label.setText(f"Selected Date: {formatted_date}")
-        self.open_main_window(QDate)
 
     def go_to_today(self):
         """Resets the calendar view and selection to today's date."""
         today = QDate.currentDate()
         self.calendar.setSelectedDate(today)
 
+    def on_date_double_click(self):
+        selected_qdate = self.calendar.selectedDate()
+        
     def open_main_window(self, date):
         print("Double clicked date:", self)
         self.popup_window = MainWindow()
