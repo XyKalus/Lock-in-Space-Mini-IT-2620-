@@ -9,10 +9,10 @@ import datetime as dt
 from datetime import timedelta
 import calendar
 import sys, os
-import PyQt5
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
-from PyQt5.QtGui import QIcon, QFont, QFontDatabase
-from PyQt5.QtCore import Qt #Qt is used for alignment
+import PyQt6
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
+from PyQt6.QtGui import QIcon, QFont, QFontDatabase
+from PyQt6.QtCore import Qt #Qt is used for alignment
 
 class MainWindow(QMainWindow): #self in the entire function refers to the "MainWindow" class (adding this here as a reminder to myself)
     def __init__(self):
@@ -37,7 +37,7 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
         label.setGeometry(0,0,90,90) #(x,y,width,height)
         label.setStyleSheet("color: black;"
                             "background-color: white;") # this code is only here for testing, will either keep or change
-        label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
+        # label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
 
         self.event_button = QPushButton('Add event', self)
         self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
@@ -61,14 +61,14 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
             
         
 
-# def main():
-#     app = QApplication(sys.argv)
-#     window = MainWindow()
-#     window.show()
-#     sys.exit(app.exec_())       
+def main():
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())       
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
 
 def eventsystem():
