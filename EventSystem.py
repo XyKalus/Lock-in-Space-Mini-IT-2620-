@@ -32,7 +32,7 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
         if font_id != -1:
             font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
 
-        label = QLabel("title", self) #for my understanding > self means the Window
+        label = QLabel("type your event here", self) #for my understanding > self means the Window
         label.setFont(QFont(font_family,60))
         label.setGeometry(0,0,90,90) #(x,y,width,height)
         label.setStyleSheet("color: black;"
@@ -48,7 +48,7 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
         layout = QGridLayout()
 
         layout.addWidget(label)
-        # layout.addWidget(event_button)
+        layout.addWidget(self.event_button)
 
         central_widget.setLayout(layout)
 
