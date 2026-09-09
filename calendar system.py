@@ -301,6 +301,8 @@ class InteractiveCalendarApp(QWidget):
         today_btn = QPushButton("Go to Today")
         today_btn.clicked.connect(self.go_to_today)
         bottom_layout.addWidget(today_btn)
+        today_btn.setFont(QFont(font_family,25))
+
 
         layout.addLayout(bottom_layout)
 
@@ -315,19 +317,20 @@ class InteractiveCalendarApp(QWidget):
         # Format QDate into a readable string (e.g., 'Tuesday, August 18, 2026')
         formatted_date = selected_qdate.toString("dddd, MMMM d, yyyy")
         self.info_label.setText(f"Selected Date: {formatted_date}")
+        # self.open_main_window(QDate)
 
     def go_to_today(self):
         """Resets the calendar view and selection to today's date."""
         today = QDate.currentDate()
         self.calendar.setSelectedDate(today)
 
-    def on_date_double_click(self):
-        selected_qdate = self.calendar.selectedDate()
+    # def on_date_double_click(self):
+    #     selected_qdate = self.calendar.selectedDate()
         
-    def open_main_window(self, date):
-        print("Double clicked date:", self)
-        self.popup_window = MainWindow()
-        self.popup_window.show()
+    # def open_main_window(self, date):
+        # print("Double clicked date:", self)
+        # self.popup_window = MainWindow()
+        # self.popup_window.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
