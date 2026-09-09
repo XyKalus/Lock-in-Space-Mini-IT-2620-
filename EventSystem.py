@@ -34,23 +34,31 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
 
         label = QLabel("amogus ding dong", self) #for my understanding > self means the Window
         label.setFont(QFont(font_family,60))
-        label.setGeometry(0,0,0,0) #(x,y,width,height)
+        label.setGeometry(0,0,90,90) #(x,y,width,height)
         label.setStyleSheet("color: black;"
                             "background-color: white;") # this code is only here for testing, will either keep or change
         label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
 
-        event_adder = QPushButton('Add event', self)
-        event_adder.setGeometry (150,200,400,200) #(x,y,width,height)
-        event_adder.setFont(QFont(font_family,60))
+        self.event_button = QPushButton('Add event', self)
+        self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
+        self.event_button.setFont(QFont(font_family,60))
+        self.event_button.clicked.connect(self.on_click)
 
+    
         layout = QGridLayout()
 
         layout.addWidget(label)
-        layout.addWidget(event_adder)
+        # layout.addWidget(event_button)
 
         central_widget.setLayout(layout)
+
+    def on_click(self):
+        print('event added!')
+        self.event_button.setText('done!')
     
-        
+
+   
+            
         
 
 def main():
