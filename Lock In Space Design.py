@@ -1,3 +1,10 @@
+"""to make it easier for us, let's add the latest editor to files that have had multiple people working on them, I'll start - Haikal 
+
+Last Edited by : Haikal
+Date : 10/10/2026
+"""
+
+
 from PyQt5.QtWidgets import (
     QApplication,
     QDialog,
@@ -25,7 +32,14 @@ from PyQt5.QtCore import (
 )
 
 import sys
+import os
+from pathlib import Path 
+from images import *
 
+IMAGES_DIR = Path(__file__).resolve().parent / "images"
+os.chdir(IMAGES_DIR)
+# simplified version : this makes it so this file is set to act as if its inside "images", this method wouldn't be necessary but this was originally written INSIDE the folder and this is the easiest "bandaid"
+#first line makes it so it looks inside the images folder, Path is a whole library that handles it, .parent is used to find the directory of the parent folder (the folder that holds this entire project), .resolve makes it the absolute directory, os.chdir just changes the directory of IMAGES_DIR
 
 # ============================================================
 # SHOP WINDOW
