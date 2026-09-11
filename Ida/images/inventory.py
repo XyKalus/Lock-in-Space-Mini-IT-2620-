@@ -1246,7 +1246,7 @@ class Window(QDialog):
 
         self.setWindowIcon(
             QIcon(
-                img("officialbg.png")
+                img("Icons/officialbg.png")
             )
         )
 

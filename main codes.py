@@ -1899,7 +1899,7 @@ class Window(QDialog):
         )
 
         self.setWindowIcon(
-            QIcon("Ida/images/officialbg.png")
+            QIcon("Ida/images/Icons/officialbg.png")
         )
 
         self.setFixedSize(
