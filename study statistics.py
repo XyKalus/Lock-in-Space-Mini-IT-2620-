@@ -3,9 +3,9 @@ import json
 import os
 from datetime import date, timedelta
 
-from PyQt5.QtWidgets import QApplication,QWidget,QLabel,QVBoxLayout
-from PyQt5.QtCore import Qt, QRectF
-from PyQt5.QtGui import QPainter,QColor,QPen,QFont
+from PyQt6.QtWidgets import QApplication,QWidget,QLabel,QVBoxLayout
+from PyQt6.QtCore import Qt, QRectF
+from PyQt6.QtGui import QPainter,QColor,QPen,QFont
 
 
 class WeeklyChart(QWidget):
@@ -46,7 +46,7 @@ class WeeklyChart(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         width = self.width()
         height = self.height()
 
@@ -123,7 +123,7 @@ class WeeklyChart(QWidget):
     
             y = (top + chart_height -  bar_height)
 
-            painter.setPen(Qt.NoPen)
+            painter.setPen(Qt.PenStyle.NoPen)
 
             painter.setBrush(
                 QColor(65, 120, 230)
@@ -137,7 +137,7 @@ class WeeklyChart(QWidget):
             )
 
             painter.setFont(
-                QFont("Arial", 9, QFont.Bold)
+                QFont("Arial", 9, QFont.Weight.Bold)
             )
 
             if minutes >= 60:
@@ -154,7 +154,7 @@ class WeeklyChart(QWidget):
 
                 text = f"{int(minutes)}m"
 
-            painter.drawText(QRectF(x - 15, y - 25,bar_width + 30,20),Qt.AlignCenter,text)
+            painter.drawText(QRectF(x - 15, y - 25,bar_width + 30,20),Qt.AlignmentFlag.AlignCenter,text)
 
             day_name = day.strftime("%a")
 
@@ -163,11 +163,11 @@ class WeeklyChart(QWidget):
             )
 
             painter.setFont(
-                QFont("Arial", 9, QFont.Bold)
+                QFont("Arial", 9, QFont.Weight.Bold)
             )
 
             painter.drawText(
-                QRectF(x - 10,top + chart_height + 12,bar_width + 20,25),Qt.AlignCenter,day_name)
+                QRectF(x - 10,top + chart_height + 12,bar_width + 20,25),Qt.AlignmentFlag.AlignCenter,day_name)
 
         painter.end()
 
@@ -245,7 +245,7 @@ class UsageWindow(QWidget):
 
         subtitle.setStyleSheet("""
             QLabel {
-                font-family: Arial;
+                font-family: Times New Roman;
                 font-size: 16px;
                 color: #758095;
             }
@@ -271,14 +271,12 @@ class UsageWindow(QWidget):
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(25, 25, 25, 25)
         main_layout.addLayout(title_layout)
-
         main_layout.addLayout(info_layout)
         main_layout.addWidget(chart)
-
         self.setLayout(main_layout)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = UsageWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
