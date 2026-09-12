@@ -27,6 +27,7 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QListWidget,
     QListWidgetItem,
+    QFormLayout,
     QPushButton,
     QLineEdit,
     QLabel,
@@ -37,7 +38,7 @@ from PyQt6.QtGui import QIcon
 
 tasks = []
 
-app = QApplication([])
+# app = QApplication([])
 
 class TodoList(QMainWindow):
     def __init__(self):
@@ -50,28 +51,75 @@ class TodoList(QMainWindow):
             central_widget = QWidget()
             self.setCentralWidget(central_widget)
 
-            bus = QLabel("type your event here", self) #for my understanding > self means the Window
-            # button.setFont(QFont(font_family,60))
-            bus.setGeometry(0,0,90,90) #(x,y,width,height)
-            bus.setStyleSheet("color: white;"
-                                "background-color: black;") # this code is only here for testing, will either keep or change
-            # label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
-    
-            self.NewTask = QPushButton('Add event', self)
-            self.NewTask.setGeometry (150,200,400,200) #(x,y,width,height)
+
+            """BUS LABEL"""
+            # text = QLabel("type your event here", self) #for my understanding > self means the Window
+            # # button.setFont(QFont(font_family,60))
+            # text.setGeometry(0,0,90,90) #(x,y,width,height)
+            # text.setStyleSheet("color: white;"
+            #                     "background-color: black;") # this code is only here for testing, will either keep or change
+            # text.setAlignment(Qt.AlignmentFlag.AlignCenter) # controls the alignment of the label, the | is used to label 2 css properties at once
+
+            
+            """Button that adds a new task"""
+            self.NewTask = QPushButton('+', self)
+            self.NewTask.setGeometry (0,0,400,200) #(x,y,width,height)
             # self.event_button.setFont(QFont(font_family,60))
             self.NewTask.clicked.connect(self.on_click)
 
-            layout = QGridLayout()
+            """Button that show the list of existing tasks"""
+            self.TaskList = QPushButton('list', self)
+            self.TaskList.setGeometry (0,0,400,200) #(x,y,width,height)
+            # self.event_button.setFont(QFont(font_family,60))
+            self.TaskList.clicked.connect(self.on_click)
             
-            layout.addWidget(bus)
-            layout.addWidget(self.NewTask)
-    
-            central_widget.setLayout(layout)
+            """Where you type in the task"""
+            self.TaskName = QLineEdit()
+            self.TaskName.setPlaceholderText('Type in your task')
+            # self.layout.addRow("Task name:", self.name_input)
+
+            Vlayout = QVBoxLayout()
+            Glayout = QGridLayout()
+            Hlayout = QHBoxLayout()
+
+            # """Glayout spacing"""
+            # Glayout.setVerticalSpacing(0)
+        
+
+            # Vlayout.addWidget(self.TaskName)
+            # Vlayout.addWidget(self.NewTask)
+
+
+            # Vlayout.addWidget(self.TaskList)
+
+            # central_layout = QVBoxLayout()
+            # central_layout.addLayout(Hlayout)
+
+            # central_widget.setLayout(central_layout)
+            Hlayout.setSpacing(0)
+            Hlayout.setContentsMargins(0,0,0,0)
+
+            Vlayout.setSpacing(0)
+            Vlayout.setContentsMargins(0,0,0,0)
+
+            Hlayout.addWidget(self.TaskName)
+            Hlayout.addWidget(self.NewTask)
+
+            Vlayout.addLayout(Hlayout)      # TaskName + NewTask side by side, as one row
+            Vlayout.addWidget(self.TaskList)  # sits directly below that row
+
+            central_layout = QHBoxLayout()
+            central_layout.addLayout(Vlayout)
+
+            central_widget.setLayout(central_layout)
 
     def on_click(self):
-            print('event added!')
+            print('task added!')
             self.NewTask.setText('done!')
+            # TaskAdded = input()
+            # tasks.append({"task":TaskAdded, "completed":False})
+            # print(f"{TaskAdded} added to the list!")
+
 
 
 # def TodoListCLI():
@@ -90,9 +138,9 @@ class TodoList(QMainWindow):
     #     TaskInitialise()
 
     #     def TaskAdd(): #This function controls the adding of new tasks and tracks its completion
-    #         TaskAdded = input('Task name: ')
-    #         tasks.append({"task":TaskAdded, "completed":False})
-    #         print(f"{TaskAdded} added to the list!")
+            # TaskAdded = input('Task name: ')
+            # tasks.append({"task":TaskAdded, "completed":False})
+            # print(f"{TaskAdded} added to the list!")
 
     #         global x
     #         x = {
