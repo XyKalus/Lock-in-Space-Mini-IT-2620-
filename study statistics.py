@@ -245,7 +245,7 @@ class UsageWindow(QWidget):
 
         subtitle.setStyleSheet("""
             QLabel {
-                font-family: Arial;
+                font-family: Times New Roman;
                 font-size: 16px;
                 color: #758095;
             }
@@ -271,10 +271,8 @@ class UsageWindow(QWidget):
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(25, 25, 25, 25)
         main_layout.addLayout(title_layout)
-
         main_layout.addLayout(info_layout)
         main_layout.addWidget(chart)
-
         self.setLayout(main_layout)
 
 if __name__ == "__main__":

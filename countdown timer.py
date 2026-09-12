@@ -3,10 +3,10 @@ import json
 import os
 from datetime import date
 
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QSpinBox, QVBoxLayout, QHBoxLayout
-from PyQt5.QtCore import QTimer, Qt, QRectF,QUrl
-from PyQt5.QtGui import QPainter, QColor, QPen, QFont
-from PyQt5.QtMultimedia import QMediaPlayer,QMediaContent,QMediaPlaylist
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QSpinBox, QVBoxLayout, QHBoxLayout
+from PyQt6.QtCore import QTimer, Qt, QRectF,QUrl
+from PyQt6.QtGui import QPainter, QColor, QPen, QFont
+from PyQt6.QtMultimedia import QMediaPlayer,QAudioOutput
 
 
 class CircularTimerWidget(QWidget):
@@ -23,7 +23,7 @@ class CircularTimerWidget(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         width = self.width()
         height = self.height()
@@ -48,14 +48,14 @@ class CircularTimerWidget(QWidget):
         painter.setPen(pen_bg)
         painter.drawEllipse(rect)
 
-        pen_progress = QPen(dynamic_color, 12, Qt.SolidLine, Qt.RoundCap)
+        pen_progress = QPen(dynamic_color, 12, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap)
         painter.setPen(pen_progress)
         angle = int(360 * self.progress * 16)
         painter.drawArc(rect, 90 * 16, -angle)
 
         painter.setPen(QColor(50, 50, 50))
-        painter.setFont(QFont("Comic Sans MS", 26, QFont.Bold))
-        painter.drawText(rect, Qt.AlignCenter, self.display_time)
+        painter.setFont(QFont("Comic Sans MS", 26, QFont.Weight.Bold))
+        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, self.display_time)
 
 class Timer(QWidget):
     def __init__(self):
@@ -71,17 +71,18 @@ class Timer(QWidget):
         self.start_button = QPushButton("Start", self)
         self.reset_button = QPushButton("Reset", self)
 
-        self.timer = QTimer(self)
+        
+        self.audio_output = QAudioOutput(self)
         self.player = QMediaPlayer(self)
-        self.playlist = QMediaPlaylist(self)
 
+        self.player.setAudioOutput(self.audio_output)   
         audio_file = "alarm.mp3"
-
-        self.playlist.addMedia(QMediaContent(QUrl.fromLocalFile(audio_file)))
-        self.playlist.setPlaybackMode(QMediaPlaylist.Loop)
-        self.player.setPlaylist(self.playlist)
+        
+        self.player.setSource( QUrl.fromLocalFile(audio_file))
+        
 
         self.alarm_playing = False
+        self.timer = QTimer(self)
 
         self.initUI()
 
@@ -129,7 +130,7 @@ class Timer(QWidget):
 
         vbox = QVBoxLayout()
         vbox.addLayout(hbox)
-        vbox.addWidget(self.circle_timer, alignment=Qt.AlignCenter)
+        vbox.addWidget(self.circle_timer, Qt.AlignmentFlag.AlignVCenter)
         vbox.addWidget(self.start_button)
         vbox.addWidget(self.reset_button)
 
@@ -234,4 +235,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     timer = Timer()
     timer.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
