@@ -122,9 +122,8 @@ class Timer(QWidget):
 
     def initUI(self):
         self.setWindowTitle("CountDown Timer")
-       
-        
-        self.minutesSpinBox.setRange(1, 1440)
+        self.hoursSpinBox.setRange(0, 24)
+        self.minutesSpinBox.setRange(0, 60)
 
         hbox = QHBoxLayout()
         hbox.addWidget(self.hoursLabel)
