@@ -64,6 +64,8 @@ class Timer(QWidget):
         self.remaining_seconds = 0
         self.total_seconds = 0
 
+        self.hoursLabel = QLabel("Hours:", self)
+        self.hoursSpinBox = QSpinBox(self)
         self.minutesLabel = QLabel("Minutes:", self)
         self.minutesSpinBox = QSpinBox(self)
         self.circle_timer = CircularTimerWidget(self)
@@ -120,11 +122,13 @@ class Timer(QWidget):
 
     def initUI(self):
         self.setWindowTitle("CountDown Timer")
-        self.move(700, 200)
-        self.setFixedSize(500, 500)
+       
+        
         self.minutesSpinBox.setRange(1, 1440)
 
         hbox = QHBoxLayout()
+        hbox.addWidget(self.hoursLabel)
+        hbox.addWidget(self.hoursSpinBox)
         hbox.addWidget(self.minutesLabel)
         hbox.addWidget(self.minutesSpinBox)
 
