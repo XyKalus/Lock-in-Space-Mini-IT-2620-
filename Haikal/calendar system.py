@@ -1,3 +1,10 @@
+"""
+Student name :
+ID :
+Email : 
+"""
+
+from EventSystem import eventsystem
 import sys
 import datetime
 from PyQt5.QtWidgets import (
@@ -13,7 +20,7 @@ class InteractiveCalendarApp(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("Interactive PyQt5 Calendar")
+        self.setWindowTitle("Calendar (W.I.P)")
         self.setGeometry(300, 150, 450, 400)
 
         layout = QVBoxLayout()
@@ -61,3 +68,5 @@ if __name__ == "__main__":
     window = InteractiveCalendarApp()
     window.show()
     sys.exit(app.exec_())
+
+eventsystem()

@@ -8,10 +8,13 @@ Basic features :
 
 """Saving should be in JSON, should I use lists to store the tasks?"""
 
+"""URGENT : work on GUI"""
+
 import shutil
 import json
 
 tasks = []
+# print(help(tasks))
 
 
 def TodoList():
@@ -32,23 +35,15 @@ def TodoList():
         def TaskAdd(): #This function controls the adding of new tasks and tracks its completion
             TaskAdder = input('Task name: ')
             tasks.append({"task":TaskAdder, "completed":False})
-            print(f"{TaskAdder} added to the list!")
-
-            global x
-            x = {
-                "name":f"{TaskAdder}",
-                "status" : "Incomplete",
-
-            }
+            print(f"{TaskAdder} added to the list!") 
             
 
         def ViewTask ():
             if len(tasks) == 0:
                 print('you currently have no tasks')
             else:
-                print('here are your existing tasks:')
-                # print(*tasks)
-                json.loads(x)
+                for task in tasks :
+                    print(task)
 
         def DeleteTask():
             print(*tasks)
@@ -87,7 +82,7 @@ def TodoList():
         else :
             print('invalid input!')
 
-        print(*tasks)
+        # print(*tasks)
 
 TodoList()
 
