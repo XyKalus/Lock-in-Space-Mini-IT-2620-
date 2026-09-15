@@ -256,14 +256,14 @@ import sys
 import datetime
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, 
-    QLabel, QCalendarWidget, QPushButton
+    QLabel, QCalendarWidget, QPushButton, QMainWindow
 )
 from PyQt6.QtCore import QDate
 from PyQt6.QtGui import QFont, QFontDatabase
 
-from EventSystem import MainWindow, eventsystem
+from EventSystem import Events, eventsystem
 
-class InteractiveCalendarApp(QWidget):
+class Calendar(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -278,14 +278,14 @@ class InteractiveCalendarApp(QWidget):
         if font_id != -1:
             font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
 
-        label = QLabel("title", self) #for my understanding > self means the Window
-        label.setFont(QFont(font_family,60))
+        # label = QLabel("title", self) #for my understanding > self means the Window
+        # label.setFont(QFont(font_family,60))
 
         layout = QVBoxLayout()
 
         # Label to display the selected date
         self.info_label = QLabel("Selected Date: None")
-        self.info_label.setFont(QFont(font_family, 11, QFont.bold))
+        self.info_label.setFont(QFont(font_family, 20, QFont.Weight.Bold))
         layout.addWidget(self.info_label)
 
         # Interactive QCalendarWidget
@@ -303,13 +303,26 @@ class InteractiveCalendarApp(QWidget):
         bottom_layout.addWidget(today_btn)
         today_btn.setFont(QFont(font_family,25))
 
+        from EventSystem import Events
+
+        self.event_button = QPushButton('Event adder', self)
+        # self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
+        self.event_button.setFont(QFont(font_family,60))
+        self.event_button.clicked.connect(self.on_click)
+        
+
 
         layout.addLayout(bottom_layout)
+        layout.addWidget(self.event_button)
 
         self.setLayout(layout)
 
         # Display current date on startup
         self.on_date_selected()
+
+    def on_click(self):
+            self.window = Events()
+            self.window.show()
 
     def on_date_selected(self):
         """Triggered whenever the user clicks a date on the calendar."""
@@ -334,7 +347,7 @@ class InteractiveCalendarApp(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = InteractiveCalendarApp()
+    window = Calendar()
     window.show()
     sys.exit(app.exec())
 

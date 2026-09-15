@@ -10,11 +10,11 @@ from datetime import timedelta
 import calendar
 import sys, os
 import PyQt6
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton, QLineEdit
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt #Qt is used for alignment
 
-class MainWindow(QMainWindow): #self in the entire function refers to the "MainWindow" class (adding this here as a reminder to myself)
+class Events(QMainWindow): #self in the entire function refers to the "MainWindow" class (adding this here as a reminder to myself)
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Set an event date') # title of the window
@@ -32,7 +32,8 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
         if font_id != -1:
             font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
 
-        label = QLabel("type your event here", self) #for my understanding > self means the Window
+        label = QLineEdit() #for my understanding > self means the Window
+        label.setPlaceholderText('type your event here')
         label.setFont(QFont(font_family,60))
         label.setGeometry(0,0,90,90) #(x,y,width,height)
         label.setStyleSheet("color: black;"
@@ -40,7 +41,7 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
         # label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
 
         self.event_button = QPushButton('Add event', self)
-        self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
+        # self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
         self.event_button.setFont(QFont(font_family,60))
         self.event_button.clicked.connect(self.on_click)
 
@@ -63,7 +64,7 @@ class MainWindow(QMainWindow): #self in the entire function refers to the "MainW
 
 def main():
     app = QApplication(sys.argv)
-    window = MainWindow()
+    window = Events()
     window.show()
     sys.exit(app.exec())       
 
