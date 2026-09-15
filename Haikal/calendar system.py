@@ -307,7 +307,7 @@ class Calendar(QWidget):
 
         self.event_button = QPushButton('Event adder', self)
         # self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
-        self.event_button.setFont(QFont(font_family,60))
+        self.event_button.setFont(QFont(font_family,25))
         self.event_button.clicked.connect(self.on_click)
         
 
