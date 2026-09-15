@@ -254,12 +254,12 @@ HOLY CRAP"""
 
 import sys
 import datetime
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, 
     QLabel, QCalendarWidget, QPushButton
 )
-from PyQt5.QtCore import QDate
-from PyQt5.QtGui import QFont, QFontDatabase
+from PyQt6.QtCore import QDate
+from PyQt6.QtGui import QFont, QFontDatabase
 
 from EventSystem import MainWindow, eventsystem
 
@@ -285,7 +285,7 @@ class InteractiveCalendarApp(QWidget):
 
         # Label to display the selected date
         self.info_label = QLabel("Selected Date: None")
-        self.info_label.setFont(QFont(font_family, 11, QFont.Bold))
+        self.info_label.setFont(QFont(font_family, 11, QFont.bold))
         layout.addWidget(self.info_label)
 
         # Interactive QCalendarWidget
@@ -336,5 +336,5 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = InteractiveCalendarApp()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
