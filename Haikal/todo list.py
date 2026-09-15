@@ -63,13 +63,13 @@ class TodoList(QMainWindow):
             
             """Button that adds a new task"""
             self.NewTask = QPushButton('+', self)
-            self.NewTask.setGeometry (0,0,400,200) #(x,y,width,height)
+            self.NewTask.setGeometry (0,0,80,40) #(x,y,width,height)
             # self.event_button.setFont(QFont(font_family,60))
             self.NewTask.clicked.connect(self.on_click)
 
             """Button that show the list of existing tasks"""
             self.TaskList = QPushButton('list', self)
-            self.TaskList.setGeometry (0,0,400,200) #(x,y,width,height)
+            self.TaskList.setGeometry (0,0,80,40) #(x,y,width,height)
             # self.event_button.setFont(QFont(font_family,60))
             self.TaskList.clicked.connect(self.on_click)
             
@@ -78,38 +78,58 @@ class TodoList(QMainWindow):
             self.TaskName.setPlaceholderText('Type in your task')
             # self.layout.addRow("Task name:", self.name_input)
 
-            Vlayout = QVBoxLayout()
-            Glayout = QGridLayout()
-            Hlayout = QHBoxLayout()
+            # Vlayout = QVBoxLayout()
+            # Glayout = QGridLayout()
+            # Hlayout = QHBoxLayout()
+            # Formlayout = QFormLayout()
 
-            # """Glayout spacing"""
-            # Glayout.setVerticalSpacing(0)
+            # # """Glayout spacing"""
+            # # Glayout.setVerticalSpacing(0)
         
 
-            # Vlayout.addWidget(self.TaskName)
-            # Vlayout.addWidget(self.NewTask)
+            # Formlayout.addWidget(self.TaskName) 
+            # Formlayout.addWidget(self.NewTask)
+            # # Hlayout.addWidget(self.TaskList)
 
 
-            # Vlayout.addWidget(self.TaskList)
+            # # Vlayout.addWidget(self.TaskList)
 
-            # central_layout = QVBoxLayout()
-            # central_layout.addLayout(Hlayout)
+            # # central_layout = QVBoxLayout()
+            # # central_layout.addLayout(Hlayout)
+
+            # # central_widget.setLayout(central_layout)
+            # Hlayout.setSpacing(0)
+            # Hlayout.setContentsMargins(0,0,0,0)
+
+            # Vlayout.setSpacing(0)
+            # Vlayout.setContentsMargins(0,0,0,0)
+
+            # # Hlayout.addWidget(self.TaskName)
+            # # Hlayout.addWidget(self.NewTask)
+
+            # # Vlayout.addLayout(Hlayout)      # TaskName + NewTask side by side, as one row
+            # # Vlayout.addWidget(self.TaskList)  # sits directly below that row
+
+
+            # central_layout = QFormLayout()
+            # # central_layout.addLayout(Vlayout)
+            # central_layout.addWidget(self.TaskName)
+            # central_layout.addWidget(self.NewTask)
+            # central_layout.addWidget(self.TaskList)
+            # # central_layout.addRow(Formlayout)
 
             # central_widget.setLayout(central_layout)
+
+
+            Hlayout = QHBoxLayout()
             Hlayout.setSpacing(0)
-            Hlayout.setContentsMargins(0,0,0,0)
+            Hlayout.setContentsMargins(0, 0, 0, 0)
+            Hlayout.addWidget(self.TaskName)   # QLineEdit
+            Hlayout.addWidget(self.NewTask)    # QPushButton
 
-            Vlayout.setSpacing(0)
-            Vlayout.setContentsMargins(0,0,0,0)
-
-            Hlayout.addWidget(self.TaskName)
-            Hlayout.addWidget(self.NewTask)
-
-            Vlayout.addLayout(Hlayout)      # TaskName + NewTask side by side, as one row
-            Vlayout.addWidget(self.TaskList)  # sits directly below that row
-
-            central_layout = QHBoxLayout()
-            central_layout.addLayout(Vlayout)
+            central_layout = QFormLayout()
+            central_layout.addRow(Hlayout)   # TaskName + NewTask share one row
+            central_layout.addRow(self.TaskList)      # TaskList on its own row below
 
             central_widget.setLayout(central_layout)
 
