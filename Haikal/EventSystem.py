@@ -10,7 +10,7 @@ from datetime import timedelta
 import calendar
 import sys, os
 import PyQt6
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton, QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QGridLayout, QPushButton, QLineEdit
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt #Qt is used for alignment
 
@@ -46,7 +46,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.event_button.clicked.connect(self.on_click)
 
     
-        layout = QGridLayout()
+        layout = QFormLayout()
 
         layout.addWidget(label)
         layout.addWidget(self.event_button)
