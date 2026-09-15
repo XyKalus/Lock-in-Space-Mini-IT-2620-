@@ -1,7 +1,7 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication,
     QDialog,
     QPushButton,
@@ -20,13 +20,13 @@ from PyQt5.QtWidgets import (
     QGraphicsItem
 )
 
-from PyQt5.QtCore import (
+from PyQt6.QtCore import (
     QSize,
     Qt,
     pyqtSignal
 )
 
-from PyQt5.QtGui import (
+from PyQt6.QtGui import (
     QPixmap,
     QIcon,
     QFont,
@@ -35,6 +35,9 @@ from PyQt5.QtGui import (
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
+
+
+
 
 # ============================================================
 # INVENTORY
@@ -177,7 +180,7 @@ class AnotherWindow(QDialog):
         )
 
         shop_title.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -231,7 +234,7 @@ class AnotherWindow(QDialog):
         currency_layout = QHBoxLayout()
 
         currency_layout.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
         currency_layout.setSpacing(
@@ -262,8 +265,8 @@ class AnotherWindow(QDialog):
             coin_pixmap = coin_pixmap.scaled(
                 60,
                 50,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
             coin_image.setPixmap(
@@ -277,7 +280,7 @@ class AnotherWindow(QDialog):
         )
 
         coin_image.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -337,8 +340,8 @@ class AnotherWindow(QDialog):
             gem_pixmap = gem_pixmap.scaled(
                 70,
                 70,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
             gem_image.setPixmap(
@@ -352,7 +355,7 @@ class AnotherWindow(QDialog):
         )
 
         gem_image.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -652,12 +655,12 @@ class AnotherWindow(QDialog):
 
 
         scroll_area.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarAlwaysOff
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
         )
 
 
         scroll_area.setVerticalScrollBarPolicy(
-            Qt.ScrollBarAsNeeded
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded
         )
 
 
@@ -803,7 +806,7 @@ class AnotherWindow(QDialog):
 
 
         name_label.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -811,7 +814,7 @@ class AnotherWindow(QDialog):
             QFont(
                 "Cave Story",
                 30,
-                QFont.Bold
+                QFont.Weight.Bold
             )
         )
 
@@ -832,7 +835,7 @@ class AnotherWindow(QDialog):
 
 
         image_label.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -851,8 +854,8 @@ class AnotherWindow(QDialog):
             pixmap = pixmap.scaled(
                 140,
                 130,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
 
@@ -881,7 +884,7 @@ class AnotherWindow(QDialog):
 
 
         price_layout.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -904,8 +907,8 @@ class AnotherWindow(QDialog):
             price_pixmap = price_pixmap.scaled(
                 25,
                 25,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
 
@@ -921,7 +924,7 @@ class AnotherWindow(QDialog):
 
 
         price_image.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -940,7 +943,7 @@ class AnotherWindow(QDialog):
 
 
         price_label.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -961,7 +964,7 @@ class AnotherWindow(QDialog):
                 QFont(
                     font_family,
                     20,
-                    QFont.Bold
+                    QFont.Weight.Bold
                 )
             )
 
@@ -1526,7 +1529,7 @@ class InventoryWindow(QDialog):
         )
 
         title.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
         font_id = QFontDatabase.addApplicationFont(
@@ -1654,7 +1657,7 @@ class InventoryWindow(QDialog):
             )
 
             name_label.setAlignment(
-                Qt.AlignCenter
+                Qt.AlignmentFlag.AlignCenter
             )
 
             name_label.setStyleSheet("""
@@ -1702,8 +1705,8 @@ class InventoryWindow(QDialog):
                 pixmap = pixmap.scaled(
                     120,
                     120,
-                    Qt.KeepAspectRatio,
-                    Qt.SmoothTransformation
+                    Qt.AspectRatioMode.KeepAspectRatio,
+                    Qt.TransformationMode.SmoothTransformation  
                 )
 
                 image_button.setIcon(
@@ -1733,7 +1736,7 @@ class InventoryWindow(QDialog):
 
             card_layout.addWidget(
                 image_button,
-                alignment=Qt.AlignCenter
+                alignment=Qt.AlignmentFlag.AlignCenter
             )
 
             item_card.setLayout(
@@ -1790,23 +1793,24 @@ class RoomItem(QGraphicsPixmapItem):
             pixmap = pixmap.scaled(
                 160,
                 160,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
             self.setPixmap(pixmap)
-
+        # Make it Move
         self.setFlag(
-            QGraphicsItem.ItemIsMovable,
+            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
             True
         )
 
         self.setFlag(
-            QGraphicsItem.ItemIsSelectable,
+            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
             True
         )
 
     def wheelEvent(self, event):
+
 
         if event.delta() > 0:
 
@@ -1824,6 +1828,7 @@ class RoomItem(QGraphicsPixmapItem):
         self.setScale(
             new_scale
         )
+
         event.accept()
 
     # ========================================================
@@ -1834,33 +1839,33 @@ class RoomItem(QGraphicsPixmapItem):
         self.locked = True
 
         self.setFlag(
-            QGraphicsItem.ItemIsMovable,
+            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
             False
         )
 
         self.setFlag(
-            QGraphicsItem.ItemIsSelectable,
+            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
             False
         )
 
-
+    # Unlock Items
     def unlock(self):
 
         self.locked = False
 
         self.setFlag(
-            QGraphicsItem.ItemIsMovable,
+            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
             True
         )
 
         self.setFlag(
-            QGraphicsItem.ItemIsSelectable,
+            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
             True
         )
 
     def mousePressEvent(self, event):
 
-        if event.button() == Qt.RightButton:
+        if event.button() == Qt.MouseButton.RightButton:
 
             self.put_back_to_inventory()
 
@@ -1970,15 +1975,15 @@ class Window(QDialog):
         )
 
         self.view.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarAlwaysOff
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
         )
 
         self.view.setVerticalScrollBarPolicy(
-            Qt.ScrollBarAlwaysOff
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
         )
 
         self.view.setFrameShape(
-            QGraphicsView.NoFrame
+            QFrame.Shape.NoFrame
         )
 
         # ====================================================
@@ -2141,5 +2146,5 @@ window.show()
 
 
 sys.exit(
-    app.exec_()
+    app.exec()
 )
