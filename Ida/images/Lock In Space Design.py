@@ -1,6 +1,9 @@
 import sys
 import os
 
+<<<<<<<< HEAD:main codes.py
+from PyQt6.QtWidgets import (
+========
 
 #BASED_DIR = os.part.dirname(os.path.abspath(__file__))
 
@@ -8,6 +11,7 @@ import os
 #    return os.path.join(BASED_DIR, path)
 
 from PyQt5.QtWidgets import (
+>>>>>>>> main:Ida/images/Lock In Space Design.py
     QApplication,
     QDialog,
     QPushButton,
@@ -18,25 +22,40 @@ from PyQt5.QtWidgets import (
     QFrame,
     QWidget,
     QScrollArea,
-    QToolTip
+    QToolTip,
+    QMessageBox,
+    QGraphicsView,
+    QGraphicsScene,
+    QGraphicsPixmapItem,
+    QGraphicsItem
 )
 
-from PyQt5.QtGui import (
+from PyQt6.QtCore import (
+    QSize,
+    Qt,
+    pyqtSignal
+)
+
+from PyQt6.QtGui import (
     QPixmap,
     QIcon,
     QFont,
     QFontDatabase
 )
 
-from PyQt5.QtCore import (
-    QSize,
-    Qt
-)
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
 
 
+
+
+# ============================================================
+# INVENTORY
+# ============================================================
+
+inventory = {}
+
+coins = 2000
 
 # ============================================================
 # SHOP WINDOW
@@ -51,9 +70,10 @@ class AnotherWindow(QDialog):
         self.setFixedSize(900, 650)
 
 
-        # ====================================================
-        # MAIN WINDOW STYLE
-        # ====================================================
+    
+    # ====================================================
+    # MAIN WINDOW STYLE
+    
 
         self.setStyleSheet("""
             QDialog {
@@ -65,7 +85,7 @@ class AnotherWindow(QDialog):
             }
 
             QPushButton {
-                font-family: Arial;
+                font-family: Cave Story;
                 font-size: 20%
             }
         """)
@@ -89,7 +109,6 @@ class AnotherWindow(QDialog):
 
         # ====================================================
         # TOP HEADER
-        # ====================================================
 
         header = QWidget()
 
@@ -171,7 +190,7 @@ class AnotherWindow(QDialog):
         )
 
         shop_title.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -225,7 +244,7 @@ class AnotherWindow(QDialog):
         currency_layout = QHBoxLayout()
 
         currency_layout.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
         currency_layout.setSpacing(
@@ -247,7 +266,7 @@ class AnotherWindow(QDialog):
         coin_image = QLabel()
 
         coin_pixmap = QPixmap(
-            "items/coins.png"
+            "Ida/images/items/coins.png"
         )
 
 
@@ -256,8 +275,8 @@ class AnotherWindow(QDialog):
             coin_pixmap = coin_pixmap.scaled(
                 60,
                 50,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
             coin_image.setPixmap(
@@ -271,12 +290,12 @@ class AnotherWindow(QDialog):
         )
 
         coin_image.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
-        coin_text = QLabel(
-            "200"
+        self.coin_text = QLabel(
+            "2000"
         )
 
 
@@ -291,7 +310,7 @@ class AnotherWindow(QDialog):
                 font_id
             )[0]
 
-            coin_text.setFont(
+            self.coin_text.setFont(
                 QFont(
                     font_family,
                     30
@@ -304,7 +323,7 @@ class AnotherWindow(QDialog):
         )
 
         coin_layout.addWidget(
-            coin_text
+            self.coin_text
         )
 
 
@@ -322,7 +341,7 @@ class AnotherWindow(QDialog):
         gem_image = QLabel()
 
         gem_pixmap = QPixmap(
-            "items/diamonds.png"
+            "Ida/images/items/diamonds.png"
         )
 
 
@@ -331,8 +350,8 @@ class AnotherWindow(QDialog):
             gem_pixmap = gem_pixmap.scaled(
                 70,
                 70,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
             gem_image.setPixmap(
@@ -346,7 +365,7 @@ class AnotherWindow(QDialog):
         )
 
         gem_image.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -469,12 +488,12 @@ class AnotherWindow(QDialog):
         # ====================================================
 
         categories = [
-            "sidebar/E1.png",
-            "sidebar/E2.png",
-            "sidebar/E3.png",
-            "sidebar/E4.png",
-            "sidebar/E5.png",
-            "sidebar/E6.png"
+            "Ida/images/sidebar/E1.png",
+            "Ida/images/sidebar/E2.png",
+            "Ida/images/sidebar/E3.png",
+            "Ida/images/sidebar/E4.png",
+            "Ida/images/sidebar/E5.png",
+            "Ida/images/sidebar/E6.png"
         ]
 
 
@@ -519,9 +538,9 @@ class AnotherWindow(QDialog):
             """)
 
 
-            # =================================================
-            # CATEGORY CONNECTION SIDE BAR/ HOVER INFORMATION
-            # =================================================
+        # =================================================
+        # CATEGORY CONNECTION SIDE BAR/ HOVER INFORMATION
+        # =================================================
 
             if index == 0:
 
@@ -607,9 +626,9 @@ class AnotherWindow(QDialog):
         )
 
 
-        # ====================================================
-        # ITEMS AREA
-        # ====================================================
+    # ====================================================
+    # ITEMS AREA
+    # ====================================================
 
         self.items_area = QWidget()
 
@@ -623,26 +642,21 @@ class AnotherWindow(QDialog):
             5
         )
 
-
         self.items_layout.setHorizontalSpacing(
             30
         )
-
 
         self.items_layout.setVerticalSpacing(
             15
         )
 
-
         self.items_area.setLayout(
             self.items_layout
         )
 
-
         # ====================================================
         # SCROLL AREA
-        # ====================================================
-
+        
         scroll_area = QScrollArea()
 
         scroll_area.setWidgetResizable(
@@ -651,12 +665,12 @@ class AnotherWindow(QDialog):
 
 
         scroll_area.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarAlwaysOff
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
         )
 
 
         scroll_area.setVerticalScrollBarPolicy(
-            Qt.ScrollBarAsNeeded
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded
         )
 
 
@@ -721,17 +735,42 @@ class AnotherWindow(QDialog):
             "characters"
         )
 
+    def buy_item(self, name, image, price):
 
+        global coins
+
+        if coins >= price:
+
+            coins -= price
+
+            inventory[name] = {
+                "image": image,
+                "price": price
+            }
+
+            self.coin_text.setText(
+                str(coins)
+            )
+
+            QMessageBox.information(
+                self,
+                "Purchased!",
+                f"{name} has been added to your inventory!"
+            )
+
+        else:
+
+            QMessageBox.warning(
+                self,
+                "Not Enough Coins",
+                "You don't have enough coins!!"
+            )
+    
     # ========================================================
     # CREATE ITEM
     # ========================================================
 
-    def create_item(
-        self,
-        name,
-        image,
-        price
-    ):
+    def create_item(self, name, image, price):
 
         card = QFrame()
 
@@ -767,9 +806,9 @@ class AnotherWindow(QDialog):
         )
 
 
-        # =================================================
-        # ITEM NAME
-        # =================================================
+    # =================================================
+    # ITEM NAME
+    # =================================================
 
         name_label = QLabel(
             name
@@ -777,7 +816,7 @@ class AnotherWindow(QDialog):
 
 
         name_label.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -785,7 +824,7 @@ class AnotherWindow(QDialog):
             QFont(
                 "Cave Story",
                 30,
-                QFont.Bold
+                QFont.Weight.Bold
             )
         )
 
@@ -799,16 +838,14 @@ class AnotherWindow(QDialog):
             name_label
         )
 
-
         # =================================================
         # ITEM IMAGE
-        # =================================================
-
+        
         image_label = QLabel()
 
 
         image_label.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -827,8 +864,8 @@ class AnotherWindow(QDialog):
             pixmap = pixmap.scaled(
                 140,
                 130,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
 
@@ -853,30 +890,25 @@ class AnotherWindow(QDialog):
 
         # =================================================
         # PRICE
-        # =================================================
-
         price_layout = QHBoxLayout()
 
 
         price_layout.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
         price_layout.setSpacing(
             5
         )
-
-
         # -------------------------------------------------
         # COIN IMAGE
-        # -------------------------------------------------
-
+        
         price_image = QLabel()
 
 
         price_pixmap = QPixmap(
-            "coins.png"
+            "Ida/images/items/coins.png"
         )
 
 
@@ -885,8 +917,8 @@ class AnotherWindow(QDialog):
             price_pixmap = price_pixmap.scaled(
                 25,
                 25,
-                Qt.KeepAspectRatio,
-                Qt.SmoothTransformation
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
             )
 
 
@@ -902,7 +934,7 @@ class AnotherWindow(QDialog):
 
 
         price_image.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -921,7 +953,7 @@ class AnotherWindow(QDialog):
 
 
         price_label.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignmentFlag.AlignCenter
         )
 
 
@@ -942,7 +974,7 @@ class AnotherWindow(QDialog):
                 QFont(
                     font_family,
                     20,
-                    QFont.Bold
+                    QFont.Weight.Bold
                 )
             )
 
@@ -969,8 +1001,6 @@ class AnotherWindow(QDialog):
 
         # =================================================
         # BUY BUTTON
-        # =================================================
-
         buy_button = QPushButton(
             "BUY"
         )
@@ -981,7 +1011,7 @@ class AnotherWindow(QDialog):
         )
 
 
-        # ONLY BUY USES CAVE STORY
+    # ONLY BUY USES CAVE STORY
         buy_button.setStyleSheet("""
             QPushButton {
                 background-color: #b38897;
@@ -1002,6 +1032,10 @@ class AnotherWindow(QDialog):
             }
         """)
 
+        
+        buy_button.clicked.connect(
+            lambda: self.buy_item(name, image, price)
+        )
 
         card_layout.addWidget(
             buy_button
@@ -1014,21 +1048,14 @@ class AnotherWindow(QDialog):
 
 
         return card
-
-
     # ========================================================
     # SHOW CATEGORY
-    # ========================================================
-
     def show_category(
         self,
         category
     ):
-
         # ====================================================
         # REMOVE CURRENT ITEMS
-        # ====================================================
-
         while self.items_layout.count():
 
             layout_item = self.items_layout.takeAt(
@@ -1054,50 +1081,50 @@ class AnotherWindow(QDialog):
 
                 (
                     "Yeejing",
-                    "characters/C1.png",
-                    1000
+                    "Ida/images/characters/C1.png",
+                    20
                 ),
 
                 (
                     "Haikal",
-                    "characters/C2.png",
-                    500
+                    "Ida/images/characters/C2.png",
+                    10
                 ),
 
                 (
                     "Khaled",
-                    "characters/CCC3.png",
-                    1000
+                    "Ida/images/characters/CCC3.png",
+                    10
                 ),
 
                 (
                     "Coco",
-                    "characters/C4.png",
-                    500
+                    "Ida/images/characters/C4.png",
+                    45
                 ),
 
                 (
                     "Sean",
-                    "characters/C6.png",
-                    1000
+                    "Ida/images/characters/C6.png",
+                    10
                 ),
 
                 (
                     "Siew Che",
-                    "characters/C5.png",
-                    500
+                    "Ida/images/characters/C5.png",
+                    59
                 ),
 
                 (
                     "Dani",
-                    "characters/C7.png",
-                    500
+                    "Ida/images/characters/C7.png",
+                    50
                 ),
 
                 (
                     "Ida",
-                    "characters/C8.png",
-                    500
+                    "Ida/images/characters/C8.png",
+                    50
                 )
 
             ]
@@ -1113,38 +1140,38 @@ class AnotherWindow(QDialog):
 
                 (
                     "Aesthethic",
-                    "background.png",
-                    1000
+                    "Ida/images/background.png",
+                    10
                 ),
 
                 (
                     "Pink Wallpaper",
-                    "W2.png",
-                    1200
+                    "Ida/images/W2.png",
+                    10
                 ),
 
                 (
                     "Night Wallpaper",
-                    "W3.png",
-                    1500
+                    "Ida/images/W3.png",
+                    15
                 ),
 
                 (
                     "Cozy Wallpaper",
-                    "W4.png",
-                    1500
+                    "Ida/images/W4.png",
+                    15
                 ),
 
                 (
                     "Modern Wallpaper",
-                    "W5.png",
-                    1800
+                    "Ida/images/W5.png",
+                    18
                 ),
 
                 (
                     "Study Wallpaper",
-                    "W6.png",
-                    2000
+                    "Ida/images/W6.png",
+                    20
                 )
 
             ]
@@ -1159,50 +1186,50 @@ class AnotherWindow(QDialog):
 
                 (
                     "Siamese Cat",
-                    "pets/cat1.png",
-                    1300
+                    "Ida/images/pets/cat1.png",
+                    13
                 ),
 
                 (
                     "Beagle Dog",
-                    "pets/dog1.png",
-                    2000
+                    "Ida/images/pets/dog1.png",
+                    20
                 ),
 
                 (
                     "Yellow Bird",
-                    "pets/bird1.png",
-                    1500
+                    "Ida/images/pets/bird1.png",
+                    15
                 ),
 
                 (
                     "Gary",
-                    "pets/snail1.png",
-                    1500
+                    "Ida/images/pets/snail1.png",
+                    15
                 ),
 
                 (
                     "Froggy",
-                    "pets/frog1.png",
-                    1800
+                    "Ida/images/pets/frog1.png",
+                    18
                 ),
 
                 (
                     "Donald Duck",
-                    "pets/duck1.png",
-                    2000
+                    "Ida/images/pets/duck1.png",
+                    20
                 ),
 
                 (
                     "Nemo",
-                    "pets/fish1.png",
-                    2300
+                    "Ida/images/pets/fish1.png",
+                    23
                 ),
 
                 (
                     "Rabbit",
-                    "pets/rabbit1.png",
-                    5000
+                    "Ida/images/pets/rabbit1.png",
+                    50
                 )
             ]
 
@@ -1215,39 +1242,39 @@ class AnotherWindow(QDialog):
             items = [
             
                 (
-                    "Book Rack",
-                    "furnitures/bookrack.png",
-                    1000
+                    "Ida/Book Rack",
+                    "images/furnitures/bookrack.png",
+                    10
                 ),
 
                 (
                     "TV",
-                    "furnitures/TV.png",
-                    2000
+                    "Ida/images/furnitures/TV.png",
+                    20
                 ),
 
                 (
                     "Flower Vase",
-                    "furnitures/Vast.png",
-                    1000
+                    "Ida/images/furnitures/Vast.png",
+                    10
                 ),
 
                 (
                     "Guitar",
-                    "furnitures/guitar.png",
-                    7000
+                    "Ida/images/furnitures/guitar.png",
+                    70
                 ),
 
                 (
                     "Radio",
-                    "furnitures/radio.png",
-                    1000
+                    "Ida/images/furnitures/radio.png",
+                    10
                 ),
 
                 (
                     "Cat Tree",
-                    "furnitures/cattoys.png",
-                    500
+                    "Ida/images/furnitures/cattoys.png",
+                    5
                 )
 
             ]
@@ -1262,109 +1289,109 @@ class AnotherWindow(QDialog):
             
                 (
                     "Croissant",
-                    "foods/f1.png",
-                    1000
+                    "Ida/images/foods/f1.png",
+                    10
                 ),
 
                 (
                     "Coffee",
-                    "foods/d1.png",
-                    500
+                    "Ida/images/foods/d1.png",
+                    50
                 ),
 
                 (
                     "Sandwich",
-                    "foods/f2.png",
-                    1000
+                    "Ida/images/foods/f2.png",
+                    1
                 ),
 
                 (
                     "Coca Cola",
-                    "foods/d2.png",
-                    500
+                    "Ida/images/foods/d2.png",
+                    5
                 ),
 
                 (
                     "Doritos",
-                    "foods/f3.png",
-                    1000
+                    "Ida/images/foods/f3.png",
+                    1
                 ),
 
                 (
                     "Strawberry Mojito",
-                    "foods/d3.png",
-                    500
+                    "Ida/images/foods/d3.png",
+                    5
                 ),
 
                 (
                     "Sushi",
-                    "foods/f4.png",
-                    1000
+                    "Ida/images/foods/f4.png",
+                    3
                 ),
 
                 (
                     "Boba Tea",
-                    "foods/d4.png",
-                    500
+                    "Ida/images/foods/d4.png",
+                    7
                 ),
 
                 (
                     "Donut",
-                    "foods/f5.png",
-                    1000
+                    "Ida/images/foods/f5.png",
+                    10
                 ),
 
                 (
                     "Lime Milkshake",
-                    "foods/d5.png",
-                    500
+                    "Ida/images/foods/d5.png",
+                    50
                 ),
 
                 (
                     "Pizza",
-                    "foods/f6.png",
-                    1000
+                    "Ida/images/foods/f6.png",
+                    10
                 ),
 
                 (
                     "Root Beer",
-                    "foods/d6.png",
-                    500
+                    "Ida/images/foods/d6.png",
+                    5
                 ),
 
                 (
                     "Ramen",
-                    "foods/f7.png",
-                    1000
+                    "Ida/images/foods/f7.png",
+                    10
                 ),
 
                 (
                     "Coconut",
-                    "foods/d7.png",
-                    500
+                    "Ida/images/foods/d7.png",
+                    5
                 ),
 
                 (
                     "Spaghetti",
-                    "foods/f8.png",
-                    1000
+                    "Ida/images/foods/f8.png",
+                    4
                 ),
 
                 (
                     "Sundae Ice Cream",
-                    "foods/d8.png",
-                    500
+                    "Ida/images/foods/d8.png",
+                    2
                 ),
 
                 (
                     "Pancake",
-                    "foods/f9.png",
-                    1000
+                    "Ida/images/foods/f9.png",
+                    10
                 ),
 
                 (
                     "Magnum",
-                    "foods/d9.png",
+                    "Ida/images/foods/d9.png",
                     500
                 )
 
@@ -1379,39 +1406,39 @@ class AnotherWindow(QDialog):
             items = [
             
                 (
-                    "HIM",
-                    "C1.png",
-                    1000
+                    "Statue Fountain",
+                    "Ida/images/special/sp1.png",
+                    10
                 ),
 
                 (
-                    "Rex",
-                    "C2.png",
-                    500
+                    "THE Flower",
+                    "Ida/images/special/sp2.png",
+                    50
                 ),
 
                 (
-                    "Rose",
-                    "C1.png",
-                    1000
+                    "Meme Poster",
+                    "Ida/images/special/sp3.png",
+                    10
                 ),
 
                 (
-                    "Dex",
-                    "C2.png",
-                    500
+                    "Fountain",
+                    "Ida/images/special/sp4.png",
+                    50
                 ),
 
                 (
-                    "LOL",
-                    "C1.png",
-                    1000
+                    "Special Frame",
+                    "Ida/images/special/sp5.png",
+                    10
                 ),
 
                 (
-                    "LOL",
-                    "C2.png",
-                    500
+                    "Wall-E Friends",
+                    "Ida/images/special/sp6.png",
+                    50
                 )
 
             ]
@@ -1463,10 +1490,415 @@ class AnotherWindow(QDialog):
 
         self.items_area.adjustSize()
 
+class InventoryWindow(QDialog):
+
+    item_selected = pyqtSignal(str, str)
+
+    #SEND SIGNAL TO MAIN WINDOW (MOVE ITEM TO WINDOWS)
+    def __init__(self, parent=None):
+
+        super().__init__(parent)
+
+        self.setWindowTitle( "Inventory"
+        )
+
+        self.setFixedSize(900, 650
+        )
+
+    # =======================================================
+    # MAIN LAYOUT (INVENTORY)
+    # =======================================================
+
+        main_layout = QVBoxLayout()
+
+        main_layout.setContentsMargins(
+            20,
+            20,
+            20,
+            20
+        )
+
+    # TITLE BAR
+
+        title_bar = QFrame()
+
+        title_bar.setFixedHeight(
+            80
+        )
+
+        title_bar.setStyleSheet("""
+            QFrame {
+                background-color: #aed6eb;
+                border-radius: 15px;
+            }
+        """)
+
+        # TITLE CONTENT
+        title = QLabel(
+            "My Inventory"
+        )
+
+        title.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        font_id = QFontDatabase.addApplicationFont(
+            "Cave-Story.ttf"
+        )
+
+        title.setFont(
+            QFont(
+                "Cave Story",
+                60
+            )
+        )
+
+        title_bar_layout = QVBoxLayout()
+
+        title_bar_layout.addWidget(
+            title
+        )
+
+        title_bar.setLayout(
+            title_bar_layout
+        )
+
+
+        main_layout.addWidget(
+            title_bar
+        )
+
+# ITEMS AREA
+
+        self.items_area = QWidget()
+
+        self.items_layout = QGridLayout()
+
+        self.items_layout.setSpacing(
+            20
+        )
+
+        self.items_area.setLayout(
+            self.items_layout
+        )
+
+    # SCROLL AREA
+        scroll_area =QScrollArea()
+
+        scroll_area.setWidgetResizable(
+            True
+        )
+
+        scroll_area.setWidget(
+            self.items_area
+        )
+
+        main_layout.addWidget(
+            scroll_area
+        )
+
+        self.setLayout(
+            main_layout
+        )
+
+    # BOUGHT ITEM POP-UP 
+
+        self.show_inventory()
+
+    def show_inventory(self):
+        # Remove Old Items
+
+        while self.items_layout.count():
+
+            item = self.items_layout.takeAt(0)
+
+            widget = item.widget()
+
+            if widget is not None:
+                widget.deleteLater()
+
+    # ADDED BOUGHT ITEMS
+
+        for index, (name, data) in enumerate(
+            inventory.items()
+        ):
+
+            image = data["image"]
+
+            # ITEM CARD
+
+            item_card = QFrame()
+
+            item_card.setFixedSize(
+                180,
+                200
+            )
+
+        # FOR RESTORE CARD ITEMS
+            item_card.setStyleSheet("""
+                QFrame {
+                    background-color: #F8F6EE;
+                    border: 2px solid black;
+                    border-radius: 15px;
+                }
+            """)
+
+
+            # CARD LAYOUT
+
+            card_layout = QVBoxLayout()
+
+            card_layout.setContentsMargins(
+                8,
+                8,
+                8,
+                8
+            )
+
+            card_layout.setSpacing(
+                5
+            )
+
+
+            # NAME
+
+            name_label = QLabel(
+                name
+            )
+
+            name_label.setAlignment(
+                Qt.AlignmentFlag.AlignCenter
+            )
+
+            name_label.setStyleSheet("""
+                QLabel {
+                    border: none;
+                    background: transparent;
+                    font-family: "Cave Story";
+                    font-size: 22px;
+                    font-weight: bold;
+                }
+            """)
+
+            card_layout.addWidget(
+                name_label
+            )
+
+
+            # PICTURE
+
+            image_button = QPushButton()
+
+            image_button.setFixedSize(
+                150,
+                145
+            )
+
+            image_button.setStyleSheet("""
+                QPushButton {
+                    background-color: transparent;
+                    border: none;
+                }
+
+                QPushButton:hover {
+                    background-color: rgba(170, 220, 243, 80);
+                    border-radius: 10px;
+                }
+            """)
+
+            pixmap = QPixmap(
+                image
+            )
+
+            if not pixmap.isNull():
+
+                pixmap = pixmap.scaled(
+                    120,
+                    120,
+                    Qt.AspectRatioMode.KeepAspectRatio,
+                    Qt.TransformationMode.SmoothTransformation  
+                )
+
+                image_button.setIcon(
+                    QIcon(pixmap)
+                )
+
+                image_button.setIconSize(
+                    QSize(
+                        120,
+                        120
+                    )
+                )
+
+
+            # CLICK IMAGE
+
+            image_button.clicked.connect(
+                lambda checked=False,
+                item_name=name,
+                item_image=image:
+                self.put_in_room(
+                    item_name,
+                    item_image
+                )
+            )
+
+
+            card_layout.addWidget(
+                image_button,
+                alignment=Qt.AlignmentFlag.AlignCenter
+            )
+
+            item_card.setLayout(
+                card_layout
+            )
+
+
+            # ADD TO GRID
+
+            row = index // 4
+
+            column = index % 4
+
+            self.items_layout.addWidget(
+                item_card,
+                row,
+                column
+            )
+
+
+    def put_in_room(self, name, image):
+
+        # Remove from inventory
+        if name in inventory:
+            del inventory[name]
+
+        # Send item to main window
+        self.item_selected.emit(
+            name,
+            image
+        )
+
+        # Refresh inventory
+        self.show_inventory()
+
+        # Close inventory
+        self.close()
+
+# ============================================================
+# ROOM ITEM
+
+class RoomItem(QGraphicsPixmapItem):
+
+    def __init__(self, name, image, main_window):
+        super().__init__()
+
+        self.item_name = name
+        self.image = image
+        self.main_window = main_window
+        pixmap = QPixmap(image)
+
+        if not pixmap.isNull():
+
+            pixmap = pixmap.scaled(
+                160,
+                160,
+                Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation
+            )
+
+            self.setPixmap(pixmap)
+        # Make it Move
+        self.setFlag(
+            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
+            True
+        )
+
+        self.setFlag(
+            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
+            True
+        )
+
+    def wheelEvent(self, event):
+
+
+        if event.delta() > 0:
+
+            new_scale = self.scale() * 1.1
+
+        else:
+
+            new_scale = self.scale() * 0.9
+
+        new_scale = max(
+            0.3,
+            min(new_scale, 3.0)
+        )
+
+        self.setScale(
+            new_scale
+        )
+
+        event.accept()
+
+    # ========================================================
+    # LOCK / UNLOCK
+
+    def lock(self):
+
+        self.locked = True
+
+        self.setFlag(
+            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
+            False
+        )
+
+        self.setFlag(
+            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
+            False
+        )
+
+    # Unlock Items
+    def unlock(self):
+
+        self.locked = False
+
+        self.setFlag(
+            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
+            True
+        )
+
+        self.setFlag(
+            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
+            True
+        )
+
+    def mousePressEvent(self, event):
+
+        if event.button() == Qt.MouseButton.RightButton:
+
+            self.put_back_to_inventory()
+
+            event.accept()
+
+            return
+
+        super().mousePressEvent(event)
+
+    # SENDING ITEM BACK TO INVENTORY
+    def put_back_to_inventory(self):
+
+        self.main_window.return_to_inventory(
+            self.item_name,
+            self.image
+        )
+
+        self.main_window.scene.removeItem(
+            self
+        )
 
 # ============================================================
 # MAIN WINDOW
-# ============================================================
 
 class Window(QDialog):
 
@@ -1477,39 +1909,29 @@ class Window(QDialog):
 
         self.shop_window = None
 
-
         self.setWindowTitle(
             "Lock In Space"
         )
 
-
         self.setWindowIcon(
-            QIcon(
-                "Logos1.png"
-            )
+            QIcon("Ida/images/Icons/officialbg.png")
         )
-
 
         self.setFixedSize(
-            QSize(
-                1100,
-                800
-            )
+            QSize(1100, 800)
         )
-
 
         self.InitWindow()
 
-
     # ========================================================
     # MAIN WINDOW SETUP
-    # ========================================================
+    
 
     def InitWindow(self):
 
         # ====================================================
         # BACKGROUND
-        # ====================================================
+        
 
         self.image = QLabel(
             self
@@ -1517,7 +1939,7 @@ class Window(QDialog):
 
 
         pixmap = QPixmap(
-            "background.png"
+            "Ida/images/background.png"
         )
 
 
@@ -1534,25 +1956,56 @@ class Window(QDialog):
         self.image.setGeometry(
             0,
             0,
-            1100,
+            2000,
             800
         )
 
 
         self.image.lower()
 
+        # ====================================================
+        # ROOM ITEM AREA
+        
+        self.scene = QGraphicsScene(self)
+
+        self.view = QGraphicsView(
+            self.scene,
+            self
+        )
+
+        self.view.setGeometry(
+            0,
+            0,
+            1100,
+            1000
+        )
+
+        self.view.setStyleSheet(
+            "background: transparent; border: none;"
+        )
+
+        self.view.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
+        )
+
+        self.view.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
+        )
+
+        self.view.setFrameShape(
+            QFrame.Shape.NoFrame
+        )
 
         # ====================================================
         # SHOP BUTTON
-        # ====================================================
-
+        
         self.shop_button = QPushButton(
             self
         )
 
-
+        #Position Button(W,H,BO.Size)
         self.shop_button.setGeometry(
-            950,
+            850,
             50,
             100,
             100
@@ -1560,16 +2013,14 @@ class Window(QDialog):
 
 
         self.shop_button.setIcon(
-            QIcon(
-                "Logos2.png"
-            )
+            QIcon("Ida/images/Icons/22.png")
         )
 
-
+        #Size Button
         self.shop_button.setIconSize(
             QSize(
-                80,
-                80
+                200,
+                200
             )
         )
 
@@ -1591,28 +2042,107 @@ class Window(QDialog):
             self.show_shop
         )
 
+    # =============================================
+    # INVENTORY
 
-    # ========================================================
+        self.inventory_button = QPushButton(
+            self
+        )
+        #Position Button(W,H,BO.Size)
+        self.inventory_button.setGeometry(
+            960,
+            50,
+            100,
+            100
+        )
+
+        self.inventory_button.setIcon(
+            QIcon(
+                "Ida/images/Icons/11.png"
+            )
+        )
+        #Size Button
+        self.inventory_button.setIconSize(
+            QSize(
+                200,
+                200
+            )
+        )
+
+        self.inventory_button.setStyleSheet("""
+            QPushButton {
+                background-color: transparent;
+                border: none;
+            }
+
+            QPushButton:hover {
+                background-color: rgba(255, 255, 255, 50);
+                border-radius: 15px;
+            }
+        """)
+
+        self.inventory_button.clicked.connect(
+            self.show_inventory
+        )
+        
+            
+    # =============================================
     # OPEN SHOP
-    # ========================================================
 
     def show_shop(self):
 
         if self.shop_window is None:
-
             self.shop_window = AnotherWindow()
 
-
         self.shop_window.show()
-
         self.shop_window.raise_()
-
         self.shop_window.activateWindow()
 
+    # OPEN INVENTORY
+
+    def show_inventory(self):
+
+        #CALL ITEMS
+        if not hasattr(self, "inventory_window") or self.inventory_window is None:
+
+            self.inventory_window = InventoryWindow(self)
+
+            self.inventory_window.item_selected.connect(
+                self.add_item_to_room
+            )
+
+        self.inventory_window.show_inventory() 
+
+        self.inventory_window.show()
+        self.inventory_window.raise_()
+        self.inventory_window.activateWindow()
+
+    # ADD ITEM TO ROOM
+    def add_item_to_room(self, name, image):
+
+        item = RoomItem(
+            name,
+            image,
+            self
+        )
+
+        item.setPos(
+            400,
+            300
+        )
+
+        self.scene.addItem(
+            item
+        )
+    # RETURN ITEM TO INVENTORY
+    def return_to_inventory(self, name, image):
+
+        inventory[name] = {
+            "image": image
+        }
 
 # ============================================================
 # RUN
-# ============================================================
 
 app = QApplication(
     sys.argv
@@ -1626,6 +2156,11 @@ window.show()
 
 
 sys.exit(
+<<<<<<<< HEAD:main codes.py
+    app.exec()
+)
+========
     app.exec_()
 )
 
+>>>>>>>> main:Ida/images/Lock In Space Design.py

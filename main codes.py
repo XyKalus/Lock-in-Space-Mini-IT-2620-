@@ -1,17 +1,10 @@
 import sys
 import os
+import PyQt6
 
-# <<<<<<<< HEAD:main codes.py
+
 from PyQt6.QtWidgets import (
-========
 
-#BASED_DIR = os.part.dirname(os.path.abspath(__file__))
-
-##def resource_path(path):
-#    return os.path.join(BASED_DIR, path)
-
-from PyQt5.QtWidgets import (
->>>>>>>> main:Ida/images/Lock In Space Design.py
     QApplication,
     QDialog,
     QPushButton,
@@ -45,7 +38,6 @@ from PyQt6.QtGui import (
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
-
 
 
 
@@ -2141,6 +2133,7 @@ class Window(QDialog):
             "image": image
         }
 
+
 # ============================================================
 # RUN
 
@@ -2156,11 +2149,8 @@ window.show()
 
 
 sys.exit(
-<<<<<<<< HEAD:main codes.py
     app.exec()
 )
-========
-    app.exec_()
-)
 
->>>>>>>> main:Ida/images/Lock In Space Design.py
+
+
