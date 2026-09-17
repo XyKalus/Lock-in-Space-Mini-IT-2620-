@@ -18,7 +18,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Set an event date') # title of the window
-        self.setGeometry(600,250,750,500) # (x,y,width,height)
+        self.setGeometry(600,250,400,80) # (x,y,width,height)
         self.setWindowIcon(QIcon("cat.png")) #Window Icon (the thing you see on the top left)
         self.initUI() #initialise the "layout" manager
 
@@ -34,15 +34,16 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         label = QLineEdit() #for my understanding > self means the Window
         label.setPlaceholderText('type your event here')
-        label.setFont(QFont(font_family,60))
+        label.setFont(QFont(font_family,30))
         label.setGeometry(0,0,90,90) #(x,y,width,height)
         label.setStyleSheet("color: black;"
                             "background-color: white;") # this code is only here for testing, will either keep or change
         # label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
 
         self.event_button = QPushButton('Add event', self)
+        USEREVENT = self.event_button
         # self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
-        self.event_button.setFont(QFont(font_family,60))
+        self.event_button.setFont(QFont(font_family,25))
         self.event_button.clicked.connect(self.on_click)
 
     
@@ -55,7 +56,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
     def on_click(self):
         print('event added!')
-        self.event_button.setText('done!')
+        self.event_button.setText(f"{input} added to events!")  #FIGURE OUT HOW THIS WORKS
     
 
    
