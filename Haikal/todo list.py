@@ -32,6 +32,7 @@ from PyQt6.QtWidgets import (
     QLineEdit,
     QLabel,
     QComboBox,
+    QCheckBox
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
@@ -53,30 +54,41 @@ class TodoList(QMainWindow):
 
 
             """BUS LABEL"""
-            # text = QLabel("type your event here", self) #for my understanding > self means the Window
-            # # button.setFont(QFont(font_family,60))
-            # text.setGeometry(0,0,90,90) #(x,y,width,height)
-            # text.setStyleSheet("color: white;"
-            #                     "background-color: black;") # this code is only here for testing, will either keep or change
-            # text.setAlignment(Qt.AlignmentFlag.AlignCenter) # controls the alignment of the label, the | is used to label 2 css properties at once
+            self.text = QLabel("---Tasks---", self) #for my understanding > self means the Window
+            # button.setFont(QFont(font_family,60))
+            # self.text.setFont()
+            self.text.setGeometry(0,0,90,90) #(x,y,width,height)
+            self.text.setStyleSheet("color: white;"
+                                "background-color: black; font-size: 20px;") # this code is only here for testing, will either keep or change
+            self.text.setAlignment(Qt.AlignmentFlag.AlignCenter) # controls the alignment of the label, the | is used to label 2 css properties at once
 
             
             """Button that adds a new task"""
-            self.NewTask = QPushButton('+', self)
+            self.NewTask = QPushButton('click me to add a task!', self)
             self.NewTask.setGeometry (0,0,80,40) #(x,y,width,height)
             # self.event_button.setFont(QFont(font_family,60))
             self.NewTask.clicked.connect(self.on_click)
 
-            """Button that show the list of existing tasks"""
-            self.TaskList = QPushButton('list', self)
-            self.TaskList.setGeometry (0,0,80,40) #(x,y,width,height)
-            # self.event_button.setFont(QFont(font_family,60))
-            self.TaskList.clicked.connect(self.on_click)
+            """drop down menu (previously just a button) that show the list of existing tasks"""
+            # self.TaskList = QPushButton('list', self)
+            # self.TaskList.setGeometry (0,0,80,40) #(x,y,width,height)
+            # # self.event_button.setFont(QFont(font_family,60))
+            # self.TaskList.clicked.connect(self.on_click)
+            self.TaskList= QComboBox()
+    
+            
             
             """Where you type in the task"""
             self.TaskName = QLineEdit()
             self.TaskName.setPlaceholderText('Type in your task')
             # self.layout.addRow("Task name:", self.name_input)
+
+            
+            "Checkbox stuff here"
+            self.checkbox = QCheckBox("test", self)
+            self.checkbox.setGeometry(0, 0, 200, 100)
+            
+
 
             Vlayout = QVBoxLayout()
             Glayout = QGridLayout()
@@ -116,13 +128,15 @@ class TodoList(QMainWindow):
             central_layout.addWidget(self.TaskName)
             central_layout.addWidget(self.NewTask)
             central_layout.addWidget(self.TaskList)
+            central_layout.addWidget(self.text)
+            central_layout.addWidget(self.checkbox)
             # central_layout.addRow(Formlayout)
 
             central_widget.setLayout(central_layout)
 
     def on_click(self):
             print('task added!')
-            self.NewTask.setText('done!')
+            self.NewTask.setText(f"{input} added to list!")
             # TaskAdded = input()
             # tasks.append({"task":TaskAdded, "completed":False})
             # print(f"{TaskAdded} added to the list!")
