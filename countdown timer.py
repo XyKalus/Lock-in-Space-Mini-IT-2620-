@@ -4,9 +4,9 @@ import os
 from datetime import date
 
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QSpinBox, QVBoxLayout, QHBoxLayout
-from PyQt6.QtCore import QTimer, Qt, QRectF,QUrl
+from PyQt6.QtCore import QTimer, Qt, QRectF, QUrl
 from PyQt6.QtGui import QPainter, QColor, QPen, QFont
-from PyQt6.QtMultimedia import QMediaPlayer,QAudioOutput
+from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 
 
 class CircularTimerWidget(QWidget):
@@ -31,7 +31,7 @@ class CircularTimerWidget(QWidget):
         rect = QRectF((width - size) / 2, (height - size) / 2, size, size)
 
         if self.progress >= 0.5:
-            t = ((1.0 -self.progress)/0.5)
+            t = ((1.0 - self.progress) / 0.5)
             r = int(255 * t)
             g = 255
             b = 0
@@ -42,7 +42,7 @@ class CircularTimerWidget(QWidget):
             g = int(255 * t)
             b = 0
 
-        dynamic_color = QColor(r,g,b)
+        dynamic_color = QColor(r, g, b)
 
         pen_bg = QPen(QColor(230, 230, 230), 12)
         painter.setPen(pen_bg)
@@ -56,6 +56,7 @@ class CircularTimerWidget(QWidget):
         painter.setPen(QColor(50, 50, 50))
         painter.setFont(QFont("Comic Sans MS", 26, QFont.Weight.Bold))
         painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, self.display_time)
+
 
 class Timer(QWidget):
     def __init__(self):
@@ -73,15 +74,13 @@ class Timer(QWidget):
         self.start_button = QPushButton("Start", self)
         self.reset_button = QPushButton("Reset", self)
 
-        
         self.audio_output = QAudioOutput(self)
         self.player = QMediaPlayer(self)
 
-        self.player.setAudioOutput(self.audio_output)   
+        self.player.setAudioOutput(self.audio_output)
         audio_file = "alarm.mp3"
-        
-        self.player.setSource( QUrl.fromLocalFile(audio_file))
-        
+
+        self.player.setSource(QUrl.fromLocalFile(audio_file))
 
         self.alarm_playing = False
         self.timer = QTimer(self)
@@ -90,16 +89,16 @@ class Timer(QWidget):
 
     def load_total_time(self):
         if not os.path.exists("study_progress.json"):
-            return{}
-
-        try:
-            with open("study_progress.json","r") as file:
-                return json.load(file)
-
-        except (json.JSONDecodeError,IOError):
             return {}
 
-    def save_total_time(self,seconds):
+        try:
+            with open("study_progress.json", "r") as file:
+                return json.load(file)
+
+        except (json.JSONDecodeError, IOError):
+            return {}
+
+    def save_total_time(self, seconds):
         if seconds <= 0:
             return
 
@@ -113,17 +112,16 @@ class Timer(QWidget):
         total_time[today] += seconds
 
         try:
-            with open("study_progress.json","w") as file:
-                json.dump(total_time,file,indent=4)
+            with open("study_progress.json", "w") as file:
+                json.dump(total_time, file, indent=4)
 
         except IOError as error:
-            print( "Could not save usage:",error)
-
+            print("Could not save usage:", error)
 
     def initUI(self):
         self.setWindowTitle("CountDown Timer")
         self.hoursSpinBox.setRange(0, 24)
-        self.minutesSpinBox.setRange(0, 60)
+        self.minutesSpinBox.setRange(0, 59)
 
         hbox = QHBoxLayout()
         hbox.addWidget(self.hoursLabel)
@@ -143,12 +141,11 @@ class Timer(QWidget):
             QSpinBox{
                 font-weight: bold;
                 font-family: Arial;
-                font-size: 40px;
+                font-size: 30px;
             }
             QLabel{
                 font-weight: bold;
                 font-size: 50px;
-                font-family: Arial;
             }
             QPushButton{
                 font-weight: bold;
@@ -161,58 +158,66 @@ class Timer(QWidget):
         self.start_button.clicked.connect(self.start_timer)
         self.reset_button.clicked.connect(self.reset)
         self.timer.timeout.connect(self.countdown)
-        self.minutesSpinBox.valueChanged.connect(self.set_minutes)
-        self.set_minutes(self.minutesSpinBox.value())
+
+        self.hoursSpinBox.valueChanged.connect(self.set_time)
+        self.minutesSpinBox.valueChanged.connect(self.set_time)
+        self.set_time()
 
     def start_timer(self):
         if self.alarm_playing:
             self.player.stop()
             self.alarm_playing = False
             self.start_button.setText("Start")
+            self.reset_button.setEnabled(True)
 
             return
 
         if self.timer.isActive():
             self.timer.stop()
-            self.used_seconds = 0
             self.start_button.setText("Start")
 
             return
-        
+
         if self.remaining_seconds > 0:
             self.timer.start(1000)
-            self.start_button.setText("Stop")
+            self.start_button.setText("Pause")
 
-    def set_minutes(self, minutes):
+    def set_time(self):
+        """Combine hours + minutes spin boxes into remaining_seconds.
+        Runs whenever either spin box changes, and once at startup."""
         if not self.timer.isActive():
-            self.remaining_seconds = minutes * 60
+            hours = self.hoursSpinBox.value()
+            minutes = self.minutesSpinBox.value()
+            self.remaining_seconds = hours * 3600 + minutes * 60
             self.total_seconds = self.remaining_seconds
-            self.used_seconds = 0
             self.player.stop()
             self.alarm_playing = False
             self.start_button.setText("Start")
             self.update_display()
 
     def reset(self):
+        if self.alarm_playing:
+            return
+
         self.timer.stop()
         self.start_button.setText("Start")
+        hours = self.hoursSpinBox.value()
         minutes = self.minutesSpinBox.value()
-        self.remaining_seconds = minutes * 60
+        self.remaining_seconds = hours * 3600 + minutes * 60
         self.total_seconds = self.remaining_seconds
-        self.used_seconds = 0
         self.update_display()
 
     def countdown(self):
         if self.remaining_seconds > 0:
             self.remaining_seconds -= 1
-            self.used_seconds += 1
             self.save_total_time(1)
 
         self.update_display()
         if self.remaining_seconds == 0:
             self.timer.stop()
             self.play_audio()
-            self.start_button.setText("Stop")
+            self.start_button.setText("Stop Alarm")
+            self.reset_button.setEnabled(False)
 
     def play_audio(self):
         if not self.alarm_playing:
@@ -226,13 +231,14 @@ class Timer(QWidget):
         text = f"{hours:02}:{minutes:02}:{seconds:02}"
 
         if self.total_seconds > 0:
-            progress = (self.remaining_seconds/ self.total_seconds)
+            progress = (self.remaining_seconds / self.total_seconds)
 
         else:
             progress = 0
 
-        progress = max(0.0,min(1.0, progress))
+        progress = max(0.0, min(1.0, progress))
         self.circle_timer.set_data(progress, text)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
