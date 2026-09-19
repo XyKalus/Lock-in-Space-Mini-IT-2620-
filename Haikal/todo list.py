@@ -74,7 +74,7 @@ class TodoList(QMainWindow):
             # self.TaskList.setGeometry (0,0,80,40) #(x,y,width,height)
             # # self.event_button.setFont(QFont(font_family,60))
             # self.TaskList.clicked.connect(self.on_click)
-            self.TaskList= QComboBox()
+            self.ListOfTasks= QComboBox()
     
             
             
@@ -85,8 +85,14 @@ class TodoList(QMainWindow):
 
             
             "Checkbox stuff here"
-            self.checkbox = QCheckBox("test", self)
-            self.checkbox.setGeometry(0, 0, 200, 100)
+            self.TaskList = QListWidget()
+            self.TaskList.addItem('tester')
+
+            item = QListWidgetItem()
+            self.item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+            self.item.setCheckState(Qt.CheckState.Unchecked)
+            self.list_widget.addItem(item)
+            
             
 
 
@@ -101,6 +107,7 @@ class TodoList(QMainWindow):
 
             Formlayout.addWidget(self.TaskName) 
             Formlayout.addWidget(self.NewTask)
+            Formlayout.addWidget(self.TaskList)
             # Hlayout.addWidget(self.TaskList)
 
 
@@ -127,9 +134,9 @@ class TodoList(QMainWindow):
             # central_layout.addLayout(Vlayout)
             central_layout.addWidget(self.TaskName)
             central_layout.addWidget(self.NewTask)
-            central_layout.addWidget(self.TaskList)
+            central_layout.addWidget(self.ListOfTasks)
             central_layout.addWidget(self.text)
-            central_layout.addWidget(self.checkbox)
+            central_layout.addWidget(self.TaskList)
             # central_layout.addRow(Formlayout)
 
             central_widget.setLayout(central_layout)
