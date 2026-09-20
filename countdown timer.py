@@ -3,7 +3,7 @@ import os
 
 from PyQt6.QtWidgets import QApplication,QWidget,QLabel,QPushButton,QSpinBox,QVBoxLayout,QHBoxLayout,QLineEdit
 from PyQt6.QtCore import QTimer,Qt,QRectF,QUrl
-from PyQt6.QtGui import QPainter,QColor,QPen,QFont
+from PyQt6.QtGui import QPainter,QColor,QPen,QFont,QFontDatabase
 from PyQt6.QtMultimedia import QMediaPlayer,QAudioOutput
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -67,6 +67,7 @@ class CountdownTimer(QWidget):
 
         self.timer_running = False
         self.alarm_playing = False
+        self.timer_finished = False
 
         self.timer = QTimer(self)
 
@@ -89,8 +90,11 @@ class CountdownTimer(QWidget):
     def setup_ui(self):
         main_layout = QVBoxLayout(self)
         main_layout.setSpacing(20)
-         
+
+       
+        
         name_label = QLabel("Timer Name : ")
+        
 
         name_label.setObjectName("fieldLabel")
         main_layout.addWidget(name_label)
@@ -169,7 +173,7 @@ class CountdownTimer(QWidget):
 
         # Connections
         self.start_button.clicked.connect(self.start_stop)
-        self.reset_button.clicked.connect(  self.reset)
+        self.reset_button.clicked.connect(self.reset)
         self.hours_spin.valueChanged.connect(self.set_time)
         self.minutes_spin.valueChanged.connect( self.set_time)
         self.seconds_spin.valueChanged.connect(self.set_time)
@@ -181,22 +185,23 @@ class CountdownTimer(QWidget):
             QWidget {
                 background: #181818;
                 color: #F5F5F5;
-                font-family: Arial;
+                
+        
             }
 
             #title {
-                font-size: 30px;
+                
                 font-weight: bold;
                 margin-bottom: 5px;
             }
 
             #fieldLabel {
-                font-size: 15px;
+                font-size: 30px;
                 font-weight: bold;
             }
 
             #timerName {
-                font-size: 24px;
+                font-size: 30px;
                 font-weight: bold;
                 margin-top: 5px;
             }
@@ -206,7 +211,7 @@ class CountdownTimer(QWidget):
                 border: 1px solid #404040;
                 border-radius: 8px;
                 padding: 10px;
-                font-size: 18px;
+                font-size: 30px;
                 font-weight: bold;
             }
 
@@ -291,24 +296,25 @@ class CountdownTimer(QWidget):
     def start_stop(self):
         if self.alarm_playing:
             self.stop_alarm()
+            return
 
+        if self.timer_finished:
             return
 
         if self.timer_running:
             self.timer.stop()
             self.timer_running = False
             self.start_button.setText("Start")
-    
             return
-        
+
         if self.remaining_seconds <= 0:
             self.set_time()
             if self.remaining_seconds <= 0:
                 return
-            
+
         self.timer.start()
         self.timer_running = True
-        self.start_button.setText( "Pause")
+        self.start_button.setText("Pause")
 
     def countdown(self):
         if self.remaining_seconds > 0:
@@ -318,14 +324,15 @@ class CountdownTimer(QWidget):
         if self.remaining_seconds <= 0:
             self.timer.stop()
             self.timer_running = False
+            self.timer_finished = True
             self.start_alarm()
 
     def start_alarm(self):
         self.alarm_playing = True
         self.start_button.setText("Stop Alarm")
-        self.reset_button.setEnabled( False)
+        self.reset_button.setEnabled(False)
       
-        if os.path.exists( ALARM_FILE   ):
+        if os.path.exists(ALARM_FILE):
             self.player.setPosition(0)
             self.player.play()
 
@@ -341,6 +348,7 @@ class CountdownTimer(QWidget):
 
         self.timer.stop()
         self.timer_running = False
+        self.timer_finished = False
         self.remaining_seconds = (self.total_seconds)
         self.start_button.setText("Start")
         self.reset_button.setEnabled(True)
@@ -352,6 +360,13 @@ class CountdownTimer(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+
+    font_id = QFontDatabase.addApplicationFont(os.path.join(BASE_DIR, "Cave-Story.ttf"))
+
+    if font_id != -1:
+        font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+        app.setFont(QFont(font_family,50))
+
     window = CountdownTimer()
     window.show()
     sys.exit(app.exec())

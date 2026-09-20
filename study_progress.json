@@ -1,5 +1,50 @@
-{
-    "2026-09-09": 151,
-    "2026-09-12": 60,
-    "2026-09-13": 300
-}
+[
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    }
+]
