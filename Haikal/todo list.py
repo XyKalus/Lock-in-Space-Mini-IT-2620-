@@ -88,12 +88,17 @@ class TodoList(QMainWindow):
             self.TaskList = QListWidget()
             self.TaskList.addItem('tester')
 
+            item = QListWidgetItem("Buy groceries")
+            self.TaskList.addItem(item)
             item = QListWidgetItem()
-            self.item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
-            self.item.setCheckState(Qt.CheckState.Unchecked)
-            self.list_widget.addItem(item)
             
-            
+            """Clear button here"""
+            self.ClearTask = QPushButton('Mark all as complete', self)
+            self.ClearTask.setGeometry (0,0,40,40) #
+
+            """Delete Task"""
+            self.DeleteTask = QPushButton('Delete task', self)
+            self.DeleteTask.setGeometry(0,0,40,40)
 
 
             Vlayout = QVBoxLayout()
@@ -137,6 +142,8 @@ class TodoList(QMainWindow):
             central_layout.addWidget(self.ListOfTasks)
             central_layout.addWidget(self.text)
             central_layout.addWidget(self.TaskList)
+            central_layout.addWidget(self.DeleteTask)
+            central_layout.addWidget(self.ClearTask)
             # central_layout.addRow(Formlayout)
 
             central_widget.setLayout(central_layout)
