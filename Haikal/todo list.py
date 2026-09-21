@@ -9,7 +9,10 @@ Basic features :
 - list of completed and uncompleted tasks
  """
 
-"""Saving should be in JSON, should I use lists to store the tasks?"""
+""" Videos I owe my code to 
+saving JSON : https://www.youtube.com/watch?v=4rmBOxn0PdI
+
+"""
 
 import shutil
 import json
@@ -88,17 +91,15 @@ class TodoList(QMainWindow):
             self.TaskList = QListWidget()
             self.TaskList.addItem('tester')
             with open('todolisttest.json','r') as file:
-                    todolisttest = json.load(file)
-                    for task in todolisttest:
-                        print([tasks])
-
-            item = QListWidgetItem(task)
-            self.TaskList.addItem(item)
-            item = QListWidgetItem()
+                    todo = json.load(file)
+                    for Tasks in todo["Tasks"]:
+                        taskfunction = Tasks.get("task")
+                        print(taskfunction)
+                        self.TaskList.addItem(taskfunction)
             
             """Clear button here"""
             self.ClearTask = QPushButton('Mark all as complete', self)
-            self.ClearTask.setGeometry (0,0,40,40) #
+            self.ClearTask.setGeometry (0,0,40,40)
 
             """Delete Task"""
             self.DeleteTask = QPushButton('Delete task', self)
@@ -158,7 +159,12 @@ class TodoList(QMainWindow):
             # TaskAdded = input()
             # tasks.append({"task":TaskAdded, "completed":False})
             # print(f"{TaskAdded} added to the list!")
+    
+    # def on_click_clear(self):
+        #   with open()
 
+
+          
 def main():
     app = QApplication(sys.argv)
     window = TodoList()
