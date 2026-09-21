@@ -15,7 +15,6 @@ saving JSON : https://www.youtube.com/watch?v=4rmBOxn0PdI
 """
 
 import shutil
-import json
 
 import sys
 import json
@@ -91,15 +90,16 @@ class TodoList(QMainWindow):
             self.TaskList = QListWidget()
             self.TaskList.addItem('tester')
             with open('todolisttest.json','r') as file:
-                    todo = json.load(file)
-                    for Tasks in todo["Tasks"]:
+                todo = json.load(file)
+                for Tasks in todo["Tasks"]:
                         taskfunction = Tasks.get("task")
-                        print(taskfunction)
+                        # print(taskfunction) #used for trouble-shooting 
                         self.TaskList.addItem(taskfunction)
             
             """Clear button here"""
             self.ClearTask = QPushButton('Mark all as complete', self)
             self.ClearTask.setGeometry (0,0,40,40)
+            self.ClearTask.clicked.connect(self.on_click_clear)
 
             """Delete Task"""
             self.DeleteTask = QPushButton('Delete task', self)
@@ -160,8 +160,14 @@ class TodoList(QMainWindow):
             # tasks.append({"task":TaskAdded, "completed":False})
             # print(f"{TaskAdded} added to the list!")
     
-    # def on_click_clear(self):
-        #   with open()
+    def on_click_clear(self):
+          data = {
+          }
+          self.TaskList.clear()
+          # WORKS AS INTENDED, BUT THE WHOLE APP CRASHES, I HAVE TO FIGURE OUT HOW TO FIX IT
+        #   with open('todolisttest.json','w') as file:
+        #     todo = json.load(file)
+           
 
 
           
