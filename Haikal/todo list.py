@@ -75,8 +75,8 @@ class TodoList(QMainWindow):
             # # self.event_button.setFont(QFont(font_family,60))
             # self.TaskList.clicked.connect(self.on_click)
             self.ListOfTasks= QComboBox()
-    
             
+             
             
             """Where you type in the task"""
             self.TaskName = QLineEdit()
@@ -87,8 +87,12 @@ class TodoList(QMainWindow):
             "Checkbox stuff here"
             self.TaskList = QListWidget()
             self.TaskList.addItem('tester')
+            with open('todolisttest.json','r') as file:
+                    todolisttest = json.load(file)
+                    for task in todolisttest:
+                        print([tasks])
 
-            item = QListWidgetItem("Buy groceries")
+            item = QListWidgetItem(task)
             self.TaskList.addItem(item)
             item = QListWidgetItem()
             
