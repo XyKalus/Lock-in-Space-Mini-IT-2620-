@@ -1,17 +1,10 @@
 import sys
 import os
+import PyQt6
 
-<<<<<<<< HEAD:main codes.py
+
 from PyQt6.QtWidgets import (
-========
 
-#BASED_DIR = os.part.dirname(os.path.abspath(__file__))
-
-##def resource_path(path):
-#    return os.path.join(BASED_DIR, path)
-
-from PyQt5.QtWidgets import (
->>>>>>>> main:Ida/images/Lock In Space Design.py
     QApplication,
     QDialog,
     QPushButton,
@@ -48,7 +41,6 @@ os.chdir(BASE_DIR)
 
 
 
-
 # ============================================================
 # INVENTORY
 # ============================================================
@@ -61,7 +53,7 @@ coins = 2000
 # SHOP WINDOW
 # ============================================================
 
-class AnotherWindow(QDialog):
+class ShoppingCart(QDialog):
 
     def __init__(self):
         super().__init__()
@@ -457,14 +449,14 @@ class AnotherWindow(QDialog):
         category_bar = QFrame()
 
         category_bar.setFixedWidth(
-            90
+            1000
         )
 
 
         category_bar.setStyleSheet("""
             QFrame {
                 background-color: #426a80;
-                border-radius: 20px;
+                border-radius: 50px;
             }
         """)
 
@@ -472,14 +464,14 @@ class AnotherWindow(QDialog):
         category_layout = QVBoxLayout()
 
         category_layout.setContentsMargins(
+            40,
             12,
             12,
-            12,
-            12
+            40
         )
 
         category_layout.setSpacing(
-            12
+            100
         )
 
 
@@ -2092,7 +2084,7 @@ class Window(QDialog):
     def show_shop(self):
 
         if self.shop_window is None:
-            self.shop_window = AnotherWindow()
+            self.shop_window = ShoppingCart()
 
         self.shop_window.show()
         self.shop_window.raise_()
@@ -2141,6 +2133,7 @@ class Window(QDialog):
             "image": image
         }
 
+
 # ============================================================
 # RUN
 
@@ -2156,11 +2149,8 @@ window.show()
 
 
 sys.exit(
-<<<<<<<< HEAD:main codes.py
     app.exec()
 )
-========
-    app.exec_()
-)
 
->>>>>>>> main:Ida/images/Lock In Space Design.py
+
+
