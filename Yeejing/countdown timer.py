@@ -15,7 +15,7 @@ class CircularTimerWidget(QWidget):
 
         self.progress = 1.0
         self.display_time = "00:00:00"
-        self.setMinimumSize(250,250)
+        self.setFixedSize(400, 400)
 
     def set_data(self,progress,text):
         self.progress = max(0.0,min(1.0, progress))
@@ -93,9 +93,8 @@ class CountdownTimer(QWidget):
         main_layout = QVBoxLayout(self)
         main_layout.setSpacing(20)
 
-       
-        
         name_label = QLabel("Timer Name : ")
+       
         
 
         name_label.setObjectName("fieldLabel")
@@ -158,7 +157,8 @@ class CountdownTimer(QWidget):
 
         # Circular timer
         self.circle_timer = CircularTimerWidget( self)
-        main_layout.addWidget(self.circle_timer,1)
+        self.circle_timer.setFixedSize(300, 300)
+        main_layout.addWidget(self.circle_timer,0, Qt.AlignmentFlag.AlignCenter)
 
         # Buttons
         button_layout = QHBoxLayout()
@@ -182,30 +182,18 @@ class CountdownTimer(QWidget):
         self.name_input.textChanged.connect(self.update_name)
 
         # Style
+       
+
         self.setStyleSheet(
             """
             QWidget {
                 background: #181818;
                 color: #F5F5F5;
                 
-        
             }
-
-            #title {
-                
-                font-weight: bold;
-                margin-bottom: 5px;
-            }
-
             #fieldLabel {
-                font-size: 30px;
+                font-size: 40px;
                 font-weight: bold;
-            }
-
-            #timerName {
-                font-size: 30px;
-                font-weight: bold;
-                margin-top: 5px;
             }
 
             QLineEdit {
@@ -225,33 +213,26 @@ class CountdownTimer(QWidget):
                 background: #252525;
                 border: 1px solid #404040;
                 border-radius: 8px;
-                padding: 15px;
+                padding: 20px;
                 font-size: 20px;
-                font-weight: bold;
-                min-width: 110px;
-            }
-
-            QSpinBox:focus {
-                border: 1px solid #777777;
-            }
-
-            QPushButton {
-                min-width: 150px;
-                padding: 14px;
-                border-radius: 8px;
-                font-size: 17px;
-                font-weight: bold;
             }
 
             #startButton {
-                background: #3A3A3A;
-            }
-
-            #resetButton {
+                font-size :30px;
+                padding: 15px;
                 background: #292929;
             }
 
-            #startButton:hover,
+            #resetButton {
+                font-size :30px;
+                padding: 15px;
+                background: #292929;
+            }
+
+            #startButton:hover {
+                background: #4A4A4A;
+            }
+
             #resetButton:hover {
                 background: #4A4A4A;
             }
@@ -275,7 +256,7 @@ class CountdownTimer(QWidget):
         hours = self.hours_spin.value()
         minutes = self.minutes_spin.value()
         seconds = self.seconds_spin.value()
-        self.total_seconds = ( hours * 3600+ minutes * 60+ seconds)
+        self.total_seconds = ( hours * 3600 + minutes * 60+ seconds)
         self.remaining_seconds = ( self.total_seconds)
         self.update_display()
 
@@ -367,7 +348,7 @@ if __name__ == "__main__":
 
     if font_id != -1:
         font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
-        app.setFont(QFont(font_family,50))
+        app.setFont(QFont(font_family,30))
 
     window = CountdownTimer()
     window.show()
