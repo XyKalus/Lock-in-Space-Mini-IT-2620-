@@ -14,6 +14,10 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLay
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt #Qt is used for alignment
 
+import json
+import pathlib
+from pathlib import Path
+
 class Events(QMainWindow): #self in the entire function refers to the "MainWindow" class (adding this here as a reminder to myself)
     def __init__(self):
         super().__init__()
@@ -57,6 +61,25 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
     def on_click(self):
         print('event added!')
         self.event_button.setText(f"{input} added to events!")  #FIGURE OUT HOW THIS WORKS
+        event_folder_checker = Path.cwd()/"events"
+        if (event_folder_checker.exists()): #check if the folder named "todolists" exist
+# print('this file exists') << old code, used and being kept for trouble shooting
+            pass
+        else : 
+            os.mkdir('events')
+            todo = Path.cwd()/"events"
+
+            json_file = todo/"My events.json" #PATHLIB : finds (or the intended use for this, create) a file with the name
+            todo_files = todo.iterdir() #PATHLIB : views the files in the directory
+            empty_chker = not any(todo_files) #PATHLIB : checks if the directory has any files
+
+            if empty_chker :
+                    json_file.write_text(json.dumps([]), encoding="utf-8")
+                    print("File created using pathlib!") #Thank you Gemini for the help lol
+            else :
+                    print('has files')
+                    pass
+            
     
 
    
