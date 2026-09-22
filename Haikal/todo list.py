@@ -165,7 +165,7 @@ class TodoList(QMainWindow):
             # tasks.append({"task":TaskAdded, "completed":False})
             # print(f"{TaskAdded} added to the list!")
             todolist_checker = Path.cwd()/"todolists"
-            if (todolist_checker.exists()):
+            if (todolist_checker.exists()): #check if the folder named "todolists" exist
     # print('this file exists') << old code, used and being kept for trouble shooting
                 pass
             else : 
