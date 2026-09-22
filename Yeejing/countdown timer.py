@@ -2,7 +2,7 @@ import sys
 import os
 
 from PyQt6.QtWidgets import QApplication,QWidget,QLabel,QPushButton,QSpinBox,QVBoxLayout,QHBoxLayout,QLineEdit
-from PyQt6.QtCore import QTimer,Qt,QRectF,QUrl
+from PyQt6.QtCore import QTimer,Qt,QRectF,QUrl,QSize
 from PyQt6.QtGui import QPainter,QColor,QPen,QFont,QFontDatabase
 from PyQt6.QtMultimedia import QMediaPlayer,QAudioOutput
 
@@ -61,6 +61,8 @@ class CircularTimerWidget(QWidget):
 class CountdownTimer(QWidget):
     def __init__(self):
         super().__init__()
+        self.setFixedSize(QSize(1100,800))
+        self.setGeometry(250,25,1100,800)
 
         self.total_seconds = 0
         self.remaining_seconds = 0
