@@ -74,7 +74,7 @@ class TodoList(QMainWindow):
             # self.TaskList.setGeometry (0,0,80,40) #(x,y,width,height)
             # # self.event_button.setFont(QFont(font_family,60))
             # self.TaskList.clicked.connect(self.on_click)
-            self.TaskList= QComboBox()
+            self.ListOfTasks= QComboBox()
     
             
             
@@ -85,9 +85,20 @@ class TodoList(QMainWindow):
 
             
             "Checkbox stuff here"
-            self.checkbox = QCheckBox("test", self)
-            self.checkbox.setGeometry(0, 0, 200, 100)
+            self.TaskList = QListWidget()
+            self.TaskList.addItem('tester')
+
+            item = QListWidgetItem("Buy groceries")
+            self.TaskList.addItem(item)
+            item = QListWidgetItem()
             
+            """Clear button here"""
+            self.ClearTask = QPushButton('Mark all as complete', self)
+            self.ClearTask.setGeometry (0,0,40,40) #
+
+            """Delete Task"""
+            self.DeleteTask = QPushButton('Delete task', self)
+            self.DeleteTask.setGeometry(0,0,40,40)
 
 
             Vlayout = QVBoxLayout()
@@ -101,6 +112,7 @@ class TodoList(QMainWindow):
 
             Formlayout.addWidget(self.TaskName) 
             Formlayout.addWidget(self.NewTask)
+            Formlayout.addWidget(self.TaskList)
             # Hlayout.addWidget(self.TaskList)
 
 
@@ -127,9 +139,11 @@ class TodoList(QMainWindow):
             # central_layout.addLayout(Vlayout)
             central_layout.addWidget(self.TaskName)
             central_layout.addWidget(self.NewTask)
-            central_layout.addWidget(self.TaskList)
+            central_layout.addWidget(self.ListOfTasks)
             central_layout.addWidget(self.text)
-            central_layout.addWidget(self.checkbox)
+            central_layout.addWidget(self.TaskList)
+            central_layout.addWidget(self.DeleteTask)
+            central_layout.addWidget(self.ClearTask)
             # central_layout.addRow(Formlayout)
 
             central_widget.setLayout(central_layout)
