@@ -11,7 +11,7 @@ inventory = {}
 
 class InventoryWindow(QWidget):
 
-    item_selected = pyqtSignal(str, str)
+    item_selected = pyqtSignal(str, str, str)
 
 
     #SEND SIGNAL TO MAIN WINDOW (MOVE ITEM TO WINDOWS)
@@ -491,17 +491,24 @@ class InventoryWindow(QWidget):
 
     def put_in_room(self, name, image):
 
-        # Remove from inventory
         if name in inventory:
+
+            category = inventory[name].get(
+                "category",
+                ""
+            )
+
             del inventory[name]
 
-        # Send item to main window
+        else:
+            category = ""
+
         self.item_selected.emit(
+            category,
             name,
             image
         )
 
-        # Refresh inventory
         self.show_inventory()
 
         
@@ -624,29 +631,3 @@ class RoomItem(QGraphicsPixmapItem):
         self.main_window.scene.removeItem(
             self
         )
-
-# ============================================================
-# MAIN WINDOW
-
-class Window(QDialog):
-
-    def __init__(self):
-
-        super().__init__()
-
-
-        self.shop_window = None
-
-        self.setWindowTitle(
-            "Lock In Space"
-        )
-
-        self.setWindowIcon(
-            QIcon("Ida/images/Icons/officialbg.png")
-        )
-
-        self.setFixedSize(
-            QSize(1100, 800)
-        )
-
-        self.InitWindow()
