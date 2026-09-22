@@ -1,11 +1,14 @@
 import sys
+import os
 from datetime import date, timedelta
 
 from PyQt6.QtWidgets import QApplication,QWidget,QLabel,QVBoxLayout,QHBoxLayout,QFrame,QPushButton,QStackedWidget,QSizePolicy
 from PyQt6.QtCore import Qt, QRectF
-from PyQt6.QtGui import QPainter, QColor, QPen, QFont
+from PyQt6.QtGui import QPainter, QColor, QPen, QFont,QFontDatabase
 
 from history_page import HistoryPage
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class BarChart(QWidget):
     def __init__(self):
@@ -98,12 +101,6 @@ class BarChart(QWidget):
             Qt.PenStyle.DashLine
         )
 
-        painter.setFont(
-            QFont(
-                "Arial",
-                9
-            )
-        )
 
         for i in range(grid_count + 1):
             value = chart_max * i / grid_count
@@ -160,13 +157,6 @@ class BarChart(QWidget):
                 QColor(50, 60, 75)
             )
 
-            painter.setFont(
-                QFont(
-                    "Arial",
-                    9,
-                    QFont.Weight.Bold
-                )
-            )
 
             if minutes >= 60:
                 hours = int(minutes // 60)
@@ -189,23 +179,7 @@ class BarChart(QWidget):
                 QColor(80, 90, 105)
             )
 
-            painter.setFont(
-                QFont(
-                    "Arial",
-                    9,
-                    QFont.Weight.Bold
-                )
-            )
-
             painter.drawText(QRectF(x - 15, top + chart_height + 10,bar_width + 30,18),Qt.AlignmentFlag.AlignCenter,day_name)
-          
-            painter.setFont(
-                QFont(
-                    "Arial",
-                    8
-                )
-            )
-
             painter.drawText(QRectF(x - 20, top + chart_height + 30,bar_width + 40,18),Qt.AlignmentFlag.AlignCenter,date_text)
            
         painter.end()
@@ -218,7 +192,8 @@ class StudyStatistics(QWidget):
         self.setWindowTitle("Study Statistics")
 
         # Fixed size
-        self.setFixedSize(900, 650)
+        self.setFixedSize(1100, 800)
+        self.setGeometry(250,25,1100,800)
 
         self.setup_ui()
 
@@ -242,7 +217,8 @@ class StudyStatistics(QWidget):
         main_layout.setSpacing(12)
 
         # TITLE
-        title = QLabel("Study Statastics")
+        title = QLabel("Study Statistics")
+        title.setFont(QFont(font_family, 40))
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(title)
 
@@ -279,7 +255,7 @@ class StudyStatistics(QWidget):
                         color :black;
                         border-radius: 10px;
                         padding: 15px;
-                        font-size: 16px;
+                        
                     }
                 """)
         
@@ -292,7 +268,7 @@ class StudyStatistics(QWidget):
                 color :black;
                 border-radius: 10px;
                 padding: 15px;
-                font-size: 16px;
+                
             }
         """)
 
@@ -360,13 +336,6 @@ class StudyStatistics(QWidget):
 
         chart_title = QLabel("Study Time")
 
-        chart_title.setFont(
-            QFont(
-                "Arial",
-                16,
-                QFont.Weight.Bold
-            )
-        )
 
         chart_title.setStyleSheet("""
             color: #333333;
@@ -402,6 +371,13 @@ class StudyStatistics(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+
+    font_id = QFontDatabase.addApplicationFont(os.path.join(BASE_DIR, "Cave-Story.ttf"))
+    
+    if font_id != -1:
+        font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+        app.setFont(QFont(font_family,20))
+    
     window = StudyStatistics()
     window.show()
     sys.exit(app.exec())
