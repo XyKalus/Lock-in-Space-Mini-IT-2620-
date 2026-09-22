@@ -17,6 +17,9 @@ saving JSON : https://www.youtube.com/watch?v=4rmBOxn0PdI
 import shutil
 
 import sys
+import os
+import pathlib
+from pathlib import Path
 import json
 
 from PyQt6.QtWidgets import (
@@ -40,6 +43,8 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 
 tasks = []
+
+
 
 # app = QApplication([])
 
@@ -69,7 +74,7 @@ class TodoList(QMainWindow):
             self.NewTask = QPushButton('click me to add a task!', self)
             self.NewTask.setGeometry (0,0,80,40) #(x,y,width,height)
             # self.event_button.setFont(QFont(font_family,60))
-            self.NewTask.clicked.connect(self.on_click)
+            self.NewTask.clicked.connect(self.on_click_add)
 
             """drop down menu (previously just a button) that show the list of existing tasks"""
             # self.TaskList = QPushButton('list', self)
@@ -153,12 +158,33 @@ class TodoList(QMainWindow):
 
             central_widget.setLayout(central_layout)
 
-    def on_click(self):
+    def on_click_add(self):
             print('task added!')
             self.NewTask.setText(f"{input} added to list!")
             # TaskAdded = input()
             # tasks.append({"task":TaskAdded, "completed":False})
             # print(f"{TaskAdded} added to the list!")
+            todolist_checker = Path.cwd()/"todolists"
+            if (todolist_checker.exists()):
+    # print('this file exists') << old code, used and being kept for trouble shooting
+                pass
+            else : 
+                os.mkdir('todolists')
+                todo = Path.cwd()/"todolists"
+
+                json_file = todo/"My ToDo list.json" #PATHLIB : finds (or the intended use for this, create) a file with the name
+                todo_files = todo.iterdir() #PATHLIB : views the files in the directory
+                empty_chker = not any(todo_files) #PATHLIB : checks if the directory has any files
+
+                if empty_chker :
+                        json_file.write_text(json.dumps([]), encoding="utf-8")
+                        print("File created using pathlib!") #Thank you Gemini for the help lol
+                else :
+                        print('has files')
+                        pass
+
+
+
     
     def on_click_clear(self):
           data = {
