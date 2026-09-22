@@ -5,6 +5,12 @@ from PyQt6.QtWidgets import QApplication,QWidget,QLabel,QPushButton,QSpinBox,QVB
 from PyQt6.QtCore import QTimer,Qt,QRectF,QUrl
 from PyQt6.QtGui import QPainter,QColor,QPen,QFont,QFontDatabase
 from PyQt6.QtMultimedia import QMediaPlayer,QAudioOutput
+<<<<<<< HEAD
+=======
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ALARM_FILE = os.path.join(BASE_DIR,"alarm.mp3")
+>>>>>>> 3755ecb8c016709cbb6809a51832e3a583ff5ed9
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ALARM_FILE = os.path.join(BASE_DIR,"alarm.mp3")
@@ -63,9 +69,12 @@ class CountdownTimer(QWidget):
     def __init__(self):
         super().__init__()
 
+<<<<<<< HEAD
         self.setWindowTitle("Timer")
         self.resize(900, 650) 
 
+=======
+>>>>>>> 3755ecb8c016709cbb6809a51832e3a583ff5ed9
         self.total_seconds = 0
         self.remaining_seconds = 0
 
