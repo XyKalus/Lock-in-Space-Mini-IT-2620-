@@ -70,6 +70,7 @@ else :
 
 class TodoList(QMainWindow):
         def __init__(self):
+            print('initUI called')
             super().__init__()
             self.setWindowTitle('To-do list') # title of the window
             self.setGeometry(600,250,300,500) # (x,y,width,height)
@@ -139,7 +140,9 @@ class TodoList(QMainWindow):
             self.TaskName.setPlaceholderText('Type in your task')
             # self.layout.addRow("Task name:", self.name_input)
 
-            
+            "Complete Task"
+            self.CompleteTask = QPushButton('Complete Task', self)
+            self.CompleteTask.setGeometry(0,0,20,40)
             
             
             """Clear button here"""
@@ -149,7 +152,7 @@ class TodoList(QMainWindow):
 
             """Delete Task"""
             self.DeleteTask = QPushButton('Delete task', self)
-            self.DeleteTask.setGeometry(0,0,40,40)
+            self.DeleteTask.setGeometry(0,0,20,40)
 
 
             Vlayout = QVBoxLayout()
@@ -159,7 +162,7 @@ class TodoList(QMainWindow):
 
             # """Glayout spacing"""
             # Glayout.setVerticalSpacing(0)
-        
+
 
             Formlayout.addWidget(self.TaskName) 
             Formlayout.addWidget(self.NewTask)
@@ -193,8 +196,9 @@ class TodoList(QMainWindow):
             central_layout.addWidget(self.ListOfTasks)
             central_layout.addWidget(self.text)
             central_layout.addWidget(self.TaskList)
-            central_layout.addWidget(self.DeleteTask)
+        #     central_layout.addWidget(self.DeleteTask)
             central_layout.addWidget(self.ClearTask)
+            central_layout.addWidget(self.CompleteTask)
             # central_layout.addRow(Formlayout)
 
             central_widget.setLayout(central_layout)
@@ -202,6 +206,30 @@ class TodoList(QMainWindow):
         def on_click_add(self):
             print('task added!')
             self.NewTask.setText(f"{input} added to list!")
+            newtask = self.TaskName.text().strip()
+
+            if not newtask:
+                   return
+
+            index = self.ListOfTasks.currentIndex()
+            file_path = self.ListOfTasks.itemData(index)
+
+            if file_path is None:
+                   return
+
+            with open(file_path, 'r') as f:
+                   todo = json.load(f)
+
+            todo['Tasks'].append({
+                   "task" : newtask,
+                   "completed" : False,
+            })
+
+            with open(file_path,'w') as f:
+                json.dump(todo, f, indent=4)
+
+            self.TaskName.clear()
+            self.ListSwitcher()
             # TaskAdded = input()
             # tasks.append({"task":TaskAdded, "completed":False})
             # print(f"{TaskAdded} added to the list!")
@@ -237,10 +265,19 @@ class TodoList(QMainWindow):
                         for Tasks in todo["Tasks"]:
                                 taskfunction = Tasks.get("task")
                                 self.TaskList.addItem(taskfunction)
+                                is_completed = Tasks.get("completed", False)
 
+                                item = QListWidgetItem(taskfunction)
+
+                                font = item.font()
+                                font.setStrikeOut(is_completed)
+                                font.setItalic(is_completed)
+                                font.setBold(is_completed)
+                                item.setFont(font)
         
 
         def ListRenamer(self):
+                print('listswitcher called')
                 index = self.ListOfTasks.currentIndex()
                 new_name = self.ListOfTasks.currentText().strip()
 
@@ -253,8 +290,14 @@ class TodoList(QMainWindow):
                 if OldFilePath == NewFilePath:
                         return
 
-                OldFilePath.rename(NewFilePath)                   # ← ADD THIS: actually renames the file on disk
-                self.ListOfTasks.setItemData(index, NewFilePath)
+                try:
+                        OldFilePath.rename(NewFilePath)
+                        self.ListOfTasks.setItemData(index, NewFilePath)
+                        self.ListOfTasks.setItemText(index, new_name)
+                except FileExistsError:
+                        print(f"A list named '{new_name}' already exists.")
+                except FileNotFoundError:
+                        print(f"Could not find the original file: {OldFilePath.name}")
 
 
              
@@ -262,9 +305,25 @@ class TodoList(QMainWindow):
 
     
         def on_click_clear(self):
-          data = {
-          }
-          self.TaskList.clear()
+        #   data = {
+        #   }
+        #   self.TaskList.clear()
+                index = self.ListOfTasks.currentIndex()
+                file_path = self.ListOfTasks.itemData(index)
+
+                if file_path is None:
+                        return
+
+                with open(file_path, 'r') as f:
+                        todo = json.load(f)
+
+                for task in todo["Tasks"]:
+                        task["completed"] = True
+
+                with open(file_path, 'w') as f:
+                        json.dump(todo, f, indent=4)
+
+                self.ListSwitcher() 
           # WORKS AS INTENDED, BUT THE WHOLE APP CRASHES, I HAVE TO FIGURE OUT HOW TO FIX IT
         #   with open('todolisttest.json','w') as file:
         #     todo = json.load(file)
