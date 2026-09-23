@@ -11,20 +11,39 @@ from history_page import HistoryPage
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class BarChart(QWidget):
-    def __init__(self):
+    def __init__(self,chart_type="weekly"):
         super().__init__()
 
         self.setFixedHeight(285)
 
-        self.labels = [
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat",
-            "Sun"
-        ]
+        self.chart_type = chart_type
+
+        if self.chart_type == "weekly":
+            self.labels = [
+                "Mon",
+                "Tue",
+                "Wed",
+                "Thu",
+                "Fri",
+                "Sat",
+                "Sun"
+            ]
+
+        else:
+            self.labels = [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
+            ]
 
         self.bar_color = QColor(66, 133, 244)
 
@@ -39,6 +58,15 @@ class BarChart(QWidget):
             data.append((current_day,0))
             
         return data
+    
+    def get_month_data(self):
+
+        data = []
+
+        for month in range(1, 13):
+            data.append((month, 0))
+
+        return data
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -49,7 +77,10 @@ class BarChart(QWidget):
 
         painter.fillRect(self.rect(), QColor(248, 250, 253))
 
-        data = self.get_week_data()
+        if self.chart_type == "weekly":
+            data = self.get_week_data()
+        else:
+            data = self.get_month_data()
 
         max_minutes = max([item[1] for item in data] + [1])
 
@@ -72,10 +103,14 @@ class BarChart(QWidget):
 
         grid_count = 4
 
-        bar_spacing = chart_width / 7
+        bar_spacing = chart_width / len(data)
 
         today = date.today()
-        today_index = today.weekday()
+
+        if self.chart_type == "weekly":
+            today_index = today.weekday()
+        else:
+            today_index = today.month - 1
 
         # Highlight today's column
         highlight_x = left + today_index * bar_spacing
@@ -172,15 +207,51 @@ class BarChart(QWidget):
             painter.drawText(QRectF(x - 15, y - 25,bar_width + 30,20),Qt.AlignmentFlag.AlignCenter,text)
                               
             # Day
-            day_name = day.strftime("%a")
-            date_text = day.strftime("%d %b")
+            if self.chart_type == "weekly":
 
-            painter.setPen(
-                QColor(80, 90, 105)
-            )
+                day_name = day.strftime("%a")
+                date_text = day.strftime("%d %b")
 
-            painter.drawText(QRectF(x - 15, top + chart_height + 10,bar_width + 30,18),Qt.AlignmentFlag.AlignCenter,day_name)
-            painter.drawText(QRectF(x - 20, top + chart_height + 30,bar_width + 40,18),Qt.AlignmentFlag.AlignCenter,date_text)
+                painter.drawText(
+                    QRectF(
+                        x - 15,
+                        top + chart_height + 10,
+                        bar_width + 30,
+                        18
+                    ),
+                    Qt.AlignmentFlag.AlignCenter,
+                    day_name
+                )
+
+                painter.drawText(
+                    QRectF(
+                        x - 20,
+                        top + chart_height + 30,
+                        bar_width + 40,
+                        18
+                    ),
+                    Qt.AlignmentFlag.AlignCenter,
+                    date_text
+                )
+
+            else:
+
+                month_name = date(
+                    today.year,
+                    day,
+                    1
+                ).strftime("%b")
+
+                painter.drawText(
+                    QRectF(
+                        x - 15,
+                        top + chart_height + 10,
+                        bar_width + 30,
+                        18
+                    ),
+                    Qt.AlignmentFlag.AlignCenter,
+                    month_name
+                )
            
         painter.end()
 
@@ -208,6 +279,7 @@ class StudyStatistics(QWidget):
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(0,0,0,0)
         main_layout.addWidget(self.pages)
+       
         self.setLayout(main_layout)
 
        
@@ -292,6 +364,8 @@ class StudyStatistics(QWidget):
                         font-weight: bold;
                     }
                 """)
+
+        self.weekly.clicked.connect(self.show_weekly)
         
         # MONTHLY BTN
 
@@ -306,6 +380,8 @@ class StudyStatistics(QWidget):
                     font-weight: bold;
                 }
             """)
+
+        self.monthly.clicked.connect(self.show_monthly)
         
         week_month_layout.addWidget(self.weekly)
         week_month_layout.addWidget(self.monthly)
@@ -313,13 +389,13 @@ class StudyStatistics(QWidget):
         main_layout.addLayout(week_month_layout)
 
         # Study Time chart
-        chart_frame = QFrame()
+        self.chart_frame = QFrame()
 
-        chart_frame.setFixedHeight(
+        self.chart_frame.setFixedHeight(
             355
         )
 
-        chart_frame.setStyleSheet("""
+        self.chart_frame.setStyleSheet("""
             QFrame {
                 background: white;
                 border: 1px solid #EEEEEE;
@@ -327,7 +403,7 @@ class StudyStatistics(QWidget):
             }
         """)
 
-        chart_layout = QVBoxLayout(chart_frame)
+        chart_layout = QVBoxLayout(self.chart_frame)
 
         chart_layout.setContentsMargins(20,8,20,8)
         
@@ -346,24 +422,35 @@ class StudyStatistics(QWidget):
             chart_title
         )
 
-        chart = BarChart()
+        # Chart pages
+        self.chart_pages = QStackedWidget()
 
-        chart.setSizePolicy(
-            QSizePolicy.Policy.Expanding,
-            QSizePolicy.Policy.Fixed
+        self.weekly_chart = BarChart("weekly")
+        self.monthly_chart = BarChart("monthly")
+
+        self.chart_pages.addWidget(self.weekly_chart)
+        self.chart_pages.addWidget(self.monthly_chart)
+
+        self.chart_pages.setCurrentWidget(
+            self.weekly_chart
         )
 
-        chart_layout.addWidget(chart)
+        chart_layout.addWidget(
+            self.chart_pages
+        )
 
-        chart_layout.addStretch()
+        main_layout.addWidget(self.chart_frame)
 
-        main_layout.addWidget(chart_frame)
-            
         self.statistics_page.setLayout(main_layout)
-    
     
     def show_history(self):
         self.pages.setCurrentWidget(self.history_page)
+
+    def show_weekly(self):
+        self.chart_pages.setCurrentWidget(self.weekly_chart)
+          
+    def show_monthly(self):
+        self.chart_pages.setCurrentWidget(self.monthly_chart)
 
     def show_statistics(self):
         self.pages.setCurrentWidget(self.statistics_page)
