@@ -94,9 +94,6 @@ class CountdownTimer(QWidget):
         main_layout.setSpacing(20)
 
         name_label = QLabel("Timer Name : ")
-       
-        
-
         name_label.setObjectName("fieldLabel")
         main_layout.addWidget(name_label)
 
@@ -177,12 +174,11 @@ class CountdownTimer(QWidget):
         self.start_button.clicked.connect(self.start_stop)
         self.reset_button.clicked.connect(self.reset)
         self.hours_spin.valueChanged.connect(self.set_time)
-        self.minutes_spin.valueChanged.connect( self.set_time)
+        self.minutes_spin.valueChanged.connect(self.set_time)
         self.seconds_spin.valueChanged.connect(self.set_time)
         self.name_input.textChanged.connect(self.update_name)
 
         # Style
-       
 
         self.setStyleSheet(
             """
@@ -295,6 +291,9 @@ class CountdownTimer(QWidget):
             if self.remaining_seconds <= 0:
                 return
 
+        # Lock name when timer starts
+        self.name_input.setReadOnly(True)
+
         self.timer.start()
         self.timer_running = True
         self.start_button.setText("Pause")
@@ -332,13 +331,25 @@ class CountdownTimer(QWidget):
         self.timer.stop()
         self.timer_running = False
         self.timer_finished = False
-        self.remaining_seconds = (self.total_seconds)
+
+        self.total_seconds = 0
+        self.remaining_seconds = 0
+
         self.start_button.setText("Start")
         self.reset_button.setEnabled(True)
-     
-        # Clear timer name only when Reset is pressed
+
+        # Clear timer name
         self.name_input.clear()
+        self.name_input.setReadOnly(False)
         self.timer_name_label.setText("")
+
+        # Clear time input
+        self.hours_spin.setValue(0)
+        self.minutes_spin.setValue(0)
+        self.seconds_spin.setValue(0)
+
+        self.start_button.setText("Start")
+        self.reset_button.setEnabled(True)
         self.update_display()
 
 if __name__ == "__main__":
