@@ -241,17 +241,20 @@ class TodoList(QMainWindow):
         
 
         def ListRenamer(self):
-             index = self.ListOfTasks.currentIndex()
-             new_name = self.ListOfTasks.currentText().strip()
+                index = self.ListOfTasks.currentIndex()
+                new_name = self.ListOfTasks.currentText().strip()
 
-             if not new_name:
-                  return
+                if not new_name:
+                        return
 
-             OldFilePath = self.ListOfTasks.itemData(index)
-             NewFilePath = OldFilePath.with_name(new_name+".json")
+                OldFilePath = self.ListOfTasks.itemData(index)
+                NewFilePath = OldFilePath.with_name(new_name + ".json")
 
-             if OldFilePath == NewFilePath:
-                  return
+                if OldFilePath == NewFilePath:
+                        return
+
+                OldFilePath.rename(NewFilePath)                   # ← ADD THIS: actually renames the file on disk
+                self.ListOfTasks.setItemData(index, NewFilePath)
 
 
              
