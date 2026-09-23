@@ -44,18 +44,38 @@ from PyQt6.QtGui import QIcon
 
 tasks = []
 
+todolist_checker = Path.cwd()/"todolists"
+if not todolist_checker.exists(): 
+        os.mkdir('todolists')#check if the folder named "todolists" exist
+# print('this file exists') << old code, used and being kept for trouble shooting
+
+        
+todo = Path.cwd()/"todolists"
+
+json_file = todo/"My ToDo list.json" #PATHLIB : finds (or the intended use for this, create) a file with the name
+todo_files = list(todolist_checker.glob("*.json"))#PATHLIB : views the files in the directory
+empty_chker = not any(todo_files) #PATHLIB : checks if the directory has any files
+
+if  empty_chker :
+        json_file = todolist_checker / "My ToDo list.json"
+        json_file.write_text(
+              json.dumps({"Tasks": []}, indent=4), encoding="utf-8")
+        print("File created using pathlib!") #Thank you Gemini for the help lol
+else :
+        print('has files')
+        pass
 
 
 # app = QApplication([])
 
 class TodoList(QMainWindow):
-    def __init__(self):
+        def __init__(self):
             super().__init__()
             self.setWindowTitle('To-do list') # title of the window
             self.setGeometry(600,250,300,500) # (x,y,width,height)
             self.initUI() #initialise the "layout" manager
 
-    def initUI(self): #you can't normally make a layout manager inside of MainWindow, the method is : Create a main.central widget > Create the layout manager within the widget, the main widget is then added to the window (in this case (MainWindow class)), learning sources : Bro Code (YouTube)
+        def initUI(self): #you can't normally make a layout manager inside of MainWindow, the method is : Create a main.central widget > Create the layout manager within the widget, the main widget is then added to the window (in this case (MainWindow class)), learning sources : Bro Code (YouTube)
             central_widget = QWidget()
             self.setCentralWidget(central_widget)
 
@@ -69,6 +89,7 @@ class TodoList(QMainWindow):
                                 "background-color: black; font-size: 20px;") # this code is only here for testing, will either keep or change
             self.text.setAlignment(Qt.AlignmentFlag.AlignCenter) # controls the alignment of the label, the | is used to label 2 css properties at once
 
+
             
             """Button that adds a new task"""
             self.NewTask = QPushButton('click me to add a task!', self)
@@ -76,13 +97,41 @@ class TodoList(QMainWindow):
             # self.event_button.setFont(QFont(font_family,60))
             self.NewTask.clicked.connect(self.on_click_add)
 
+
+      
+
+
+
+
             """drop down menu (previously just a button) that show the list of existing tasks"""
             # self.TaskList = QPushButton('list', self)
             # self.TaskList.setGeometry (0,0,80,40) #(x,y,width,height)
             # # self.event_button.setFont(QFont(font_family,60))
             # self.TaskList.clicked.connect(self.on_click)
+
+            "Checkbox stuff here"
+            self.TaskList = QListWidget()
+            todolist_path = Path.cwd()/"todolists"
+
+            todolists_folder = Path.cwd()/"todolists"
+            todolists_json = list(todolists_folder.glob("*.json"))
+
+            list_names = [filename.stem for filename in todolists_json]
+
             self.ListOfTasks= QComboBox()
-            
+            self.ListOfTasks.setEditable(True)
+            self.ListOfTasks.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+            self.ListOfTasks.lineEdit().editingFinished.connect(self.ListRenamer)
+        
+
+            for i, name in enumerate(list_names):
+                  self.ListOfTasks.addItem(name)
+                  self.ListOfTasks.setItemData(i, todolists_json[i])
+
+            self.ListOfTasks.currentIndexChanged.connect(self.ListSwitcher)
+
+            if list_names:
+                 self.ListSwitcher()
              
             
             """Where you type in the task"""
@@ -91,15 +140,7 @@ class TodoList(QMainWindow):
             # self.layout.addRow("Task name:", self.name_input)
 
             
-            "Checkbox stuff here"
-            self.TaskList = QListWidget()
-            self.TaskList.addItem('tester')
-            with open('todolisttest.json','r') as file:
-                todo = json.load(file)
-                for Tasks in todo["Tasks"]:
-                        taskfunction = Tasks.get("task")
-                        # print(taskfunction) #used for trouble-shooting 
-                        self.TaskList.addItem(taskfunction)
+            
             
             """Clear button here"""
             self.ClearTask = QPushButton('Mark all as complete', self)
@@ -158,43 +199,72 @@ class TodoList(QMainWindow):
 
             central_widget.setLayout(central_layout)
 
-    def on_click_add(self):
+        def on_click_add(self):
             print('task added!')
             self.NewTask.setText(f"{input} added to list!")
             # TaskAdded = input()
             # tasks.append({"task":TaskAdded, "completed":False})
             # print(f"{TaskAdded} added to the list!")
-            todolist_checker = Path.cwd()/"todolists"
-            if (todolist_checker.exists()): #check if the folder named "todolists" exist
-    # print('this file exists') << old code, used and being kept for trouble shooting
-                pass
-            else : 
-                os.mkdir('todolists')
-                todo = Path.cwd()/"todolists"
+#             todolist_checker = Path.cwd()/"todolists"
+#             if not todolist_checker.exists(): 
+#                 os.mkdir('todolists')#check if the folder named "todolists" exist
+#     # print('this file exists') << old code, used and being kept for trouble shooting
+           
+                
+#             todo = Path.cwd()/"todolists"
 
-                json_file = todo/"My ToDo list.json" #PATHLIB : finds (or the intended use for this, create) a file with the name
-                todo_files = todo.iterdir() #PATHLIB : views the files in the directory
-                empty_chker = not any(todo_files) #PATHLIB : checks if the directory has any files
+#             json_file = todo/"My ToDo list.json" #PATHLIB : finds (or the intended use for this, create) a file with the name
+#             todo_files = todo.iterdir() #PATHLIB : views the files in the directory
+#             empty_chker = not any(todo_files) #PATHLIB : checks if the directory has any files
 
-                if empty_chker :
-                        json_file.write_text(json.dumps([]), encoding="utf-8")
-                        print("File created using pathlib!") #Thank you Gemini for the help lol
-                else :
-                        print('has files')
-                        pass
+#         if  empty_chker :
+#                 json_file = todo_files/ "My ToDo list.json"
+#                 json_file.write_text(json.dumps({"Tasks:" "[]"}, indent=4), encoding="utf-8")
+#                 print("File created using pathlib!") #Thank you Gemini for the help lol
+#         else :
+#                 print('has files')
+
+#                 pass
+
+        def ListSwitcher(self):
+                index = self.ListOfTasks.currentIndex()
+                file_path = self.ListOfTasks.itemData(index)
+
+                self.TaskList.clear()
+
+                with open(file_path,'r') as f:
+                        todo = json.load(f)
+                        for Tasks in todo["Tasks"]:
+                                taskfunction = Tasks.get("task")
+                                self.TaskList.addItem(taskfunction)
+
+        
+
+        def ListRenamer(self):
+             index = self.ListOfTasks.currentIndex()
+             new_name = self.ListOfTasks.currentText().strip()
+
+             if not new_name:
+                  return
+
+             OldFilePath = self.ListOfTasks.itemData(index)
+             NewFilePath = OldFilePath.with_name(new_name+".json")
+
+             if OldFilePath == NewFilePath:
+                  return
 
 
+             
+        
 
     
-    def on_click_clear(self):
+        def on_click_clear(self):
           data = {
           }
           self.TaskList.clear()
           # WORKS AS INTENDED, BUT THE WHOLE APP CRASHES, I HAVE TO FIGURE OUT HOW TO FIX IT
         #   with open('todolisttest.json','w') as file:
         #     todo = json.load(file)
-           
-
 
           
 def main():
