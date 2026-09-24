@@ -40,7 +40,7 @@ from PyQt6.QtWidgets import (
     QCheckBox
 )
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QIcon
+from PyQt6.QtGui import QIcon, QFont
 
 tasks = []
 
@@ -111,6 +111,8 @@ class TodoList(QMainWindow):
             # self.TaskList.clicked.connect(self.on_click)
 
             "Checkbox stuff here"
+            self.Checker = QCheckBox()
+
             self.TaskList = QListWidget()
             todolist_path = Path.cwd()/"todolists"
 
@@ -118,6 +120,8 @@ class TodoList(QMainWindow):
             todolists_json = list(todolists_folder.glob("*.json"))
 
             list_names = [filename.stem for filename in todolists_json]
+
+            self.TaskList.itemChanged.connect(self.on_task_checked)
 
             self.ListOfTasks= QComboBox()
             self.ListOfTasks.setEditable(True)
@@ -140,19 +144,20 @@ class TodoList(QMainWindow):
             self.TaskName.setPlaceholderText('Type in your task')
             # self.layout.addRow("Task name:", self.name_input)
 
-            "Complete Task"
-            self.CompleteTask = QPushButton('Complete Task', self)
-            self.CompleteTask.setGeometry(0,0,20,40)
-            
-            
+            "Add a new list"
+            self.NewListButton = QPushButton('New List', self)
+            self.NewListButton.setGeometry(0, 0, 20, 40)
+            self.NewListButton.clicked.connect(self.on_click_new_list)
+        
             """Clear button here"""
             self.ClearTask = QPushButton('Mark all as complete', self)
             self.ClearTask.setGeometry (0,0,40,40)
             self.ClearTask.clicked.connect(self.on_click_clear)
 
-            """Delete Task"""
+            """Clears the tasks from the list"""
             self.DeleteTask = QPushButton('Delete task', self)
             self.DeleteTask.setGeometry(0,0,20,40)
+            self.DeleteTask.clicked.connect(self.clearlist)
 
 
             Vlayout = QVBoxLayout()
@@ -167,6 +172,7 @@ class TodoList(QMainWindow):
             Formlayout.addWidget(self.TaskName) 
             Formlayout.addWidget(self.NewTask)
             Formlayout.addWidget(self.TaskList)
+            Formlayout.addWidget(self.DeleteTask)
             # Hlayout.addWidget(self.TaskList)
 
 
@@ -194,11 +200,12 @@ class TodoList(QMainWindow):
             central_layout.addWidget(self.TaskName)
             central_layout.addWidget(self.NewTask)
             central_layout.addWidget(self.ListOfTasks)
+            central_layout.addWidget(self.NewListButton)
             central_layout.addWidget(self.text)
             central_layout.addWidget(self.TaskList)
         #     central_layout.addWidget(self.DeleteTask)
             central_layout.addWidget(self.ClearTask)
-            central_layout.addWidget(self.CompleteTask)
+            central_layout.addWidget(self.DeleteTask)
             # central_layout.addRow(Formlayout)
 
             central_widget.setLayout(central_layout)
@@ -264,16 +271,18 @@ class TodoList(QMainWindow):
                         todo = json.load(f)
                         for Tasks in todo["Tasks"]:
                                 taskfunction = Tasks.get("task")
-                                self.TaskList.addItem(taskfunction)
-                                is_completed = Tasks.get("completed", False)
+                                # is_completed = Tasks.get("completed", True)
 
-                                item = QListWidgetItem(taskfunction)
+                                item = self.TaskItemLister(Tasks)
 
-                                font = item.font()
-                                font.setStrikeOut(is_completed)
-                                font.setItalic(is_completed)
-                                font.setBold(is_completed)
-                                item.setFont(font)
+                                # font = item.font()
+                                # # font = QFont()
+                                # font.setStrikeOut(is_completed)
+                                # font.setItalic(is_completed)
+                                # font.setBold(is_completed)
+                                # item.setFont(font)
+
+                                self.TaskList.addItem(item)
         
 
         def ListRenamer(self):
@@ -299,15 +308,43 @@ class TodoList(QMainWindow):
                 except FileNotFoundError:
                         print(f"Could not find the original file: {OldFilePath.name}")
 
+                index = self.ListOfTasks.currentIndex()
+                file_path = self.ListOfTasks.itemData(index)
 
-             
-        
+                self.TaskList.blockSignals(True)   # pause itemChanged while rebuilding
+                self.TaskList.clear()
+
+                with open(file_path, 'r') as f:
+                        todo = json.load(f)
+                        for Tasks in todo["Tasks"]:
+                                item = self.build_task_item(Tasks)
+                                self.TaskList.addItem(item)
+
+                self.TaskList.blockSignals(False) 
+
+
+        def TaskItemLister(self, task_dict):
+                index = self.ListOfTasks.currentIndex()
+                file_path = self.ListOfTasks.itemData(index)
+
+                
+                task_text = task_dict.get("task")
+                is_completed = task_dict.get("completed", False)
+
+                item = QListWidgetItem(task_text)
+
+                
+                task_text = task_dict.get("task")
+                is_completed = task_dict.get("completed", False)
+
+                item = QListWidgetItem(task_text)
+                item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+                item.setCheckState(Qt.CheckState.Checked if is_completed else Qt.CheckState.Unchecked)
+
+                return item
 
     
         def on_click_clear(self):
-        #   data = {
-        #   }
-        #   self.TaskList.clear()
                 index = self.ListOfTasks.currentIndex()
                 file_path = self.ListOfTasks.itemData(index)
 
@@ -323,16 +360,73 @@ class TodoList(QMainWindow):
                 with open(file_path, 'w') as f:
                         json.dump(todo, f, indent=4)
 
-                self.ListSwitcher() 
+                self.ListSwitcher()
           # WORKS AS INTENDED, BUT THE WHOLE APP CRASHES, I HAVE TO FIGURE OUT HOW TO FIX IT
         #   with open('todolisttest.json','w') as file:
         #     todo = json.load(file)
 
+        def on_task_checked(self, item):
+               index = self.ListOfTasks.currentIndex()
+               file_path = self.ListOfTasks.itemData(index)
+
+               with open(file_path, 'r') as f:
+                      todo = json.load(f)
+               
+               task_text = item.text()
+               is_checked = item.checkState() == Qt.CheckState.Checked
+
+               for task in todo["Tasks"]:
+                      if task.get('task') == task_text:
+                             task["completed"] = is_checked
+                             break
+               with open(file_path, 'w') as f:
+                      json.dump(todo, f, indent=4)
+
+        def on_click_new_list(self):
+                todolists_folder = Path.cwd() / "todolists"
+
+                base_name = "New List"
+                new_file = todolists_folder / f"{base_name}.json"
+
+                # Avoid overwriting an existing file if "New List.json" already exists
+                counter = 1
+                while new_file.exists():
+                        new_file = todolists_folder / f"{base_name} ({counter}).json"
+                        counter += 1
+
+                new_file.write_text(
+                        json.dumps({"Tasks": []}, indent=4),
+                        encoding="utf-8"
+                )
+
+                # Add it to the dropdown and switch straight to it
+                index = self.ListOfTasks.count()
+                self.ListOfTasks.addItem(new_file.stem)
+                self.ListOfTasks.setItemData(index, new_file)
+                self.ListOfTasks.setCurrentIndex(index)
+
+        def clearlist(self):
+                index = self.ListOfTasks.currentIndex()
+                file_path = self.ListOfTasks.itemData(index)
+
+                if file_path is None:
+                        return
+
+                with open(file_path, 'r') as f:
+                        todo = json.load(f)
+
+                todo["Tasks"] = []
+
+                with open(file_path, 'w') as f:
+                        json.dump(todo, f, indent=4)
+
+                self.ListSwitcher()
           
 def main():
     app = QApplication(sys.argv)
     window = TodoList()
     window.setWindowTitle('To-Do List')
+    window.setWindowFlags(window.windowFlags() | Qt.WindowType.WindowStaysOnTopHint)
     window.show()
     sys.exit(app.exec())
 
