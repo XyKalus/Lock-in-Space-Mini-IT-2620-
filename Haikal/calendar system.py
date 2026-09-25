@@ -65,7 +65,7 @@ class Calendar(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("Interactive PyQt5 Calendar")
+        self.setWindowTitle("Your Calendar")
         self.setGeometry(300, 150, 450, 400)
 
          
@@ -87,9 +87,11 @@ class Calendar(QWidget):
         # Interactive QCalendarWidget
         self.calendar = QCalendarWidget(self)
         self.calendar.setGridVisible(True)  # Shows grid lines between days
+
         
         # Connect date selection signal to slot function
         self.calendar.selectionChanged.connect(self.on_date_selected)
+        self.calendar.setFont(QFont(font_family,25))
         layout.addWidget(self.calendar)
 
         # Bottom Controls: Quick reset button
