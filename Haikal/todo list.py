@@ -37,7 +37,8 @@ from PyQt6.QtWidgets import (
     QLineEdit,
     QLabel,
     QComboBox,
-    QCheckBox
+    QCheckBox,
+    QKeySequenceEdit
 )
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
@@ -74,6 +75,7 @@ class TodoList(QMainWindow):
             super().__init__()
             self.setWindowTitle('To-do list') # title of the window
             self.setGeometry(600,250,300,500) # (x,y,width,height)
+            self.setWindowIcon(QIcon("checklist.png"))
             self.initUI() #initialise the "layout" manager
 
 
