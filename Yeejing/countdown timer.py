@@ -210,6 +210,18 @@ class CountdownTimer(QWidget):
         self.quit_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.quit_button.setObjectName("quitButton")
         self.quit_button.clicked.connect(self.quit_clicked)
+        self.quit_button.setStyleSheet(
+            """
+            QPushButton {
+                border: 1px solid #4285F4;
+                border-radius: 8px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background: #F0F6FF;
+            }
+            """
+        )
         
         top_bar.addWidget(self.quit_button)
          
