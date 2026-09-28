@@ -56,21 +56,14 @@ class CircularTimerWidget(QWidget):
         pen_bg = QPen(QColor(230, 230, 230),12)
 
         painter.setPen(pen_bg)
-      
         painter.drawEllipse(rect)
-         
         pen_progress = QPen( dynamic_color,12,  Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap)
-
         painter.setPen(pen_progress)
          
         angle = int(360* self.progress* 16)
-
         painter.drawArc(rect, 90 * 16,-angle)
-    
         painter.setPen(QColor(50, 50, 50))
-
         painter.setFont( QFont("Comic Sans MS", 26, QFont.Weight.Bold))
-          
         painter.drawText(rect, Qt.AlignmentFlag.AlignCenter,self.display_time)
          
 
@@ -212,8 +205,8 @@ class CountdownTimer(QWidget):
         top_bar = QHBoxLayout()
         top_bar.addStretch()
 
-        self.quit_button = QPushButton( "Quit") #change to img quit btn
-        self.quit_button.setFixedSize(100,45)
+        self.quit_button = QPushButton("X")
+        self.quit_button.setFixedSize(45,45)
         self.quit_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.quit_button.setObjectName("quitButton")
         self.quit_button.clicked.connect(self.quit_clicked)
@@ -316,7 +309,6 @@ class CountdownTimer(QWidget):
         self.seconds_spin.valueChanged.connect(self.set_time)
        
         self.name_input.textChanged.connect(self.update_name)
-
    
         self.setStyleSheet(
             """
