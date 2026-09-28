@@ -291,6 +291,10 @@ class TodoList(QMainWindow):
                                 # item.setFont(font)
 
                                 self.TaskList.addItem(item)
+                        if file_path == None:
+                                index = self.ListOfTasks.currentIndex()
+                                
+                
         
 
         def ListRenamer(self):
@@ -431,28 +435,38 @@ class TodoList(QMainWindow):
                 self.ListSwitcher()
 
         def ListDeleter(self):
-
                 index = self.ListOfTasks.currentIndex()
                 file_path = self.ListOfTasks.itemData(index)
 
-                file_path.unlink()
+                if file_path is None:
+                        return
 
-                newindex = self.ListOfTasks.currentIndex()
+                try:
+                        file_path.unlink()
+                except FileNotFoundError:
+                        print(f"{file_path.name} is gone forever lol.")
 
-                
+                todolists_folder = Path.cwd() / "todolists"
 
-                empty_chker = 0#PATHLIB : checks if the directory has any files
+                # If that was the last list, create a fallback before re-scanning
+                if not any(todolists_folder.glob("*.json")):
+                        fallback = todolists_folder / "My ToDo list.json"
+                        fallback.write_text(json.dumps({"Tasks": []}, indent=4), encoding="utf-8")
 
-                if  empty_chker :
-                        json_file = todolist_checker / "My ToDo list.json"
-                        json_file.write_text(
-                        json.dumps({"Tasks": []}, indent=4), encoding="utf-8")
-                        print("File created using pathlib!") #Thank you Gemini for the help lol
-                else :
-                        print('has files')
-                        pass
+                # Re-scan, newest first
+                files = sorted(todolists_folder.glob("*.json"),
+                                key=lambda p: p.stat().st_mtime, reverse=True)
 
-                return newindex
+                # Rebuild the dropdown without triggering ListSwitcher mid-rebuild
+                self.ListOfTasks.blockSignals(True)
+                self.ListOfTasks.clear()
+                for i, f in enumerate(files):
+                        self.ListOfTasks.addItem(f.stem)
+                        self.ListOfTasks.setItemData(i, f)
+                self.ListOfTasks.blockSignals(False)
+
+                self.ListOfTasks.setCurrentIndex(0)
+                self.ListSwitcher()
 
 
                 

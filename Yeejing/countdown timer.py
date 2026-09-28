@@ -63,12 +63,6 @@ class CountdownTimer(QWidget):
     def __init__(self):
         super().__init__()
 
-<<<<<<< HEAD
-        self.setWindowTitle("Timer")
-        self.resize(900, 650) 
-
-=======
->>>>>>> 3755ecb8c016709cbb6809a51832e3a583ff5ed9
         self.total_seconds = 0
         self.remaining_seconds = 0
 
