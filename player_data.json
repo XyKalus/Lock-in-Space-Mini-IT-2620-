@@ -1,0 +1,76 @@
+{
+    "players": [
+        {
+            "name": "k",
+            "gender": "boy",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "i",
+            "gender": "girl",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "f",
+            "gender": "girl",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "nurul",
+            "gender": "girl",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "d",
+            "gender": "boy",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "n",
+            "gender": "girl",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "k",
+            "gender": "boy",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "j",
+            "gender": "boy",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        },
+        {
+            "name": "mahirah",
+            "gender": "girl",
+            "coins": 0,
+            "study_time": 0,
+            "wallpaper": "White and Wood",
+            "inventory": []
+        }
+    ]
+}
