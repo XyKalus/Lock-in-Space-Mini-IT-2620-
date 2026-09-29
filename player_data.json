@@ -3,7 +3,7 @@
         {
             "name": "b",
             "gender": "boy",
-            "coins": 60,
+            "coins": 70,
             "study_time": 0,
             "wallpaper": {
                 "name": "White and Wood",
@@ -11,7 +11,7 @@
             },
             "inventory": {},
             "room_items": {},
-            "last_claim": "2026-09-29"
+            "last_claim": "2026-09-30"
         }
     ]
 }

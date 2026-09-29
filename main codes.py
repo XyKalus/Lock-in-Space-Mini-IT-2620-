@@ -17,6 +17,9 @@ from Ida.inventory import InventoryWindow, RoomItem, inventory
 from Ida.playerecords import PlayerRecords
 from Ida.dailylogin import DailyLogin
 from Yeejing.countdowntimer import CountdownTimer   
+from Haikal.calendarsystem import CalendarMainWindow
+from Haikal.MusicPlayer import *
+from Haikal.EventSystem import Events, eventsystem
 
 #from Haikal........ import ....... 
 # haikal u need to change something line 2294 to called your function, you can see example like the timer
@@ -28,6 +31,8 @@ class Window(QDialog):
         self.reward = 10
         super().__init__()
 
+        
+        self.music = MusicController()
 
         # Button click sound
         self.click_sound = QSoundEffect(self)
@@ -2222,6 +2227,45 @@ class Window(QDialog):
         self.calendar_button.clicked.connect(self.play_click_sound)
 
 
+        "Haikal was here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+
+        self.music_settings = QPushButton(
+                    self.room_page
+                )
+        
+        self.music_settings.setGeometry(1000,320,100,100)
+
+        self.music_settings.setToolTip(
+            "<b>Calendar</b><br>"
+            "Plan your study sessions and keep track of important dates!"
+        )
+
+        self.music_settings.setIcon(
+            QIcon(
+                os.path.join(BASE_DIR,"Ida","images","Icons","musicicon.png")
+            )
+        )
+
+        self.music_settings.setIconSize(
+            QSize(150, 150)
+        )
+
+        self.music_settings.setStyleSheet("""
+            QPushButton {
+                background-color: transparent;
+                border: none;
+            }
+
+            QPushButton:hover {
+                background-color: rgba(255, 255, 255, 50);
+                border-radius: 50px;
+            }
+        """)
+
+        self.music_settings.clicked.connect(self.open_music_settings)
+        self.music_settings.clicked.connect(self.play_click_sound)
+        
+
         # ====================================================
         # HIDE BUTTONS AT START
         # ====================================================
@@ -2232,6 +2276,7 @@ class Window(QDialog):
         self.timer_button.hide()
         self.statistics_button.hide()
         self.calendar_button.hide()
+        self.music_settings.hide()
 
 
 
@@ -2246,6 +2291,7 @@ class Window(QDialog):
             self.timer_button.hide()
             self.statistics_button.hide()
             self.calendar_button.hide()
+            self.music_settings.hide()
 
 
         else:
@@ -2256,6 +2302,7 @@ class Window(QDialog):
             self.timer_button.show()
             self.statistics_button.show()
             self.calendar_button.show()
+            self.music_settings.show()
 
     def intro_finished(self, status):
 
@@ -2291,7 +2338,12 @@ class Window(QDialog):
         print("WHERE IS YOUR PROGRESSIONNN")
 
     def show_calendar(self):
-        print("NOT BADD")
+        self.calendar = CalendarMainWindow()
+        self.calendar.show()
+
+    def open_music_settings(self):
+        MusicDialog(self.music, parent=self).exec()
+
 
     
 
