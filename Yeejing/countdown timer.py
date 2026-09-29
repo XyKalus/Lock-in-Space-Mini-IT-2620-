@@ -107,12 +107,7 @@ class CountdownTimer(QWidget):
        
 
     def coin_value_for(self, seconds):
-        value = seconds // 60
-
-        if value < 1 and seconds > 0:
-            value = 1
-
-        return value
+        return seconds // 60
 
 
     def save_session(self,description,start_time,end_time,duration,status,coin_earned):
