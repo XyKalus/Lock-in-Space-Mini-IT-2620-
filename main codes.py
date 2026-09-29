@@ -17,7 +17,7 @@ from Ida.inventory import InventoryWindow, RoomItem, inventory
 from Ida.playerecords import PlayerRecords
 from Ida.dailylogin import DailyLogin
 from Yeejing.countdowntimer import CountdownTimer   
-from Haikal.calendarsystem import CalendarMainWindow
+# from Haikal.calendarsystem import CalendarMainWindow
 from Haikal.MusicPlayer import *
 from Haikal.EventSystem import Events, eventsystem
 
