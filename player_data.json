@@ -1,76 +1,70 @@
 {
     "players": [
         {
-            "name": "k",
-            "gender": "boy",
-            "coins": 0,
-            "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
-        },
-        {
-            "name": "i",
+            "name": "fifi",
             "gender": "girl",
             "coins": 0,
             "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
+            "wallpaper": {
+                "name": "Pink Wallpaper",
+                "image": "Ida/images/wallpaper/w2.png"
+            },
+            "inventory": {
+                "White and Wood": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png",
+                    "category": "wallpaper"
+                }
+            },
+            "room_items": {},
+            "last_claim": "2026-09-29"
         },
         {
-            "name": "f",
+            "name": "ida",
             "gender": "girl",
-            "coins": 0,
+            "coins": 10,
             "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {},
+            "last_claim": "2026-09-29"
         },
         {
-            "name": "nurul",
+            "name": "dada",
             "gender": "girl",
-            "coins": 0,
+            "coins": 10,
             "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {},
+            "last_claim": "2026-09-29"
         },
         {
-            "name": "d",
-            "gender": "boy",
-            "coins": 0,
-            "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
-        },
-        {
-            "name": "n",
+            "name": "sasa",
             "gender": "girl",
-            "coins": 0,
+            "coins": 50,
             "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
-        },
-        {
-            "name": "k",
-            "gender": "boy",
-            "coins": 0,
-            "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
-        },
-        {
-            "name": "j",
-            "gender": "boy",
-            "coins": 0,
-            "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
-        },
-        {
-            "name": "mahirah",
-            "gender": "girl",
-            "coins": 0,
-            "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {
+                "Khaled": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/CCC3.png",
+                    "category": "furniture"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
+                    "category": "furniture"
+                }
+            },
+            "room_items": {},
+            "last_claim": "2026-09-29"
         }
     ]
 }

@@ -13,6 +13,12 @@ class PlayerRecords:
 
         self.data = self.load_data()
 
+    def get_player(self, name):
+        for player in self.data["players"]:
+            if player["name"].lower() == name.lower():
+                return player
+        return None
+
     def load_data(self):
 
         if not os.path.exists(self.save_path):
@@ -41,12 +47,37 @@ class PlayerRecords:
         player = {
             "name": name,
             "gender": gender,
+
             "coins": 0,
+
             "study_time": 0,
-            "wallpaper": "White and Wood",
-            "inventory": []
+
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": os.path.join(
+                    "Ida",
+                    "images",
+                    "wallpaper",
+                    "mainbackground.png"
+                )
+            },
+
+            "inventory": {},
+
+            "room_items": {},
+
+            "last_claim": ""
         }
 
         self.data["players"].append(player)
 
         self.save_data()
+
+        # lower for treated as the same username
+    def player_exists(self, name):
+
+        for player in self.data["players"]:
+            if player["name"].lower() == name.lower():
+                return True
+
+        return False

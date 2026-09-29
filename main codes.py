@@ -15,12 +15,15 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 from Ida.shoppingcart import ShoppingCart
 from Ida.inventory import InventoryWindow, RoomItem, inventory
 from Ida.playerecords import PlayerRecords
-#from Yeejing.countdown timer import   
+from Ida.dailylogin import DailyLogin
+from Yeejing.countdowntimer import CountdownTimer   
 
 class Window(QDialog):
 
     def __init__(self):
+        self.reward = 10
         super().__init__()
+
 
         # Button click sound
         self.click_sound = QSoundEffect(self)
@@ -31,6 +34,10 @@ class Window(QDialog):
         )
 
         self.click_sound.setVolume(0.5)
+
+        # Daily login system
+        self.daily_login = DailyLogin(self.player_records)
+        self.coins = 100
 
         self.setWindowFlags(
         Qt.WindowType.Window |
@@ -105,6 +112,7 @@ class Window(QDialog):
 
         # CREATE THESE BEFORE USING THEM
         self.shop_page = ShoppingCart()
+        self.shop_page.coins_changed.connect(self.update_coin_display)
 
         self.inventory_page = InventoryWindow()
 
@@ -144,21 +152,246 @@ class Window(QDialog):
         self.create_character_page()
         self.create_welcome_page()
 
+        coin_path = os.path.join(BASE_DIR,"Ida","images","items","coins.png")
+
+        self.coin_label = QLabel(self.room_page)
+        self.coin_label.setPixmap(QPixmap(coin_path))
+        self.coin_label.setScaledContents(True)
+        self.coin_label.setGeometry(810, 60, 80, 80)
+
+        self.coin_amount = QLabel(str(self.coins), self.room_page)
+        self.coin_amount.setGeometry(900, 45, 100, 100)
+
+        self.coin_amount.setFont(
+            QFont("Cave Story", 25, QFont.Weight.Bold)
+        )
+
+        self.coin_amount.setStyleSheet("""
+            QLabel {
+                color: white;
+                background: transparent;
+            }
+        """)
+
         self.InitWindow()
 
         # ====================================================
         # START INTRO VIDEO
         # ====================================================
 
-        self.pages.setCurrentWidget(
-            self.intro_page
-        )
+        self.pages.setCurrentWidget(self.intro_page)
 
-        self.show_room_note()
 
         self.intro_player.mediaStatusChanged.connect(self.intro_finished)
 
         self.intro_player.play()
+
+    
+
+    def show_daily_reward(self):
+
+        # Don't create another popup if one already exists
+        if getattr(self, "daily_reward_popup", None) is not None:
+            try:
+                if self.daily_reward_popup.isVisible():
+                    return
+            except RuntimeError:
+                self.daily_reward_popup = None
+
+        self.daily_reward_popup = QFrame(self.room_page)
+
+        self.daily_reward_popup.setGeometry(
+            300,
+            250,
+            500,
+            250
+        )
+
+        self.daily_reward_popup.setStyleSheet("""
+            QFrame {
+                background-color: #d4be9f;
+                border: 5px solid #11152d;
+                border-radius: 20px;
+            }
+        """)
+
+        # =========================
+        # TITLE
+        # =========================
+
+        self.daily_reward_title = QLabel(
+            "DAILY REWARD!",
+            self.daily_reward_popup
+        )
+
+        self.daily_reward_title.setGeometry(
+            30,
+            20,
+            440,
+            60
+        )
+
+        self.daily_reward_title.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        self.daily_reward_title.setStyleSheet("""
+            QLabel {
+                color: #11152d;
+                background: transparent;
+                border: none;
+            }
+        """)
+
+        self.daily_reward_title.setFont(
+            QFont("Cave Story", 30, QFont.Weight.Bold)
+        )
+
+        # =========================
+        # MESSAGE
+        # =========================
+
+        self.daily_reward_message = QLabel(
+            "You just received\n10 coins!",
+            self.daily_reward_popup
+        )
+
+        self.daily_reward_message.setGeometry(
+            30,
+            80,
+            440,
+            80
+        )
+
+        self.daily_reward_message.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        self.daily_reward_message.setStyleSheet("""
+            QLabel {
+                color: #11152d;
+                background: transparent;
+                border: none;
+            }
+        """)
+
+        self.daily_reward_message.setFont(
+            QFont("Cave Story", 22, QFont.Weight.Bold)
+        )
+
+        # =========================
+        # CLAIM BUTTON
+        # =========================
+
+        self.claim_button = QPushButton(
+            "CLAIM",
+            self.daily_reward_popup
+        )
+
+        self.claim_button.setGeometry(
+            175,
+            175,
+            150,
+            50
+        )
+
+        self.claim_button.setStyleSheet("""
+            QPushButton {
+                background-color: #eeeeee;
+                color: #111111;
+                border: 5px solid #11152d;
+                border-radius: 10px;
+                font-weight: bold;
+            }
+
+            QPushButton:hover {
+                background-color: #cfe5ff;
+            }
+
+            QPushButton:pressed {
+                background-color: #a9c9ef;
+            }
+        """)
+
+        self.claim_button.setFont(
+            QFont("Cave Story", 20, QFont.Weight.Bold)
+        )
+
+        self.claim_button.clicked.connect(
+            self.claim_daily_login
+        )
+
+        self.claim_button.clicked.connect(
+            self.play_click_sound
+        )
+
+        self.daily_reward_popup.raise_()
+        self.daily_reward_popup.show()
+
+    def show_daily_notification(self, message):
+
+        self.daily_notification = QLabel(
+            message,
+            self.room_page
+        )
+
+        self.daily_notification.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        self.daily_notification.setStyleSheet("""
+            QLabel {
+                background-color: #d4be9f;
+                color: black;
+                border: 3px solid black;
+                border-radius: 15px;
+                padding: 10px;
+                font-family: "Cave Story";
+                font-size: 25px;
+                font-weight: bold;
+            }
+        """)
+
+        self.daily_notification.setGeometry(
+            300, 250, 500, 100
+        )
+
+        self.daily_notification.raise_()
+        self.daily_notification.show()
+
+        QTimer.singleShot(
+            2000,
+            self.daily_notification.deleteLater
+        )
+
+    def claim_daily_login(self):
+        success, coins = self.daily_login.claim(self.player_name)
+
+        # Safely close the daily reward popup
+        popup = getattr(self, "daily_reward_popup", None)
+
+        if popup is not None:
+            try:
+                popup.close()
+                popup.deleteLater()
+            except RuntimeError:
+                pass
+
+            self.daily_reward_popup = None
+
+        if success:
+            self.coins = coins
+            self.coin_amount.setText(str(coins))
+             # Update Shopping Cart coins
+            self.shop_page.set_coins(self.coins)
+            self.show_daily_notification("+10 COINS!")
+
+        else:
+            self.show_daily_notification("Already Claimed Today!") 
+
+    def set_coins(self, coins):
+        self.coins = coins
+        self.coin_text.setText(str(coins))
 
     # ENTER button func.
     def keyPressEvent(self, event):
@@ -171,6 +404,35 @@ class Window(QDialog):
 
     def play_click_sound(self):
         self.click_sound.play()
+
+    def update_coin_display(self, coins):
+
+        self.coins = coins
+
+        self.coin_amount.setText(
+            str(coins)
+        )
+
+        player = self.player_records.get_player(
+            self.player_name
+        )
+
+        if player is not None:
+
+            player["coins"] = coins
+
+            player["inventory"] = dict(
+                inventory
+            )
+
+            self.player_records.save_data()
+
+            print("PLAYER DATA SAVED")
+            print("COINS:", coins)
+            print("INVENTORY:", player["inventory"])
+
+    def update_shop_coins(self):
+        self.shop_page.set_coins(self.coins)
 
     def create_name_page(self):
 
@@ -334,9 +596,7 @@ class Window(QDialog):
             self.play_click_sound
         )
 
-        
-
- # ====================================================
+        # ====================================================
         # NO BUTTON
         # ====================================================
 
@@ -381,21 +641,452 @@ class Window(QDialog):
             self.play_click_sound
         )
 
+    def create_player_list_page(self):
+
+        # Create the page only once
+        if hasattr(self, "player_list_page"):
+            return
+
+        self.player_list_page = QWidget()
+
+        # =========================
+        # BACKGROUND
+        # =========================
+
+        background = QLabel(self.player_list_page)
+
+        background_path = os.path.join(
+            BASE_DIR,
+            "Ida",
+            "images",
+            "background",
+            "loginbg.png"
+        )
+
+        background.setPixmap(QPixmap(background_path))
+        background.setScaledContents(True)
+        background.setGeometry(
+            0, 0, 1100, 800
+        )
+
+        background.lower()
+
+        # =========================
+        # POPUP
+        # =========================
+
+        popup = QLabel(self.player_list_page)
+
+        border_path = os.path.join(
+            BASE_DIR,
+            "Ida",
+            "images",
+            "background",
+            "border.png"
+        )
+
+        popup.setPixmap(QPixmap(border_path))
+        popup.setScaledContents(True)
+
+        popup.setGeometry(
+            -70,
+            100,
+            1200,
+            600
+        )
+
+        # =========================
+        # TITLE
+        # =========================
+
+        title = QLabel(
+            "SELECT YOUR PROFILE",
+            popup
+        )
+
+        title.setGeometry(
+            100,
+            70,
+            1000,
+            80
+        )
+
+        title.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        title.setStyleSheet("""
+            QLabel {
+                color: white;
+                background: transparent;
+                border: none;
+            }
+        """)
+
+        title.setFont(
+            QFont(
+                "Cave Story",
+                38,
+                QFont.Weight.Bold
+            )
+        )
+
+        # =========================
+        # PLAYER LIST
+        # =========================
+
+        players = self.player_records.data.get(
+            "players",
+            []
+        )
+
+        y_position = 180
+
+        for player in players:
+
+            name = player.get(
+                "name",
+                "Unknown"
+            )
+
+            player_button = QPushButton(
+                name,
+                popup
+            )
+
+            player_button.setGeometry(
+                350,
+                y_position,
+                400,
+                60
+            )
+
+            player_button.setFont(
+                QFont(
+                    "Cave Story",
+                    22,
+                    QFont.Weight.Bold
+                )
+            )
+
+            player_button.setStyleSheet("""
+                QPushButton {
+                    background-color: #eeeeee;
+                    color: #111111;
+                    border: 5px solid #11152d;
+                }
+
+                QPushButton:hover {
+                    background-color: #cfe5ff;
+                }
+
+                QPushButton:pressed {
+                    background-color: #a9c9ef;
+                }
+            """)
+
+            player_button.clicked.connect(
+                lambda checked=False, player_name=name:
+                    self.load_existing_player(player_name)
+            )
+
+            player_button.clicked.connect(
+                self.play_click_sound
+            )
+
+            y_position += 75
+
+        # =========================
+        # BACK BUTTON
+        # =========================
+
+        back_button = QPushButton(
+            "BACK",
+            popup
+        )
+
+        back_button.setGeometry(
+            450,
+            500,
+            200,
+            60
+        )
+
+        back_button.setFont(
+            QFont(
+                "Cave Story",
+                20,
+                QFont.Weight.Bold
+            )
+        )
+
+        back_button.setStyleSheet("""
+            QPushButton {
+                background-color: #eeeeee;
+                color: #111111;
+                border: 5px solid #11152d;
+            }
+
+            QPushButton:hover {
+                background-color: #ffd6d6;
+            }
+
+            QPushButton:pressed {
+                background-color: #f0b8cd;
+            }
+        """)
+
+        back_button.clicked.connect(
+            lambda: self.pages.setCurrentWidget(
+                self.name_page
+            )
+        )
+
+        back_button.clicked.connect(
+            self.play_click_sound
+        )
+
+        # =========================
+        # ADD PAGE
+        # =========================
+
+        self.pages.addWidget(
+            self.player_list_page
+        )
+
+    def load_existing_player(self, player_name):
+        player = self.player_records.get_player(player_name)
+
+        if player is None:
+            return
+
+        self.player_name = player["name"]
+        self.player_gender = player.get("gender", "girl")
+
+        # Load saved coins
+        self.coins = player.get("coins", 100)
+        self.coin_amount.setText(str(self.coins))
+
+        # =========================
+        # LOAD PLAYER INVENTORY
+        # =========================
+
+        inventory.clear()
+
+        saved_inventory = player.get("inventory", {})
+
+        inventory.update(saved_inventory)
+
+        print("LOADED INVENTORY:", inventory)
+
+        self.inventory_page.show_inventory()
+
+        # Load saved wallpaper
+        wallpaper = player.get("wallpaper")
+
+        if isinstance(wallpaper, dict):
+            self.current_wallpaper = {
+                "name": wallpaper.get("name", "White and Wood"),
+                "image": wallpaper.get(
+                    "image",
+                    os.path.join(
+                        BASE_DIR,
+                        "Ida",
+                        "images",
+                        "wallpaper",
+                        "mainbackground.png"
+                    )
+                )
+            }
+
+        else:
+            # Existing save uses a string for wallpaper
+            self.current_wallpaper = {
+                "name": str(wallpaper) if wallpaper else "White and Wood",
+                "image": os.path.join(
+                    BASE_DIR,
+                    "Ida",
+                    "images",
+                    "wallpaper",
+                    "mainbackground.png"
+                )
+            }
+
+        # Apply the saved wallpaper to the room
+        self.change_wallpaper(
+            self.current_wallpaper["image"]
+        )
+
+        print("LOADED PLAYER:")
+        print("Name:", self.player_name)
+        print("Gender:", self.player_gender)
+        print("Coins:", self.coins)
+        print("Wallpaper:", self.current_wallpaper["name"])
+
+        self.enter_room()
+
     def name_next_clicked(self):
 
         name = self.name_input.text().strip()
 
+        # Check if name is empty
         if not name:
             self.name_input.setPlaceholderText(
                 "Please enter your name!"
             )
             return
 
+        # Check if username already exists
+        if self.player_records.player_exists(name):
+
+            self.show_name_error(
+                "USER FOUND!\n"
+                "This username is already in use.\n"
+                "Please choose another name."
+            )
+
+            return
+
+        # Name is available
         self.player_name = name
 
         self.pages.setCurrentWidget(
             self.character_page
         )
+
+    def show_name_error(self, message):
+
+        self.name_error_popup = QFrame(self.name_page)
+
+        self.name_error_popup.setGeometry(
+            300,
+            270,
+            500,
+            260
+        )
+
+        self.name_error_popup.setStyleSheet("""
+            QFrame {
+                background-color: #d4be9f;
+                border: 5px solid #11152d;
+                border-radius: 20px;
+            }
+        """)
+
+        # =========================
+        # TITLE
+        # =========================
+
+        self.name_error_title = QLabel(
+            "USER FOUND!",
+            self.name_error_popup
+        )
+
+        self.name_error_title.setGeometry(
+            30,
+            25,
+            440,
+            55
+        )
+
+        self.name_error_title.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        self.name_error_title.setStyleSheet("""
+            QLabel {
+                color: #11152d;
+                background: transparent;
+                border: none;
+            }
+        """)
+
+        self.name_error_title.setFont(
+            QFont("Cave Story", 30, QFont.Weight.Bold)
+        )
+
+        # =========================
+        # MESSAGE
+        # =========================
+
+        self.name_error_message = QLabel(
+            message,
+            self.name_error_popup
+        )
+
+        self.name_error_message.setGeometry(
+            30,
+            85,
+            440,
+            80
+        )
+
+        self.name_error_message.setAlignment(
+            Qt.AlignmentFlag.AlignCenter
+        )
+
+        self.name_error_message.setWordWrap(True)
+
+        self.name_error_message.setStyleSheet("""
+            QLabel {
+                color: #11152d;
+                background: transparent;
+                border: none;
+            }
+        """)
+
+        self.name_error_message.setFont(
+            QFont("Cave Story", 19, QFont.Weight.Bold)
+        )
+
+        # =========================
+        # OK BUTTON
+        # =========================
+
+        self.name_error_button = QPushButton(
+            "OK",
+            self.name_error_popup
+        )
+
+        self.name_error_button.setGeometry(
+            175,
+            180,
+            150,
+            50
+        )
+
+        self.name_error_button.setStyleSheet("""
+            QPushButton {
+                background-color: #eeeeee;
+                color: #111111;
+                border: 5px solid #11152d;
+                border-radius: 10px;
+                font-weight: bold;
+            }
+
+            QPushButton:hover {
+                background-color: #cfe5ff;
+            }
+
+            QPushButton:pressed {
+                background-color: #a9c9ef;
+            }
+        """)
+
+        self.name_error_button.setFont(
+            QFont("Cave Story", 20, QFont.Weight.Bold)
+        )
+
+        self.name_error_button.clicked.connect(
+            self.name_error_popup.deleteLater
+        )
+
+        self.name_error_button.clicked.connect(
+            self.play_click_sound
+        )
+
+        self.name_error_popup.raise_()
+        self.name_error_popup.show()
 
     def enter_room(self):
 
@@ -464,8 +1155,7 @@ class Window(QDialog):
         # CURTAIN
         # =========================
 
-        curtain_path = os.path.join(BASE_DIR,"Ida","images","furnitures","curtain.png"
-        )
+        curtain_path = os.path.join(BASE_DIR,"Ida","images","furnitures","curtain.png")
 
         print("CURTAIN PATH:", curtain_path)
         print("CURTAIN EXISTS:", os.path.exists(curtain_path))
@@ -496,7 +1186,7 @@ class Window(QDialog):
         door_path = os.path.join(BASE_DIR,"Ida","images","furnitures","door.png"
         )
 
-        print("DOOR PATH:", curtain_path)
+        print("DOOR PATH:", door_path)
         print("DOOR EXISTS:", os.path.exists(door_path))
 
         if os.path.exists(door_path):
@@ -518,13 +1208,67 @@ class Window(QDialog):
 
             self.door_item.setZValue(10)
 
+        # =========================
+        # LOAD SAVED ROOM ITEMS
+        # =========================
+
+        player = self.player_records.get_player(self.player_name)
+
+        if player is not None:
+
+            saved_items = player.get("room_items", {})
+
+            print("SAVED ROOM ITEMS:", saved_items)
+
+            for name, data in saved_items.items():
+
+                image = data.get("image")
+
+                if not image:
+                    continue
+
+                # Convert saved relative path to full path
+                if not os.path.isabs(image):
+                    image = os.path.join(BASE_DIR, image)
+
+                print("LOADING SAVED ITEM:", name)
+                print("IMAGE PATH:", image)
+                print("IMAGE EXISTS:", os.path.exists(image))
+
+                if not os.path.exists(image):
+                    continue
+
+                item = RoomItem(
+                    name,
+                    image,
+                    self
+                )
+
+                self.scene.addItem(item)
+
+                item.setPos(
+                    data.get("x", 400),
+                    data.get("y", 300)
+                )
+
+                item.setScale(
+                    data.get("scale", 1.0)
+                )
+
+                item.setZValue(10)
+
+                self.room_layout[name] = item
+
         # Go to room
-        self.pages.setCurrentWidget(
-            self.room_page
-        )
+        self.pages.setCurrentWidget(self.room_page)
 
         # SHOW TEMPORARY NOTE
         self.show_room_note()
+        # SHOW DAILY REWARD AFTER 1 SECOND
+        QTimer.singleShot(
+            1000,
+            self.show_daily_reward
+        )
 
         print(f"Welcome {self.player_name}!")
 
@@ -532,9 +1276,8 @@ class Window(QDialog):
 
     def no_name_clicked(self):
 
-        self.pages.setCurrentWidget(
-            self.room_page
-        )
+        self.create_player_list_page()
+        self.pages.setCurrentWidget(self.player_list_page)
 
 
     def back_to_name(self):
@@ -725,16 +1468,35 @@ class Window(QDialog):
 
         self.player_gender = gender
 
-        # SAVE NEW PLAYER
+        # Create and save the new player
         self.player_records.create_player(
             self.player_name,
             self.player_gender
         )
 
+        # =========================
+        # STARTING COINS
+        # =========================
+
+        self.coins = 50
+        self.coin_amount.setText(str(self.coins))
+
+        # Save 50 coins to this new player
+        player = self.player_records.get_player(
+            self.player_name
+        )
+
+        if player is not None:
+            player["coins"] = 50
+            self.player_records.save_data()
+
+        self.enter_room()
+
         print("PLAYER NAME:", self.player_name)
         print("PLAYER GENDER:", self.player_gender)
+        print("STARTING COINS:", self.coins)
 
-        # UPDATE WELCOME MESSAGE WITH PLAYER NAME
+        # UPDATE WELCOME MESSAGE
         self.welcome_label.setText(
             f"Are You Ready To Lock In, {self.player_name}?"
         )
@@ -961,37 +1723,156 @@ class Window(QDialog):
             self.room_note.deleteLater
         )
 
+    def save_player_inventory(self):
+
+        player = self.player_records.get_player(
+            self.player_name
+        )
+
+        if player is None:
+            return
+
+        player["inventory"] = dict(inventory)
+
+        self.player_records.save_data()
+
+        print("INVENTORY SAVED:")
+        print(player["inventory"])
+
     def save_room_layout(self):
 
-        self.room_layout = {}
+        player = self.player_records.get_player(
+            self.player_name
+        )
+
+        if player is None:
+            return
+
+        saved_items = {}
+
+        # Items that belong to the default room
+        default_items = {
+            "player_character",
+            "bed",
+            "curtain",
+            "door"
+        }
 
         for item in self.scene.items():
 
-            if isinstance(item, RoomItem):
+            if not isinstance(item, RoomItem):
+                continue
 
-                self.room_layout[item.item_name] = {
-                    "x": item.pos().x(),
-                    "y": item.pos().y()
-                }
+            name = item.item_name
 
-        self.save_room_button = QPushButton(
-            "SAVE ROOM",
-            self.room_page
+            # Don't save default room furniture
+            if name in default_items:
+                continue
+
+            saved_items[name] = {
+
+                "image": item.image,
+
+                "x": item.pos().x(),
+
+                "y": item.pos().y(),
+
+                "scale": item.scale(),
+
+                "category": "furniture"
+            }
+
+        player["room_items"] = saved_items
+
+        # Save inventory too
+        player["inventory"] = dict(
+            inventory
         )
 
-        self.save_room_button.setGeometry(
-            850,
-            30,
-            180,
-            60
+        # Save coins
+        player["coins"] = self.coins
+
+        # Save wallpaper
+        player["wallpaper"] = self.current_wallpaper
+
+        self.player_records.save_data()
+
+        print("================================")
+        print("ROOM SAVED")
+        print("ROOM ITEMS:", saved_items)
+        print("INVENTORY:", player["inventory"])
+        print("COINS:", player["coins"])
+        print("================================")
+
+    def save_current_player_state(self):
+
+        player = self.player_records.get_player(
+            self.player_name
         )
 
-        self.save_room_button.clicked.connect(
-            self.save_room_layout
-)
+        if player is None:
+            return
 
-        print("ROOM SAVED:")
-        print(self.room_layout)
+        # =========================
+        # COINS
+        # =========================
+
+        player["coins"] = self.coins
+
+        # =========================
+        # INVENTORY
+        # =========================
+
+        player["inventory"] = dict(
+            inventory
+        )
+
+        # =========================
+        # ROOM
+        # =========================
+
+        saved_items = {}
+
+        default_items = {
+            "player_character",
+            "bed",
+            "curtain",
+            "door"
+        }
+
+        for item in self.scene.items():
+
+            if not isinstance(item, RoomItem):
+                continue
+
+            name = item.item_name
+
+            if name in default_items:
+                continue
+
+            saved_items[name] = {
+                "image": item.image,
+                "x": item.pos().x(),
+                "y": item.pos().y(),
+                "scale": item.scale(),
+                "category": "furniture"
+            }
+
+        player["room_items"] = saved_items
+
+        # =========================
+        # WALLPAPER
+        # =========================
+
+        player["wallpaper"] = self.current_wallpaper
+
+        # =========================
+        # SAVE JSON
+        # =========================
+
+        self.player_records.save_data()
+
+        print("PLAYER STATE SAVED")
 
     def InitWindow(self):
 
@@ -1393,13 +2274,11 @@ class Window(QDialog):
 
         ###EXAMPLE###
     def show_shop(self):
-
-        self.pages.setCurrentWidget(
-            self.shop_page 
-        )
+        self.shop_page.set_coins(self.coins)
+        self.pages.setCurrentWidget(self.shop_page)
 
     def show_inventory(self):
-
+        self.shop_page.set_coins(self.coins)
         self.inventory_page.show_inventory()
 
         self.pages.setCurrentWidget(
@@ -1410,7 +2289,8 @@ class Window(QDialog):
         print("To-Do List clicked!")
 
     def show_timer(self):
-        print("DONT WASTE TIME LAA")
+        self.timer_window = CountdownTimer()
+        self.timer_window.show()
 
     def show_statistics(self):
         print("WHERE IS YOUR PROGRESSIONNN")
@@ -1470,9 +2350,15 @@ class Window(QDialog):
 
         self.pages.setCurrentWidget(self.room_page)
 
-    def add_item_to_room(self, name, image):
+    def add_item_to_room(self, name, image, category="furniture"):
 
         print("ADDING:", name, image)
+
+        # Get item information before removing it
+        item_data = inventory.get(
+            name,
+            {}
+        )
 
         item = RoomItem(
             name,
@@ -1489,8 +2375,15 @@ class Window(QDialog):
 
         item.setZValue(10)
 
-        # Remember this furniture item
+        # Remember room item
         self.room_layout[name] = item
+
+        # Remove item from inventory
+        if name in inventory:
+            del inventory[name]
+
+        # Save everything immediately
+        self.save_current_player_state()
 
         self.pages.setCurrentWidget(
             self.room_page
@@ -1498,20 +2391,37 @@ class Window(QDialog):
 
         self.view.show()
 
-
     def return_to_inventory(self, name, image):
+
         inventory[name] = {
             "image": image,
-            "category": "characters"
+            "category": "furniture"
         }
 
+        # Save inventory permanently
+        player = self.player_records.get_player(
+            self.player_name
+        )
+
+        if player is not None:
+            player["inventory"] = dict(inventory)
+            self.player_records.save_data()
+
         self.inventory_page.show_inventory()
+
     def show_room(self):
 
         self.pages.setCurrentWidget(
             self.room_page
         )
 
+    def closeEvent(self, event):
+
+        print("WINDOW CLOSING...")
+
+        self.save_current_player_state()
+
+        event.accept()
 
 
 app = QApplication(sys.argv)
