@@ -70,14 +70,7 @@ def load_study_data():
 
 
 def is_completed(record):
-    status = str(record.get("status",record.get("Status","Completed"))).strip().lower()
-
-    return status in [
-        "completed",
-        "complete",
-        "finished",
-        "success"
-    ]
+    return record.get("status") == "Completed"
 
 
 def duration_to_minutes(duration):
@@ -300,7 +293,6 @@ class BarChart(QWidget):
 
             data.append((current_day,total_minutes))
               
-        print("WEEKLY DATA (SAMPLE + JSON):",data )
 
         return data
 
@@ -325,8 +317,6 @@ class BarChart(QWidget):
                     total_minutes += (get_record_duration(record))
                 
             data.append((month,total_minutes))
-
-        print("MONTHLY DATA (SAMPLE + JSON):",data)
 
         return data
 
@@ -734,6 +724,7 @@ class StudyStatistics(QWidget):
         self.update_statistics()
 
     def show_history(self):
+        self.history_page.refresh_history()
         self.pages.setCurrentWidget(self.history_page)
 
     # SHOW WEEKLY
