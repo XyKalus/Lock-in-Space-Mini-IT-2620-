@@ -9,7 +9,11 @@ from PyQt6.QtGui import QPainter,QColor,QPen,QFont,QFontDatabase
 from PyQt6.QtMultimedia import QMediaPlayer,QAudioOutput
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+<<<<<<< HEAD
 ALARM_FILE = os.path.join(BASE_DIR, "alarm.mp3")
+=======
+ALARM_FILE = os.path.join(BASE_DIR,"alarm.mp3")
+>>>>>>> lock-in-space/main
 
 
 class CircularTimerWidget(QWidget):
@@ -71,10 +75,13 @@ class CountdownTimer(QWidget):
     def __init__(self):
         super().__init__()
 
+<<<<<<< HEAD
         self.setFixedSize(QSize(1100, 800))
     
         self.setGeometry(250,25,1100,800)
          
+=======
+>>>>>>> lock-in-space/main
         self.total_seconds = 0
         self.remaining_seconds = 0
 
