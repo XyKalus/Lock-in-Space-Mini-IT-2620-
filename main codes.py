@@ -18,6 +18,10 @@ from Ida.playerecords import PlayerRecords
 from Ida.dailylogin import DailyLogin
 from Yeejing.countdowntimer import CountdownTimer   
 
+#from Haikal........ import ....... 
+# haikal u need to change something line 2294 to called your function, you can see example like the timer
+# btw You guys need to change a bit your codes if one to make it it run the same window
+
 class Window(QDialog):
 
     def __init__(self):
@@ -65,9 +69,9 @@ class Window(QDialog):
 
         self.intro_page = QWidget()
 
-# ====================================================
-# NAME / CHARACTER / WELCOME PAGES
-# ====================================================
+        # ====================================================
+        # NAME / CHARACTER / WELCOME PAGES
+        # ====================================================
 
         self.name_page = QWidget()
         self.character_page = QWidget()
@@ -1665,29 +1669,20 @@ class Window(QDialog):
             }
         """)
 
-        self.welcome_no.setFont(
-            QFont("Cave Story", 15, QFont.Weight.Bold)
-        )
+        self.welcome_no.setFont(QFont("Cave Story", 15, QFont.Weight.Bold))
 
-        self.welcome_no.clicked.connect(
-            self.back_to_name
-        )
+        self.welcome_no.clicked.connect(self.back_to_name)
 
-        self.welcome_no.clicked.connect(
-            self.play_click_sound
-        )
+        self.welcome_no.clicked.connect(self.play_click_sound)
 
-        self.welcome_no.clicked.connect(
-            self.back_to_name
-        )
+        self.welcome_no.clicked.connect(self.back_to_name)
 
     def show_room_note(self):
 
         self.room_note = QLabel(
             "This is your space to lock in!\n"
             "Customize your room and make it yours!",
-            self.room_page
-        )
+            self.room_page)
 
         self.room_note.setGeometry(
             300,
