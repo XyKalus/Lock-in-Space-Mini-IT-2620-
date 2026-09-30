@@ -3,6 +3,7 @@ import os
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
+from PyQt6.QtMultimedia import QSoundEffect
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -11,13 +12,20 @@ inventory = {}
 
 class InventoryWindow(QWidget):
 
-    item_selected = pyqtSignal(str, str)
+    item_selected = pyqtSignal(str, str, str)
 
 
     #SEND SIGNAL TO MAIN WINDOW (MOVE ITEM TO WINDOWS)
     def __init__(self, parent=None):
 
         super().__init__(parent)
+
+        # Button click sound
+        self.click_sound = QSoundEffect(self)
+
+        self.click_sound.setSource(
+            QUrl.fromLocalFile(os.path.join(BASE_DIR,"Ida","images","audio","clicked.wav"))
+        )
 
         # ====================================================
         # BACKGROUND WALLPAPER
@@ -40,8 +48,8 @@ class InventoryWindow(QWidget):
                     BASE_DIR,
                     "Ida",
                     "images",
-                    "Icons",
-                    "inventorybg.png"
+                    "wallpaper",
+                    "inventorybg.jpg"
                 )
             )
         )
@@ -491,17 +499,24 @@ class InventoryWindow(QWidget):
 
     def put_in_room(self, name, image):
 
-        # Remove from inventory
         if name in inventory:
+
+            category = inventory[name].get(
+                "category",
+                ""
+            )
+
             del inventory[name]
 
-        # Send item to main window
+        else:
+            category = ""
+
         self.item_selected.emit(
+            category,
             name,
             image
         )
 
-        # Refresh inventory
         self.show_inventory()
 
         
@@ -624,29 +639,3 @@ class RoomItem(QGraphicsPixmapItem):
         self.main_window.scene.removeItem(
             self
         )
-
-# ============================================================
-# MAIN WINDOW
-
-class Window(QDialog):
-
-    def __init__(self):
-
-        super().__init__()
-
-
-        self.shop_window = None
-
-        self.setWindowTitle(
-            "Lock In Space"
-        )
-
-        self.setWindowIcon(
-            QIcon("Ida/images/Icons/officialbg.png")
-        )
-
-        self.setFixedSize(
-            QSize(1100, 800)
-        )
-
-        self.InitWindow()
