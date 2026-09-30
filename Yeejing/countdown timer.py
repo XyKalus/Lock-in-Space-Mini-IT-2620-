@@ -146,12 +146,9 @@ class CountdownTimer(QWidget):
         progress_path = os.path.join( BASE_DIR,"study_progress.json")
 
         try:
-            if os.path.exists(  progress_path):
+            if os.path.exists(progress_path):
                 with open(progress_path,"r") as f:
                     data = json.load(f)
-
-                    if not isinstance(data,list):
-                        data = []
 
             else:
                 data = []
@@ -223,7 +220,7 @@ class CountdownTimer(QWidget):
         main_layout.addLayout(top_bar)
 
         # DESCRIPTION
-        name_label = QLabel( "Enter Your Description/Purpose for using timer : ")
+        name_label = QLabel("Enter Your Description/Purpose for using timer : ")
         name_label.setObjectName("fieldLabel")
         main_layout.addWidget(name_label)
         
@@ -234,7 +231,7 @@ class CountdownTimer(QWidget):
 
         # TIME 
         time_label = QLabel("Enter Time : ")
-        time_label.setObjectName( "fieldLabel")
+        time_label.setObjectName("fieldLabel")
         main_layout.addWidget( time_label)
      
         time_layout = QHBoxLayout()
@@ -245,7 +242,7 @@ class CountdownTimer(QWidget):
         hours_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
     
         self.hours_spin = QSpinBox()
-        self.hours_spin.setRange(0,23)
+        self.hours_spin.setRange(0,24)
         self.hours_spin.setValue(0)
         self.hours_spin.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -667,7 +664,7 @@ class CountdownTimer(QWidget):
             self.timer_finished = True
             self.start_alarm()
 
-
+        #AFTER TIMES UP START BTN FUNC
     def start_alarm(self):
         self.alarm_playing = True
         self.start_button.setText("Stop Alarm")
@@ -735,6 +732,7 @@ class CountdownTimer(QWidget):
 
         self.show_confirmation("reset")
 
+    #FOR IMCOMPLETE STATUS,WHEN RESET BEFORE TIMESUP
     def perform_reset(self):
 
         # SAVE IMCOMPLETE STATUS

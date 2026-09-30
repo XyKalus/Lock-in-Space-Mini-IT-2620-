@@ -43,7 +43,7 @@ def load_study_data():
         return []
 
     try:
-        with open(PROGRESS_FILE,"r",encoding="utf-8") as file:
+        with open(PROGRESS_FILE,"r") as file:
             data = json.load(file)
 
         if isinstance(data, list):
