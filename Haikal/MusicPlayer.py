@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
 
 
 class MusicController:
-    """Owns the player. Create ONCE and keep a reference (e.g. self.music)."""
+    """Owns the player. Create ONCE and keep a reference (e.g. self.music).""" # < for reference
 
     def __init__(self):
         self.player = QMediaPlayer()
