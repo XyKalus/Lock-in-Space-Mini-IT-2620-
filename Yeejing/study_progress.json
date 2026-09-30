@@ -1,4 +1,54 @@
 [
+<<<<<<< HEAD
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    },
+    {
+        "timer": "test",
+        "seconds": 1
+    }
+=======
   {
     "description": "test2.0",
     "start_time": "2026-09-25 20:42:49",
@@ -159,4 +209,5 @@
     "status": "Completed",
     "coin_earned": 1
   }
+>>>>>>> lock-in-space/feat
 ]
