@@ -56,11 +56,6 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
     def on_click(self):
         print('event added!')
-        self.event_button.setText(f"{input} added to events!")  #FIGURE OUT HOW THIS WORKS
-    
-
-   
-            
         
 
 def main():
