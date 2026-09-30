@@ -1,0 +1,17 @@
+{
+    "players": [
+        {
+            "name": "b",
+            "gender": "boy",
+            "coins": 70,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {},
+            "last_claim": "2026-09-30"
+        }
+    ]
+}

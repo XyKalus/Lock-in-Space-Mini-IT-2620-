@@ -8,15 +8,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from Ida.inventory import inventory
 from PyQt6.QtMultimedia import QSoundEffect
 
-coins = 1000
 purchased_items = set()
 
 class ShoppingCart(QWidget):
+    coins_changed = pyqtSignal(int)
 
     def __init__(self):
 
         super().__init__()
+        
 
+        # Shared coin system
 
         self.setStyleSheet("""
             QPushButton {
@@ -324,10 +326,10 @@ class ShoppingCart(QWidget):
             Qt.AlignmentFlag.AlignCenter
         )
 
+        self.coins = 0
+        self.coin_text = QLabel(str(self.coins))
+        
 
-        self.coin_text = QLabel(
-            "2000"
-        )
 
 
         font_id = QFontDatabase.addApplicationFont(
@@ -715,12 +717,22 @@ class ShoppingCart(QWidget):
 
         super().resizeEvent(event)
 
+    def set_coins(self, coins):
+        self.coins = coins
+        self.coin_text.setText(str(coins))
+
     def buy_item(self, name, image, price):
-        global coins
 
-        if coins >= price:
-            coins -= price
+        if self.coins >= price:
 
+            # Deduct coins
+            self.coins -= price
+
+            self.coin_text.setText(
+                str(self.coins)
+            )
+
+            # Add item to inventory
             inventory[name] = {
                 "image": image,
                 "price": price,
@@ -729,7 +741,10 @@ class ShoppingCart(QWidget):
 
             purchased_items.add(name)
 
-            self.coin_text.setText(str(coins))
+            # Tell main window about new coin amount
+            self.coins_changed.emit(
+                self.coins
+            )
 
             self.coin_sound.play()
 
@@ -739,9 +754,12 @@ class ShoppingCart(QWidget):
                 f"{name} has been added to your inventory!"
             )
 
-            self.show_category(self.current_category)
+            self.show_category(
+                self.current_category
+            )
 
         else:
+
             QMessageBox.warning(
                 self,
                 "Not enough coins!",
