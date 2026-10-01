@@ -3,46 +3,47 @@ import json
 import re
 from datetime import date, timedelta, datetime
 
-from PyQt6.QtWidgets import QWidget,QLabel,QVBoxLayout,QHBoxLayout,QFrame,QPushButton,QStackedWidget,QToolTip
-from PyQt6.QtCore import Qt, QRectF,pyqtSignal
-from PyQt6.QtGui import QPainter,QColor,QFont
+from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QPushButton, QStackedWidget, QToolTip
+from PyQt6.QtCore import Qt, QRectF, pyqtSignal
+from PyQt6.QtGui import QPainter, QColor, QFont
 
 from Yeejing.history_page import HistoryPage
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PROGRESS_FILE = os.path.join(BASE_DIR,"study_progress.json")
+PROGRESS_FILE = os.path.join(BASE_DIR, "study_progress.json")
 
 SAMPLE_WEEKLY_MINUTES = [
-    60,     # Monday
-    120,    # Tuesday
-    45,     # Wednesday
-    90,     # Thursday
-    180,    # Friday
-    150,    # Saturday
-    60      # Sunday
+    60,  # Monday
+    120,  # Tuesday
+    45,  # Wednesday
+    90,  # Thursday
+    180,  # Friday
+    150,  # Saturday
+    60  # Sunday
 ]
 
 SAMPLE_MONTHLY_MINUTES = [
-    60,     # January
-    120,    # February
-    210,    # March
-    90,     # April
-    300,    # May
-    150,    # June
-    240,    # July
-    180,    # August
-    360,    # September
-    120,    # October
-    270,    # November
-    420     # December
+    60,  # January
+    120,  # February
+    210,  # March
+    90,  # April
+    300,  # May
+    150,  # June
+    240,  # July
+    180,  # August
+    360,  # September
+    120,  # October
+    270,  # November
+    420  # December
 ]
+
 
 def load_study_data():
     if not os.path.exists(PROGRESS_FILE):
         return []
 
     try:
-        with open(PROGRESS_FILE,"r",encoding="utf-8") as file:
+        with open(PROGRESS_FILE, "r", encoding="utf-8") as file:
             data = json.load(file)
 
         if isinstance(data, list):
@@ -50,21 +51,21 @@ def load_study_data():
 
         if isinstance(data, dict):
             if isinstance(
-                data.get("sessions"),
-                list
+                    data.get("sessions"),
+                    list
             ):
                 return data["sessions"]
 
             if isinstance(
-                data.get("records"),
-                list
+                    data.get("records"),
+                    list
             ):
                 return data["records"]
 
         return []
 
     except Exception as e:
-        print("Error loading study_progress.json:",e)
+        print("Error loading study_progress.json:", e)
         return []
 
 
@@ -76,7 +77,7 @@ def duration_to_minutes(duration):
     if duration is None:
         return 0
 
-    if isinstance(duration,(int, float)):
+    if isinstance(duration, (int, float)):
         return float(duration)
 
     text = str(duration).strip()
@@ -84,21 +85,19 @@ def duration_to_minutes(duration):
     if not text:
         return 0
 
-
     if ":" in text:
         try:
             parts = text.split(":")
 
             if len(parts) == 3:
-
                 hours = int(parts[0])
                 minutes = int(parts[1])
                 seconds = int(parts[2])
 
-                return (hours * 60 + minutes+ seconds / 60)
-                   
+                return (hours * 60 + minutes + seconds / 60)
+
             if len(parts) == 2:
-                minutes = int( parts[0])
+                minutes = int(parts[0])
                 seconds = int(parts[1])
 
                 return (minutes + seconds / 60)
@@ -115,10 +114,10 @@ def duration_to_minutes(duration):
 
     if hour_match:
         total += (
-            float(
-                hour_match.group(1)
-            )
-            * 60
+                float(
+                    hour_match.group(1)
+                )
+                * 60
         )
 
     minute_match = re.search(
@@ -127,11 +126,9 @@ def duration_to_minutes(duration):
     )
 
     if minute_match:
-
         total += float(
             minute_match.group(1)
         )
-
 
     if total == 0:
         hour_match = re.search(
@@ -140,12 +137,11 @@ def duration_to_minutes(duration):
         )
 
         if hour_match:
-
             total += (
-                float(
-                    hour_match.group(1)
-                )
-                * 60
+                    float(
+                        hour_match.group(1)
+                    )
+                    * 60
             )
 
         minute_match = re.search(
@@ -154,14 +150,12 @@ def duration_to_minutes(duration):
         )
 
         if minute_match:
-
             total += float(
                 minute_match.group(1)
             )
 
     if total > 0:
         return total
-
 
     try:
         return float(
@@ -205,7 +199,7 @@ def get_record_date(record):
     if not value:
         return None
 
-    if isinstance( value,date):
+    if isinstance(value, date):
         return value
 
     value = str(value).strip()
@@ -218,7 +212,6 @@ def get_record_date(record):
 
     except ValueError:
         pass
-
 
     try:
         return datetime.strptime(
@@ -240,6 +233,7 @@ def get_record_date(record):
 
     return None
 
+
 def get_record_duration(record):
     duration = record.get(
         "duration",
@@ -260,23 +254,22 @@ class BarChart(QWidget):
     def __init__(self, chart_type="weekly"):
         super().__init__()
         self.chart_type = chart_type
-        self.setMinimumHeight(285 )
+        self.setMinimumHeight(285)
 
-        self.bar_color = QColor(66,133,244)
+        self.bar_color = QColor(66, 133, 244)
         self.setMouseTracking(True)
         self.hover_index = -1
-
 
     def get_week_data(self):
         today = date.today()
 
-        monday = (today - timedelta (days=today.weekday()))
-         
+        monday = (today - timedelta(days=today.weekday()))
+
         records = load_study_data()
         data = []
 
         for i in range(7):
-            current_day = (monday + timedelta( days=i))
+            current_day = (monday + timedelta(days=i))
 
             total_minutes = (SAMPLE_WEEKLY_MINUTES[i])
 
@@ -290,10 +283,9 @@ class BarChart(QWidget):
                     continue
 
                 if record_date == current_day:
-                    total_minutes += ( get_record_duration(record))
+                    total_minutes += (get_record_duration(record))
 
-            data.append((current_day,total_minutes))
-              
+            data.append((current_day, total_minutes))
 
         return data
 
@@ -303,7 +295,7 @@ class BarChart(QWidget):
         data = []
 
         for month in range(1, 13):
-            total_minutes = ( SAMPLE_MONTHLY_MINUTES[ month - 1])
+            total_minutes = (SAMPLE_MONTHLY_MINUTES[month - 1])
 
             for record in records:
                 if not is_completed(record):
@@ -316,20 +308,19 @@ class BarChart(QWidget):
 
                 if (record_date.year == today.year and record_date.month == month):
                     total_minutes += (get_record_duration(record))
-                
-            data.append((month,total_minutes))
+
+            data.append((month, total_minutes))
 
         return data
 
-
-    def get_chart_max(self,max_minutes):
+    def get_chart_max(self, max_minutes):
         if max_minutes <= 0:
             return 60
 
         if max_minutes <= 60:
             return 60
 
-        chart_max = (int((max_minutes + 29)// 30) * 30)
+        chart_max = (int((max_minutes + 29) // 30) * 30)
         chart_max += 30
 
         return chart_max
@@ -346,11 +337,11 @@ class BarChart(QWidget):
         chart_right = (width - horizontal_margin)
         chart_width = (chart_right - chart_left)
         chart_height = (height - top - bottom)
-        
-        return (chart_left,chart_right,top, chart_height,chart_width)
 
-    def mouseMoveEvent(self,event):
-        (left,right,top,chart_height,chart_width) = self.get_chart_geometry()
+        return (chart_left, chart_right, top, chart_height, chart_width)
+
+    def mouseMoveEvent(self, event):
+        (left, right, top, chart_height, chart_width) = self.get_chart_geometry()
 
         if chart_width <= 0:
             return
@@ -368,26 +359,26 @@ class BarChart(QWidget):
 
         bar_width = (bar_spacing * 0.48)
 
-        mouse_x = (event.position().x() )
+        mouse_x = (event.position().x())
 
-        index = int( (mouse_x - left) / bar_spacing)
+        index = int((mouse_x - left) / bar_spacing)
 
-        if ( index < 0 or index >= len(data)):
+        if (index < 0 or index >= len(data)):
             QToolTip.hideText()
             self.hover_index = -1
             self.update()
 
             return
 
-        x = (left+ index * bar_spacing+ (bar_spacing- bar_width) / 2)
+        x = (left + index * bar_spacing + (bar_spacing - bar_width) / 2)
 
-        if ( mouse_x >= x and mouse_x <= x + bar_width):
+        if (mouse_x >= x and mouse_x <= x + bar_width):
             period, minutes = data[index]
 
             tooltip_text = format_minutes(minutes)
             self.hover_index = index
 
-            QToolTip.showText( event.globalPosition().toPoint(), tooltip_text,self)
+            QToolTip.showText(event.globalPosition().toPoint(), tooltip_text, self)
             self.update()
 
         else:
@@ -395,20 +386,20 @@ class BarChart(QWidget):
             self.hover_index = -1
             self.update()
 
-    def leaveEvent(self,event):
+    def leaveEvent(self, event):
         QToolTip.hideText()
         self.hover_index = -1
         self.update()
         super().leaveEvent(event)
 
-    def paintEvent(self,event):
+    def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         width = self.width()
         height = self.height()
 
-        painter.fillRect(self.rect(),QColor(248,250,253))
+        painter.fillRect(self.rect(), QColor(248, 250, 253))
 
         if self.chart_type == "weekly":
             data = self.get_week_data()
@@ -420,11 +411,11 @@ class BarChart(QWidget):
             painter.end()
             return
 
-        max_minutes = max(( item[1] for item in data),default=0)
+        max_minutes = max((item[1] for item in data), default=0)
 
         chart_max = self.get_chart_max(max_minutes)
 
-        (left,right,top,chart_height,chart_width) = self.get_chart_geometry()
+        (left, right, top, chart_height, chart_width) = self.get_chart_geometry()
 
         if chart_width <= 0:
             painter.end()
@@ -435,7 +426,7 @@ class BarChart(QWidget):
             return
 
         bar_spacing = (chart_width / len(data))
-        bar_width = ( bar_spacing * 0.48)
+        bar_width = (bar_spacing * 0.48)
 
         today = date.today()
 
@@ -445,53 +436,57 @@ class BarChart(QWidget):
         else:
             today_index = today.month - 1
 
-        highlight_x = (left + today_index * bar_spacing )
+        highlight_x = (left + today_index * bar_spacing)
 
-        painter.setPen( Qt.PenStyle.NoPen)
-        painter.setBrush(QColor(66,133,244,25))
-        painter.drawRect( QRectF(highlight_x,top,bar_spacing,chart_height))
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(QColor(66, 133, 244, 25))
+        painter.drawRect(QRectF(highlight_x, top, bar_spacing, chart_height))
 
-        for index, (period,minutes) in enumerate(data):
-            x = (left + index* bar_spacing+ (bar_spacing - bar_width) / 2)
+        for index, (period, minutes) in enumerate(data):
+            x = (left + index * bar_spacing + (bar_spacing - bar_width) / 2)
 
             if chart_max > 0:
-                bar_height = (minutes / chart_max* chart_height)
+                bar_height = (minutes / chart_max * chart_height)
 
             else:
                 bar_height = 0
 
-            y = (top + chart_height- bar_height)
+            y = (top + chart_height - bar_height)
 
             painter.setPen(Qt.PenStyle.NoPen)
 
             if index == today_index:
                 painter.setBrush(self.bar_color)
-              
+
             else:
-                painter.setBrush(QColor(66,133,244,200))
+                painter.setBrush(QColor(66, 133, 244, 200))
 
             if index == self.hover_index:
-                painter.setBrush(QColor(40,110,220))
+                painter.setBrush(QColor(40, 110, 220))
 
             if minutes > 0:
-                painter.drawRoundedRect(QRectF(x,y,bar_width,bar_height),6,6)
+                painter.drawRoundedRect(QRectF(x, y, bar_width, bar_height), 6, 6)
 
-            painter.setPen(QColor(50,60,75))
+            painter.setPen(QColor(50, 60, 75))
 
             if self.chart_type == "weekly":
                 day_name = period.strftime("%a")
 
-                painter.drawText(QRectF(x - 15,top + chart_height+ 10,bar_width + 30,18),Qt.AlignmentFlag.AlignCenter,day_name)
+                painter.drawText(QRectF(x - 15, top + chart_height + 10, bar_width + 30, 18),
+                                 Qt.AlignmentFlag.AlignCenter, day_name)
 
                 date_text = period.strftime("%d %b")
 
-                painter.drawText(QRectF(x - 20,top+ chart_height+ 30,bar_width + 40,18),Qt.AlignmentFlag.AlignCenter,date_text)
+                painter.drawText(QRectF(x - 20, top + chart_height + 30, bar_width + 40, 18),
+                                 Qt.AlignmentFlag.AlignCenter, date_text)
 
             else:
-                month_name = date(today.year,period,1).strftime("%b")
-                painter.drawText(QRectF(x - 15,top+ chart_height+ 10,bar_width + 30,18),Qt.AlignmentFlag.AlignCenter,month_name)
+                month_name = date(today.year, period, 1).strftime("%b")
+                painter.drawText(QRectF(x - 15, top + chart_height + 10, bar_width + 30, 18),
+                                 Qt.AlignmentFlag.AlignCenter, month_name)
 
         painter.end()
+
 
 class StudyStatistics(QWidget):
     back_main = pyqtSignal()
@@ -513,7 +508,7 @@ class StudyStatistics(QWidget):
         self.pages.addWidget(self.history_page)
 
         main_layout = QVBoxLayout()
-        main_layout.setContentsMargins(0,0,0,0)
+        main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.addWidget(self.pages)
         self.setLayout(main_layout)
 
@@ -535,16 +530,16 @@ class StudyStatistics(QWidget):
             if record_date == today:
                 today_minutes += minutes
 
-        return (today_minutes,total_minutes)
+        return (today_minutes, total_minutes)
 
     # UPDATE STATISTICS (TOTAL TIME USAGE & TODAY TIME USAGE)
     def update_statistics(self):
         (today_minutes, total_minutes) = self.calculate_statistics()
         self.today_progress.setText(
-            "Today's Progress\n\n"+ format_minutes(today_minutes))
+            "Today's Progress\n\n" + format_minutes(today_minutes))
 
         self.total_study_time.setText(
-            "Total Study Time\n\n"+ format_minutes(total_minutes))
+            "Total Study Time\n\n" + format_minutes(total_minutes))
 
         self.weekly_chart.update()
         self.monthly_chart.update()
@@ -552,18 +547,18 @@ class StudyStatistics(QWidget):
     # STATISTICS PAGE
     def study_statistics_page(self):
         main_layout = QVBoxLayout()
-        main_layout.setContentsMargins(30,20,30,20)
+        main_layout.setContentsMargins(30, 20, 30, 20)
         main_layout.setSpacing(12)
-        
+
         # QUIT BTN
         top_bar = QHBoxLayout()
-        top_bar.setContentsMargins(0,0,0,0)
+        top_bar.setContentsMargins(0, 0, 0, 0)
         top_bar.addStretch()
 
         self.quit_btn = QPushButton("X")
-        self.quit_btn.setFixedSize(45,45)
+        self.quit_btn.setFixedSize(45, 45)
         self.quit_btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.quit_btn.clicked.connect(self.back_main.emit) #connect to main code
+        self.quit_btn.clicked.connect(self.back_main.emit)  # connect to main code
 
         self.quit_btn.setStyleSheet(
             """
@@ -582,9 +577,9 @@ class StudyStatistics(QWidget):
         top_bar.addWidget(self.quit_btn)
         main_layout.addLayout(top_bar)
 
-        #TITLE
+        # TITLE
         title = QLabel("Study Statistics")
-        title.setFont(QFont("Cave Story",40))
+        title.setFont(QFont("Cave Story", 40))
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(title)
 
@@ -592,7 +587,7 @@ class StudyStatistics(QWidget):
         history_layout = QHBoxLayout()
         history_layout.addStretch()
         self.history_btn = QPushButton("History")
-        self.history_btn.setFixedSize(110,35)
+        self.history_btn.setFixedSize(110, 35)
         self.history_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         self.history_btn.clicked.connect(self.show_history)
 
@@ -611,9 +606,9 @@ class StudyStatistics(QWidget):
         )
 
         history_layout.addWidget(self.history_btn)
-        main_layout.addLayout(history_layout )
+        main_layout.addLayout(history_layout)
 
-        #TODAY TOTAL TIME AND ALL TOTAL SUM
+        # TODAY TOTAL TIME AND ALL TOTAL SUM
         stats_layout = QHBoxLayout()
         self.today_progress = QLabel("Today's Progress\n\n0m")
 
@@ -651,7 +646,7 @@ class StudyStatistics(QWidget):
         # WEEKLY / MONTHLY BUTTONS
         week_month_layout = QHBoxLayout()
         self.weekly = QPushButton("Weekly")
-        self.weekly.setFixedSize(105,36)
+        self.weekly.setFixedSize(105, 36)
         self.weekly.setCursor(Qt.CursorShape.PointingHandCursor)
 
         self.weekly.setStyleSheet(
@@ -670,7 +665,7 @@ class StudyStatistics(QWidget):
 
         self.weekly.clicked.connect(self.show_weekly)
         self.monthly = QPushButton("Monthly")
-        self.monthly.setFixedSize(105,36)
+        self.monthly.setFixedSize(105, 36)
         self.monthly.setCursor(Qt.CursorShape.PointingHandCursor)
 
         self.monthly.setStyleSheet(
@@ -708,7 +703,7 @@ class StudyStatistics(QWidget):
 
         chart_layout = QVBoxLayout(self.chart_frame)
 
-        chart_layout.setContentsMargins(20,8,20,8)
+        chart_layout.setContentsMargins(20, 8, 20, 8)
         chart_layout.setSpacing(3)
 
         self.chart_pages = QStackedWidget()
@@ -731,11 +726,10 @@ class StudyStatistics(QWidget):
     # SHOW WEEKLY
     def show_weekly(self):
         self.chart_pages.setCurrentWidget(self.weekly_chart)
-    
+
         self.weekly_chart.hover_index = -1
         QToolTip.hideText()
         self.weekly_chart.update()
-
 
     def show_monthly(self):
         self.chart_pages.setCurrentWidget(self.monthly_chart)
