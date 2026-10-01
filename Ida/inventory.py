@@ -183,9 +183,7 @@ class InventoryWindow(QWidget):
         # CLOSE BUTTON
         # ----------------------------------------------------
 
-        self.close_button = QPushButton(
-            "X"
-        )
+        self.close_button = QPushButton("X")
 
         self.close_button.setFixedSize(
             55,
@@ -216,21 +214,11 @@ class InventoryWindow(QWidget):
 
         x_layout = QVBoxLayout()
 
-        x_layout.setContentsMargins(
-            0,
-            3,
-            0,
-            10
-        )
+        x_layout.setContentsMargins(0,3,0,10)
 
-        x_layout.addWidget(
-            self.close_button
-        )
+        x_layout.addWidget(self.close_button)
 
-        top_row.addLayout(
-            x_layout
-        )
-
+        top_row.addLayout(x_layout)
 
         # ----------------------------------------------------
         # ADD TOP ROW TO HEADER
@@ -243,8 +231,6 @@ class InventoryWindow(QWidget):
         header.setLayout(
             header_layout
         )
-
-    
 
     # =======================================================
     # MAIN LAYOUT (INVENTORY)
@@ -610,7 +596,6 @@ class RoomItem(QGraphicsPixmapItem):
         )
 
     def mousePressEvent(self, event):
-
         if event.button() == Qt.MouseButton.RightButton:
 
             self.main_window.return_to_inventory(
@@ -618,12 +603,12 @@ class RoomItem(QGraphicsPixmapItem):
                 self.image
             )
 
-            self.main_window.scene.removeItem(
-                self
-            )
+            self.main_window.scene.removeItem(self)
+
+            # Save room AFTER removing the item
+            self.main_window.save_current_player_state()
 
             event.accept()
-
             return
 
         super().mousePressEvent(event)

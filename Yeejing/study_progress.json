@@ -1,5 +1,16 @@
 [
   {
+<<<<<<< HEAD
+=======
+    "description": "test2.0",
+    "start_time": "2026-09-25 20:42:49",
+    "end_time": "2026-09-25 20:43:51",
+    "duration": "00:01:00",
+    "status": "Completed",
+    "coin_earned": 1
+  },
+  {
+>>>>>>> main
     "description": "yo",
     "start_time": "2026-09-25 20:51:40",
     "end_time": "2026-09-25 20:52:40",
@@ -70,6 +81,7 @@
     "duration": "00:02:00",
     "status": "Incomplete",
     "coin_earned": 0
+<<<<<<< HEAD
   },
   {
     "description": "aa",
@@ -145,3 +157,7 @@
   }
 >>>>>>> lock-in-space/feat
 ]
+=======
+  }
+]
+>>>>>>> main

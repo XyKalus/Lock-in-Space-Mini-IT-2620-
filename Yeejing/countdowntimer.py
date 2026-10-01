@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import sys
+=======
+>>>>>>> main
 import os
 import json
 from datetime import datetime
 
+<<<<<<< HEAD
 from PyQt6.QtWidgets import QApplication,QWidget,QLabel,QPushButton,QSpinBox,QVBoxLayout,QHBoxLayout,QLineEdit,QFrame
 from PyQt6.QtCore import QTimer,Qt,QRectF,QUrl,QSize
 from PyQt6.QtGui import QPainter,QColor,QPen,QFont,QFontDatabase
@@ -12,12 +16,24 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 ALARM_FILE = os.path.join(BASE_DIR, "alarm.mp3")
 
+=======
+from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QSpinBox, QVBoxLayout, QHBoxLayout, QLineEdit, QFrame
+from PyQt6.QtCore import QTimer, Qt, QRectF, QUrl, pyqtSignal
+from PyQt6.QtGui import QPainter, QColor, QPen, QFont
+from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ALARM_FILE = os.path.join(BASE_DIR, "alarm.mp3")
+
+
+>>>>>>> main
 class CircularTimerWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.progress = 1.0
         self.display_time = "00:00:00"
 
+<<<<<<< HEAD
 
     def set_data(self, progress, text):
         self.progress = max( 0.0, min(1.0, progress))
@@ -25,6 +41,13 @@ class CircularTimerWidget(QWidget):
         self.update()
 
 
+=======
+    def set_data(self, progress, text):
+        self.progress = max(0.0, min(1.0, progress))
+        self.display_time = text
+        self.update()
+
+>>>>>>> main
     def paintEvent(self, event):
         painter = QPainter(self)
 
@@ -33,9 +56,15 @@ class CircularTimerWidget(QWidget):
         width = self.width()
         height = self.height()
 
+<<<<<<< HEAD
         size = min(width,height) - 20
 
         rect = QRectF((width - size) / 2,(height - size) / 2,size,size)
+=======
+        size = min(width, height) - 20
+
+        rect = QRectF((width - size) / 2, (height - size) / 2, size, size)
+>>>>>>> main
 
         if self.progress >= 0.5:
             t = ((1.0 - self.progress) / 0.5)
@@ -45,12 +74,17 @@ class CircularTimerWidget(QWidget):
             b = 0
 
         else:
+<<<<<<< HEAD
             t = (self.progress/ 0.5)
+=======
+            t = (self.progress / 0.5)
+>>>>>>> main
 
             r = 255
             g = int(255 * t)
             b = 0
 
+<<<<<<< HEAD
         dynamic_color = QColor(r,g,b)
 
         pen_bg = QPen(QColor(230, 230, 230),12)
@@ -73,6 +107,31 @@ class CountdownTimer(QWidget):
         self.setFixedSize(QSize(1100, 800))
         self.setGeometry(250,25,1100,800)
          
+=======
+        dynamic_color = QColor(r, g, b)
+
+        pen_bg = QPen(QColor(230, 230, 230), 12)
+
+        painter.setPen(pen_bg)
+        painter.drawEllipse(rect)
+        pen_progress = QPen(dynamic_color, 12, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap)
+        painter.setPen(pen_progress)
+
+        angle = int(360 * self.progress * 16)
+        painter.drawArc(rect, 90 * 16, -angle)
+        painter.setPen(QColor(50, 50, 50))
+        painter.setFont(QFont("Comic Sans MS", 26, QFont.Weight.Bold))
+        painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, self.display_time)
+
+
+class CountdownTimer(QWidget):
+    back_main = pyqtSignal()
+    coins_earned = pyqtSignal(int)
+
+    def __init__(self):
+        super().__init__()
+
+>>>>>>> main
         self.total_seconds = 0
         self.remaining_seconds = 0
 
@@ -90,7 +149,11 @@ class CountdownTimer(QWidget):
         self.timer = QTimer(self)
         self.timer.setInterval(1000)
         self.timer.timeout.connect(self.countdown)
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> main
         self.setup_audio()
         self.setup_ui()
         self.setup_popup()
@@ -102,13 +165,20 @@ class CountdownTimer(QWidget):
         secs = seconds % 60
 
         return (f"{hours:02d}:" f"{minutes:02d}:"f"{secs:02d}")
+<<<<<<< HEAD
        
+=======
+>>>>>>> main
 
     def coin_value_for(self, seconds):
         return seconds // 60
 
+<<<<<<< HEAD
 
     def save_session(self,description,start_time,end_time,duration,status,coin_earned):
+=======
+    def save_session(self, description, start_time, end_time, duration, status, coin_earned):
+>>>>>>> main
         record = {
             "description":
                 description
@@ -141,6 +211,7 @@ class CountdownTimer(QWidget):
                 coin_earned
         }
 
+<<<<<<< HEAD
         progress_path = os.path.join( BASE_DIR,"study_progress.json")
 
         try:
@@ -149,12 +220,26 @@ class CountdownTimer(QWidget):
                     data = json.load(f)
 
                     if not isinstance(data,list):
+=======
+        progress_path = os.path.join(BASE_DIR, "study_progress.json")
+
+        try:
+            if os.path.exists(progress_path):
+                with open(progress_path, "r") as f:
+                    data = json.load(f)
+
+                    if not isinstance(data, list):
+>>>>>>> main
                         data = []
 
             else:
                 data = []
 
+<<<<<<< HEAD
         except (json.JSONDecodeError,OSError) as e:
+=======
+        except (json.JSONDecodeError, OSError) as e:
+>>>>>>> main
 
             print(f"[study_progress] "f"could not read "f"{progress_path}: {e}")
             data = []
@@ -162,23 +247,38 @@ class CountdownTimer(QWidget):
         data.append(record)
 
         try:
+<<<<<<< HEAD
             with open(progress_path,"w") as f:
                 json.dump(data,f,indent=2)
 
             print(f"[study_progress] " f"session saved to " f"{progress_path}")
                
+=======
+            with open(progress_path, "w") as f:
+                json.dump(data, f, indent=2)
+
+            print(f"[study_progress] " f"session saved to " f"{progress_path}")
+
+>>>>>>> main
         except OSError as e:
 
             print(f"[study_progress] "f"FAILED to write "f"{progress_path}: {e}")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     def setup_audio(self):
         self.audio_output = QAudioOutput(self)
         self.audio_output.setVolume(1.0)
         self.player = QMediaPlayer(self)
         self.player.setAudioOutput(self.audio_output)
         self.player.errorOccurred.connect(self.on_player_error)
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> main
         if os.path.exists(ALARM_FILE):
             self.player.setSource(QUrl.fromLocalFile(ALARM_FILE))
 
@@ -187,19 +287,31 @@ class CountdownTimer(QWidget):
         else:
             print(f"[alarm] WARNING: alarm file not found "f"at {ALARM_FILE}")
 
+<<<<<<< HEAD
 
     def on_player_error(self,error,error_string):
+=======
+    def on_player_error(self, error, error_string):
+>>>>>>> main
         print(f"[alarm] QMediaPlayer error: " f"{error_string}")
 
     def setup_ui(self):
         main_layout = QVBoxLayout(self)
         main_layout.setSpacing(20)
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> main
         top_bar = QHBoxLayout()
         top_bar.addStretch()
 
         self.quit_button = QPushButton("X")
+<<<<<<< HEAD
         self.quit_button.setFixedSize(45,45)
+=======
+        self.quit_button.setFixedSize(45, 45)
+>>>>>>> main
         self.quit_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.quit_button.setObjectName("quitButton")
         self.quit_button.clicked.connect(self.quit_clicked)
@@ -215,6 +327,7 @@ class CountdownTimer(QWidget):
             }
             """
         )
+<<<<<<< HEAD
         
         top_bar.addWidget(self.quit_button)
          
@@ -244,16 +357,52 @@ class CountdownTimer(QWidget):
     
         self.hours_spin = QSpinBox()
         self.hours_spin.setRange(0,23)
+=======
+
+        top_bar.addWidget(self.quit_button)
+
+        main_layout.addLayout(top_bar)
+
+        # DESCRIPTION
+        name_label = QLabel("Enter Your Description/Purpose for using timer : ")
+        name_label.setObjectName("fieldLabel")
+        main_layout.addWidget(name_label)
+
+        self.name_input = QLineEdit()
+        self.name_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        main_layout.addWidget(self.name_input)
+
+        # TIME
+        time_label = QLabel("Enter Time : ")
+        time_label.setObjectName("fieldLabel")
+        main_layout.addWidget(time_label)
+
+        time_layout = QHBoxLayout()
+        time_layout.setSpacing(15)
+
+        hours_layout = QVBoxLayout()
+        hours_label = QLabel("Hours")
+        hours_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.hours_spin = QSpinBox()
+        self.hours_spin.setRange(0, 23)
+>>>>>>> main
         self.hours_spin.setValue(0)
         self.hours_spin.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         hours_layout.addWidget(hours_label)
         hours_layout.addWidget(self.hours_spin)
+<<<<<<< HEAD
          
+=======
+
+>>>>>>> main
         minutes_layout = QVBoxLayout()
         minutes_label = QLabel("Minutes")
         minutes_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.minutes_spin = QSpinBox()
+<<<<<<< HEAD
         self.minutes_spin.setRange(0,59)
         self.minutes_spin.setValue(0)
         self.minutes_spin.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -270,12 +419,31 @@ class CountdownTimer(QWidget):
         self.seconds_spin.setValue(0)
         self.seconds_spin.setAlignment(Qt.AlignmentFlag.AlignCenter)
     
+=======
+        self.minutes_spin.setRange(0, 59)
+        self.minutes_spin.setValue(0)
+        self.minutes_spin.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        minutes_layout.addWidget(minutes_label)
+        minutes_layout.addWidget(self.minutes_spin)
+
+        seconds_layout = QVBoxLayout()
+        seconds_label = QLabel("Seconds")
+        seconds_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.seconds_spin = QSpinBox()
+        self.seconds_spin.setRange(0, 59)
+        self.seconds_spin.setValue(0)
+        self.seconds_spin.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+>>>>>>> main
         seconds_layout.addWidget(seconds_label)
         seconds_layout.addWidget(self.seconds_spin)
 
         time_layout.addLayout(hours_layout)
         time_layout.addLayout(minutes_layout)
         time_layout.addLayout(seconds_layout)
+<<<<<<< HEAD
          
         main_layout.addLayout(time_layout)
      
@@ -296,14 +464,43 @@ class CountdownTimer(QWidget):
         button_layout = QHBoxLayout()
         button_layout.setSpacing(15)
          
+=======
+
+        main_layout.addLayout(time_layout)
+
+        self.timer_name_label = QLabel("")
+        self.timer_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.timer_name_label.setObjectName("timerName")
+
+        self.timer_name_label.setToolTip("")
+
+        main_layout.addWidget(self.timer_name_label)
+
+        self.circle_timer = CircularTimerWidget(self)
+        self.circle_timer.setFixedSize(300, 300)
+
+        main_layout.addWidget(self.circle_timer, 0, Qt.AlignmentFlag.AlignCenter)
+
+        # START RESET BTN
+        button_layout = QHBoxLayout()
+        button_layout.setSpacing(15)
+
+>>>>>>> main
         self.start_button = QPushButton("Start")
         self.start_button.setObjectName("startButton")
         self.reset_button = QPushButton("Reset")
         self.reset_button.setObjectName("resetButton")
+<<<<<<< HEAD
           
         button_layout.addWidget(self.start_button)
         button_layout.addWidget(self.reset_button)
            
+=======
+
+        button_layout.addWidget(self.start_button)
+        button_layout.addWidget(self.reset_button)
+
+>>>>>>> main
         main_layout.addLayout(button_layout)
 
         self.start_button.clicked.connect(self.start_stop)
@@ -312,9 +509,15 @@ class CountdownTimer(QWidget):
         self.hours_spin.valueChanged.connect(self.set_time)
         self.minutes_spin.valueChanged.connect(self.set_time)
         self.seconds_spin.valueChanged.connect(self.set_time)
+<<<<<<< HEAD
        
         self.name_input.textChanged.connect(self.update_name)
    
+=======
+
+        self.name_input.textChanged.connect(self.update_name)
+
+>>>>>>> main
         self.setStyleSheet(
             """
             #fieldLabel {
@@ -375,6 +578,7 @@ class CountdownTimer(QWidget):
 
     def setup_popup(self):
         self.popup_overlay = QWidget(self)
+<<<<<<< HEAD
           
         overlay_layout = QVBoxLayout(self.popup_overlay)
         overlay_layout.setContentsMargins(0,0,0,0)
@@ -382,6 +586,15 @@ class CountdownTimer(QWidget):
         
         self.popup_card = QFrame(self.popup_overlay)
         self.popup_card.setFixedSize(560,280)
+=======
+
+        overlay_layout = QVBoxLayout(self.popup_overlay)
+        overlay_layout.setContentsMargins(0, 0, 0, 0)
+        overlay_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.popup_card = QFrame(self.popup_overlay)
+        self.popup_card.setFixedSize(560, 280)
+>>>>>>> main
         self.popup_card.setStyleSheet(
             """
             QFrame {
@@ -394,6 +607,7 @@ class CountdownTimer(QWidget):
         )
 
         card_layout = QVBoxLayout(self.popup_card)
+<<<<<<< HEAD
         card_layout.setContentsMargins(30,25,30,25)
         card_layout.setSpacing(18)
      
@@ -402,6 +616,15 @@ class CountdownTimer(QWidget):
         self.popup_title = QLabel()
         self.popup_title.setAlignment( Qt.AlignmentFlag.AlignCenter)
         
+=======
+        card_layout.setContentsMargins(30, 25, 30, 25)
+        card_layout.setSpacing(18)
+
+        # POP UP CORFIMATION
+        self.popup_title = QLabel()
+        self.popup_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+>>>>>>> main
         self.popup_title.setStyleSheet(
             """
             QLabel {
@@ -414,7 +637,11 @@ class CountdownTimer(QWidget):
         )
 
         card_layout.addWidget(self.popup_title)
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> main
         self.popup_message = QLabel("")
         self.popup_message.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.popup_message.setWordWrap(True)
@@ -482,18 +709,26 @@ class CountdownTimer(QWidget):
 
         self.popup_overlay.hide()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     def resizeEvent(self, event):
         if hasattr(self, "popup_overlay"):
             self.popup_overlay.setGeometry(self.rect())
 
         super().resizeEvent(event)
 
+<<<<<<< HEAD
     # BACK TO MAIN CODE BTN ,NOW PUT FOR QUIT APP TEMPORARILY    
+=======
+    # BACK TO MAIN CODE BTN ,NOW PUT FOR QUIT APP TEMPORARILY
+>>>>>>> main
 
     def quit_clicked(self):
         if self.alarm_playing:
             self.stop_alarm()
+<<<<<<< HEAD
             self.close()
             return
 
@@ -503,13 +738,29 @@ class CountdownTimer(QWidget):
 
         if not self.timer_started:
             self.close()
+=======
+            self.back_main.emit()
+            return
+
+        if self.timer_finished:
+            self.back_main.emit()
+            return
+
+        if not self.timer_started:
+            self.back_main.emit()
+>>>>>>> main
             return
 
         self.show_confirmation("quit")
 
+<<<<<<< HEAD
 
     # RESET / QUIT POP UP
     def show_confirmation(self,popup_type):
+=======
+    # RESET / QUIT POP UP
+    def show_confirmation(self, popup_type):
+>>>>>>> main
         self.popup_type = popup_type
 
         self.popup_was_running = (self.timer_running)
@@ -533,7 +784,11 @@ class CountdownTimer(QWidget):
             self.popup_message.setText(
                 "Your current timer session is not completed.\n\nIf you leave now, this session will be saved as incomplete.\n\nDo you want to quit?"
             )
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> main
         # SHOW POPUP CORFIMATION
         self.popup_overlay.setGeometry(self.rect())
         self.popup_overlay.raise_()
@@ -551,7 +806,10 @@ class CountdownTimer(QWidget):
         elif popup_type == "quit":
             self.perform_quit()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     # NO BTN ON RESET / QUIT BTN
     def popup_no(self):
         self.popup_overlay.hide()
@@ -559,8 +817,12 @@ class CountdownTimer(QWidget):
         self.popup_type = None
 
         if ((popup_type == "reset" or popup_type == "quit")
+<<<<<<< HEAD
             and self.popup_was_running and not self.timer_finished and not self.alarm_playing):
 
+=======
+                and self.popup_was_running and not self.timer_finished and not self.alarm_playing):
+>>>>>>> main
             self.timer.start()
             self.timer_running = True
             self.start_button.setText("Pause")
@@ -569,7 +831,11 @@ class CountdownTimer(QWidget):
 
     def update_name(self):
         name = (self.name_input.text().strip())
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> main
         if not name:
             self.timer_name_label.setText("")
             self.timer_name_label.setToolTip("")
@@ -578,14 +844,22 @@ class CountdownTimer(QWidget):
 
         max_length = 50
         if len(name) > max_length:
+<<<<<<< HEAD
             display_name = (name[:max_length]+ "...")
+=======
+            display_name = (name[:max_length] + "...")
+>>>>>>> main
 
         else:
             display_name = name
 
         self.timer_name_label.setText(display_name)
         self.timer_name_label.setToolTip(name)
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> main
     def set_time(self):
         if self.timer_running:
             return
@@ -599,20 +873,31 @@ class CountdownTimer(QWidget):
         hours = (self.hours_spin.value())
         minutes = (self.minutes_spin.value())
         seconds = (self.seconds_spin.value())
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> main
         self.total_seconds = (hours * 3600 + minutes * 60 + seconds)
         self.remaining_seconds = (self.total_seconds)
         self.update_display()
 
     def format_time(self):
         hours = (self.remaining_seconds // 3600)
+<<<<<<< HEAD
         minutes = (self.remaining_seconds % 3600 ) // 60
         seconds = (self.remaining_seconds % 60)
         
+=======
+        minutes = (self.remaining_seconds % 3600) // 60
+        seconds = (self.remaining_seconds % 60)
+
+>>>>>>> main
         return (f"{hours:02d}:" f"{minutes:02d}:" f"{seconds:02d}")
 
     def update_display(self):
         text = (self.format_time())
+<<<<<<< HEAD
         
         if self.total_seconds > 0:
             progress = (self.remaining_seconds / self.total_seconds)
@@ -623,6 +908,18 @@ class CountdownTimer(QWidget):
         self.circle_timer.set_data(progress,text)
     
     #START /STOP/ RESET FUNC
+=======
+
+        if self.total_seconds > 0:
+            progress = (self.remaining_seconds / self.total_seconds)
+
+        else:
+            progress = 0
+
+        self.circle_timer.set_data(progress, text)
+
+    # START /STOP/ RESET FUNC
+>>>>>>> main
     def start_stop(self):
         if self.alarm_playing:
             self.stop_alarm()
@@ -635,7 +932,11 @@ class CountdownTimer(QWidget):
             self.timer.stop()
             self.timer_running = False
             self.start_button.setText("Start")
+<<<<<<< HEAD
          
+=======
+
+>>>>>>> main
             return
 
         if self.remaining_seconds <= 0:
@@ -653,7 +954,11 @@ class CountdownTimer(QWidget):
         self.timer.start()
         self.timer_running = True
         self.start_button.setText("Pause")
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> main
     def countdown(self):
         if self.remaining_seconds > 0:
             self.remaining_seconds -= 1
@@ -665,18 +970,30 @@ class CountdownTimer(QWidget):
             self.timer_finished = True
             self.start_alarm()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     def start_alarm(self):
         self.alarm_playing = True
         self.start_button.setText("Stop Alarm")
         self.reset_button.setEnabled(False)
 
+<<<<<<< HEAD
         coin = (self.coin_value_for( self.total_seconds))
            
+=======
+        coin = (self.coin_value_for(self.total_seconds))
+
+        # Send earned coins to Main Window
+        self.coins_earned.emit(coin)
+
+>>>>>>> main
         # SAVE WHEN STATUS COMPLETED
         end_time = datetime.now()
         self.save_session(
             description=
+<<<<<<< HEAD
                 self.name_input.text().strip(),
 
             start_time=
@@ -693,12 +1010,33 @@ class CountdownTimer(QWidget):
 
             coin_earned=
                 coin
+=======
+            self.name_input.text().strip(),
+
+            start_time=
+            self.session_start_time,
+
+            end_time=
+            end_time,
+
+            duration=
+            self.total_seconds,
+
+            status=
+            "Completed",
+
+            coin_earned=
+            coin
+>>>>>>> main
         )
 
         self.session_saved = True
 
+<<<<<<< HEAD
      
 
+=======
+>>>>>>> main
         if os.path.exists(ALARM_FILE):
             self.player.setPosition(0)
             self.player.play()
@@ -725,7 +1063,10 @@ class CountdownTimer(QWidget):
             self.perform_reset()
             return
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
         if not self.timer_started:
             self.perform_reset()
 
@@ -741,6 +1082,7 @@ class CountdownTimer(QWidget):
 
             self.save_session(
                 description=
+<<<<<<< HEAD
                     self.name_input.text().strip(),
 
                 start_time=
@@ -757,6 +1099,24 @@ class CountdownTimer(QWidget):
 
                 coin_earned=
                     0
+=======
+                self.name_input.text().strip(),
+
+                start_time=
+                self.session_start_time,
+
+                end_time=
+                end_time,
+
+                duration=
+                self.total_seconds,
+
+                status=
+                "Incomplete",
+
+                coin_earned=
+                0
+>>>>>>> main
             )
 
             self.session_saved = True
@@ -775,13 +1135,21 @@ class CountdownTimer(QWidget):
         self.start_button.setText("Start")
         self.start_button.setEnabled(True)
         self.reset_button.setEnabled(True)
+<<<<<<< HEAD
            
+=======
+
+>>>>>>> main
         # CLEAR NAME
         self.name_input.clear()
         self.name_input.setReadOnly(False)
         self.timer_name_label.setText("")
         self.timer_name_label.setToolTip("")
+<<<<<<< HEAD
            
+=======
+
+>>>>>>> main
         # RESET SPINBOX
 
         self.hours_spin.setValue(0)
@@ -791,13 +1159,17 @@ class CountdownTimer(QWidget):
         # UPDATE CIRCLE TIMER
         self.update_display()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     def perform_quit(self):
         if (self.timer_started and not self.timer_finished and not self.session_saved):
             end_time = datetime.now()
 
             self.save_session(
                 description=
+<<<<<<< HEAD
                     self.name_input.text().strip(),
 
                 start_time=
@@ -814,6 +1186,24 @@ class CountdownTimer(QWidget):
 
                 coin_earned=
                     0
+=======
+                self.name_input.text().strip(),
+
+                start_time=
+                self.session_start_time,
+
+                end_time=
+                end_time,
+
+                duration=
+                self.total_seconds,
+
+                status=
+                "Incomplete",
+
+                coin_earned=
+                0
+>>>>>>> main
             )
 
             self.session_saved = True
@@ -822,12 +1212,48 @@ class CountdownTimer(QWidget):
         self.player.stop()
         self.timer_running = False
         self.alarm_playing = False
+<<<<<<< HEAD
         self.close()
 
+=======
+
+        # CLEAR TIMER STATE
+        self.timer_running = False
+        self.alarm_playing = False
+        self.timer_finished = False
+        self.timer_started = False
+        self.session_start_time = None
+        self.session_saved = False
+
+        # CLEAR TIME
+        self.total_seconds = 0
+        self.remaining_seconds = 0
+
+        # CLEAR DESCRIPTION
+        self.name_input.clear()
+        self.name_input.setReadOnly(False)
+        self.timer_name_label.setText("")
+        self.timer_name_label.setToolTip("")
+
+        # CLEAR SPINBOX
+        self.hours_spin.setValue(0)
+        self.minutes_spin.setValue(0)
+        self.seconds_spin.setValue(0)
+
+        # RESET BUTTON
+        self.start_button.setText("Start")
+        self.start_button.setEnabled(True)
+        self.reset_button.setEnabled(True)
+
+        # CLEAR CIRCLE
+        self.update_display()
+        self.back_main.emit()
+>>>>>>> main
 
     def closeEvent(self, event):
         self.timer.stop()
         self.player.stop()
+<<<<<<< HEAD
         event.accept() 
 
 
@@ -844,3 +1270,6 @@ if __name__ == "__main__":
     window = CountdownTimer()
     window.show()
     sys.exit(app.exec())
+=======
+        event.accept()
+>>>>>>> main
