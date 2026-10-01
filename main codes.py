@@ -2,7 +2,7 @@ import sys
 import os
 
 # Make it a daily log in ( gain coins)
-# Reset 
+# Reset
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
@@ -16,13 +16,15 @@ from Ida.inventory import InventoryWindow, RoomItem, inventory
 from Ida.playerecords import PlayerRecords
 from Ida.dailylogin import DailyLogin
 from Ida.enteringsystem import LoginSystem
-from Yeejing.countdowntimer import CountdownTimer 
+from Yeejing.countdowntimer import CountdownTimer
+from Yeejing.study_statistics import StudyStatistics
 from Haikal.calendarsystem import Calendar
+
 
 class Window(QDialog):
 
     def __init__(self):
-        
+
         super().__init__()
 
         self.pages = QStackedWidget(self)
@@ -36,7 +38,7 @@ class Window(QDialog):
         self.login_system.login_success.connect(self.player_login_success)
         self.pages.addWidget(self.login_system)
 
-        self.click_sound.setSource(QUrl.fromLocalFile(os.path.join(BASE_DIR,"Ida","images","audio","clicked.wav")))
+        self.click_sound.setSource(QUrl.fromLocalFile(os.path.join(BASE_DIR, "Ida", "images", "audio", "clicked.wav")))
         self.click_sound.setVolume(0.5)
 
         # Daily login system
@@ -44,13 +46,13 @@ class Window(QDialog):
         self.coins = 100
 
         self.setWindowFlags(
-        Qt.WindowType.Window |
-        Qt.WindowType.WindowMinimizeButtonHint |
-        Qt.WindowType.WindowMaximizeButtonHint |
-        Qt.WindowType.WindowCloseButtonHint
+            Qt.WindowType.Window |
+            Qt.WindowType.WindowMinimizeButtonHint |
+            Qt.WindowType.WindowMaximizeButtonHint |
+            Qt.WindowType.WindowCloseButtonHint
         )
 
-        self.setWindowIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","officialbg.png")))
+        self.setWindowIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "officialbg.png")))
         self.setWindowTitle("Lock In Space")
         self.setFixedSize(QSize(1100, 800))
 
@@ -67,7 +69,7 @@ class Window(QDialog):
 
         self.intro_video.setAspectRatioMode(
             Qt.AspectRatioMode.KeepAspectRatioByExpanding
-)
+        )
 
         self.intro_player = QMediaPlayer(self)
         self.intro_audio = QAudioOutput(self)
@@ -78,7 +80,7 @@ class Window(QDialog):
         self.intro_audio.setVolume(1.0)
 
         video_path = os.path.join(
-            BASE_DIR,"Ida","images","audio","intro.mp4"
+            BASE_DIR, "Ida", "images", "audio", "intro.mp4"
         )
 
         print("VIDEO PATH:", video_path)
@@ -103,6 +105,17 @@ class Window(QDialog):
         )
         self.calendar_page = Calendar()
 
+        # TIMER PAGE
+        self.timer_page = CountdownTimer()
+        self.timer_page.back_main.connect(self.back_main)
+        self.timer_page.coins_earned.connect(self.add_timer_coins)
+
+        # STATISTICS PAGE
+        self.statistics_page = StudyStatistics()
+        self.statistics_page.back_main.connect(self.back_main)
+
+        self.calendar_page = Calendar()
+
         # ADD PAGES (QStackWidget) BUTTON
 
         self.pages.addWidget(self.intro_page)
@@ -110,8 +123,12 @@ class Window(QDialog):
         self.pages.addWidget(self.shop_page)
         self.pages.addWidget(self.inventory_page)
         self.pages.addWidget(self.calendar_page)
+        # TIMER PAGE ADDWIDGET + connect main
+        self.pages.addWidget(self.timer_page)
+        # STATISTICS PAGE ADD WIDGET
+        self.pages.addWidget(self.statistics_page)
 
-        self.pages.setGeometry(0,0,1100,800)
+        self.pages.setGeometry(0, 0, 1100, 800)
 
         # CLOSE BUTTONS
         self.shop_page.close_button.clicked.connect(self.show_room)
@@ -121,10 +138,10 @@ class Window(QDialog):
         # Changing current wallpaper with a new one
         self.current_wallpaper = {
             "name": "White and Wood",
-            "image": os.path.join(BASE_DIR,"Ida","images","wallpaper","mainbackground.png")
+            "image": os.path.join(BASE_DIR, "Ida", "images", "wallpaper", "mainbackground.png")
         }
 
-        coin_path = os.path.join(BASE_DIR,"Ida","images","items","coins.png")
+        coin_path = os.path.join(BASE_DIR, "Ida", "images", "items", "coins.png")
 
         self.coin_label = QLabel(self.room_page)
         self.coin_label.setPixmap(QPixmap(coin_path))
@@ -146,7 +163,7 @@ class Window(QDialog):
         """)
 
         self.InitWindow()
-      
+
         # START INTRO VIDEO
 
         self.pages.setCurrentWidget(self.intro_page)
@@ -168,13 +185,12 @@ class Window(QDialog):
         if player is not None:
 
             # LOAD COINS
-            self.coins = player.get("coins",50)
+            self.coins = player.get("coins", 50)
 
             self.coin_amount.setText(str(self.coins))
 
             self.shop_page.set_coins(self.coins)
 
-          
             # LOAD INVENTORY
             inventory.clear()
 
@@ -205,8 +221,9 @@ class Window(QDialog):
             else:
 
                 self.current_wallpaper = {"name": "White and Wood",
-                                          "image": os.path.join(BASE_DIR, "Ida", "images", "wallpaper", "mainbackground.png")
-                }
+                                          "image": os.path.join(BASE_DIR, "Ida", "images", "wallpaper",
+                                                                "mainbackground.png")
+                                          }
 
         # CLEAR OLD ROOM
 
@@ -222,9 +239,8 @@ class Window(QDialog):
             self.change_wallpaper(
                 self.current_wallpaper["image"]
             )
-        
 
-   # OUTPUT
+    # OUTPUT
     def claim_daily_login(self):
 
         success, coins = self.daily_login.claim(self.player_name)
@@ -249,7 +265,7 @@ class Window(QDialog):
 
         self.daily_notification.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.daily_notification.setGeometry(450,200,200,260)
+        self.daily_notification.setGeometry(450, 200, 200, 260)
 
         self.daily_notification.setFont(QFont("Cave Story", 20, QFont.Weight.Bold))
 
@@ -277,6 +293,32 @@ class Window(QDialog):
         self.coins = coins
         self.coin_text.setText(str(coins))
 
+    # FOR TIMER AND STATISTICS PAGE CONNECT BACK MAIN CODE (ROOM PAGE)
+    def back_main(self):
+        self.pages.setCurrentWidget(self.room_page)
+
+    # HAVE TO ADD ANOTHER FUNC TO CONNECT THE COIN GET BACK TO MAIN
+    def add_timer_coins(self, coins):
+        self.coins += coins
+
+        # Update coin display
+        self.coin_amount.setText(str(self.coins))
+
+        # Update Shopping Cart
+        self.shop_page.set_coins(self.coins)
+
+        # Save coins to current player
+        player = self.player_records.get_player(
+            self.player_name
+        )
+
+        if player is not None:
+            player["coins"] = self.coins
+            self.player_records.save_data()
+
+        print("TIMER COINS EARNED:", coins)
+        print("TOTAL COINS:", self.coins)
+
     # ENTER button func.
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Return or event.key() == Qt.Key.Key_Enter:
@@ -284,7 +326,7 @@ class Window(QDialog):
             if self.pages.currentWidget() == self.intro_page:
                 self.intro_player.stop()
                 self.pages.setCurrentWidget(self.login_system)
-                
+
             else:
                 super().keyPressEvent(event)
 
@@ -304,7 +346,6 @@ class Window(QDialog):
         )
 
         if player is not None:
-
             player["coins"] = coins
 
             player["inventory"] = dict(
@@ -319,7 +360,6 @@ class Window(QDialog):
 
     def update_shop_coins(self):
         self.shop_page.set_coins(self.coins)
-
 
     def enter_room(self):
 
@@ -338,7 +378,7 @@ class Window(QDialog):
         print("SAVED ROOM ITEMS:", saved_items)
 
         # LOAD THEIR SAVED ROOM
-  
+
         if saved_items:
 
             for name, data in saved_items.items():
@@ -388,7 +428,6 @@ class Window(QDialog):
                 character_path = os.path.join(BASE_DIR, "Ida", "images", "characters", "girl.png")
 
             if os.path.exists(character_path):
-
                 self.character_item = RoomItem(
                     "BOY",
                     character_path,
@@ -401,22 +440,20 @@ class Window(QDialog):
                 self.character_item.setZValue(10)
 
             # BED
-            bed_path = os.path.join(BASE_DIR, "Ida", "images", "furnitures","bed.png")
+            bed_path = os.path.join(BASE_DIR, "Ida", "images", "furnitures", "bed.png")
 
             if os.path.exists(bed_path):
-
                 self.bed_item = RoomItem("bed", bed_path, self)
                 self.scene.addItem(self.bed_item)
-                self.bed_item.setPos(5,500)
+                self.bed_item.setPos(5, 500)
                 self.bed_item.setScale(2.5)
                 self.bed_item.setZValue(10)
-            
+
             # CURTAIN
 
-            curtain_path = os.path.join(BASE_DIR,"Ida", "images", "furnitures", "curtain.png")
+            curtain_path = os.path.join(BASE_DIR, "Ida", "images", "furnitures", "curtain.png")
 
             if os.path.exists(curtain_path):
-
                 self.curtain_item = RoomItem("curtain", curtain_path, self)
                 self.scene.addItem(self.curtain_item)
                 self.curtain_item.setPos(50, 200)
@@ -425,10 +462,9 @@ class Window(QDialog):
                 self.curtain_item.setZValue(10)
 
             # DOOR
-            door_path = os.path.join(BASE_DIR, "Ida", "images", "furnitures","door.png")
+            door_path = os.path.join(BASE_DIR, "Ida", "images", "furnitures", "door.png")
 
             if os.path.exists(door_path):
-
                 self.door_item = RoomItem("door", door_path, self)
                 self.scene.addItem(self.door_item)
                 self.door_item.setPos(700, 280)
@@ -559,7 +595,7 @@ class Window(QDialog):
 
         if player is None:
             return
-        
+
         # COINS
         player["coins"] = self.coins
 
@@ -599,19 +635,19 @@ class Window(QDialog):
         # BACKGROUND
         self.image = QLabel(self.room_page)
 
-        pixmap = QPixmap(os.path.join(BASE_DIR,"Ida","images","wallpaper","mainbackground.png")
-        )
+        pixmap = QPixmap(os.path.join(BASE_DIR, "Ida", "images", "wallpaper", "mainbackground.png")
+                         )
 
         self.image.setPixmap(pixmap)
         self.image.setScaledContents(True)
-        self.image.setGeometry(0, 0, 1100,800)
+        self.image.setGeometry(0, 0, 1100, 800)
         self.image.lower()
-      
+
         # ROOM ITEM AREA
         self.scene = QGraphicsScene()
-        self.scene.setSceneRect(0, 0, 1100,800)
+        self.scene.setSceneRect(0, 0, 1100, 800)
         self.view = QGraphicsView(self.scene, self.room_page)
-        self.view.setGeometry(0,0, 1100, 800)
+        self.view.setGeometry(0, 0, 1100, 800)
 
         self.view.setStyleSheet("""
             QGraphicsView {
@@ -641,15 +677,15 @@ class Window(QDialog):
             self.room_page
         )
 
-        self.menu_button.setGeometry(940,50,100,100)
+        self.menu_button.setGeometry(940, 50, 100, 100)
 
         self.menu_button.setToolTip(
             "<b>Menu</b><br>"
             "Open the menu to access your needs"
         )
 
-        self.menu_button.setIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","menuicon.png")))
-        self.menu_button.setIconSize(QSize(150,150))
+        self.menu_button.setIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "menuicon.png")))
+        self.menu_button.setIconSize(QSize(150, 150))
         self.menu_button.setStyleSheet("""
             QPushButton {
                 background-color: transparent;
@@ -667,15 +703,15 @@ class Window(QDialog):
 
         # INVENTORY BUTTON
         self.inventory_button = QPushButton(self.room_page)
-        self.inventory_button.setGeometry(820,150,100,100)
-        
+        self.inventory_button.setGeometry(820, 150, 100, 100)
+
         self.inventory_button.setToolTip(
-         "<b>Inventory</b><br>"
+            "<b>Inventory</b><br>"
             "View your items and decorate your study space!"
         )
 
-        self.inventory_button.setIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","invenicon.png")))
-        self.inventory_button.setIconSize( QSize(150,150))
+        self.inventory_button.setIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "invenicon.png")))
+        self.inventory_button.setIconSize(QSize(150, 150))
         self.inventory_button.setStyleSheet("""
             QPushButton {
                 background-color: transparent;
@@ -693,13 +729,13 @@ class Window(QDialog):
 
         # SHOPPING CART BUTTON
         self.shop_button = QPushButton(self.room_page)
-        self.shop_button.setGeometry(1000,150,100,100)
+        self.shop_button.setGeometry(1000, 150, 100, 100)
         self.shop_button.setToolTip(
             "<b>Shopping Cart</b><br>"
             "Spend your coins and find new items for your room!"
         )
 
-        self.shop_button.setIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","shopicon.png")))
+        self.shop_button.setIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "shopicon.png")))
         self.shop_button.setIconSize(QSize(150, 150))
         self.shop_button.setStyleSheet("""
             QPushButton {
@@ -715,17 +751,17 @@ class Window(QDialog):
 
         self.shop_button.clicked.connect(self.show_shop)
         self.shop_button.clicked.connect(self.play_click_sound)
-        
+
         # TO-DO LIST BUTTON
         self.tdlist_button = QPushButton(self.room_page)
-        self.tdlist_button.setGeometry(910,150,100,100)
+        self.tdlist_button.setGeometry(910, 150, 100, 100)
 
         self.tdlist_button.setToolTip(
             "<b>To-Do List</b><br>"
             "Keep track of your tasks and goals"
         )
 
-        self.tdlist_button.setIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","todoicon.png")))
+        self.tdlist_button.setIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "todoicon.png")))
         self.tdlist_button.setIconSize(QSize(150, 150))
         self.tdlist_button.setStyleSheet("""
             QPushButton {
@@ -748,14 +784,14 @@ class Window(QDialog):
             self.room_page
         )
 
-        self.timer_button.setGeometry(820,235,100,100)
+        self.timer_button.setGeometry(820, 235, 100, 100)
 
         self.timer_button.setToolTip(
             "<b>Timer</b><br>"
             "Start your study session and stay Locked In!"
         )
 
-        self.timer_button.setIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","timericon.png")))
+        self.timer_button.setIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "timericon.png")))
         self.timer_button.setIconSize(QSize(150, 150))
         self.timer_button.setStyleSheet("""
             QPushButton {
@@ -772,17 +808,16 @@ class Window(QDialog):
         self.timer_button.clicked.connect(self.show_timer)
         self.timer_button.clicked.connect(self.play_click_sound)
 
-
         # STATISTICS BUTTON
 
         self.statistics_button = QPushButton(self.room_page)
-        self.statistics_button.setGeometry(910,235,100,100)
+        self.statistics_button.setGeometry(910, 235, 100, 100)
         self.statistics_button.setToolTip(
             "<b>Statistics</b><br>"
             "View your study progress and achievements!!"
         )
 
-        self.statistics_button.setIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","staticon.png")))
+        self.statistics_button.setIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "staticon.png")))
         self.statistics_button.setIconSize(QSize(150, 150))
         self.statistics_button.setStyleSheet("""
             QPushButton {
@@ -803,13 +838,13 @@ class Window(QDialog):
 
         self.calendar_button = QPushButton(self.room_page)
 
-        self.calendar_button.setGeometry(1000,235,100,100)
+        self.calendar_button.setGeometry(1000, 235, 100, 100)
 
         self.calendar_button.setToolTip("<b>Calendar</b><br>"
                                         "Plan your study sessions and keep track of important dates!"
-        )
+                                        )
 
-        self.calendar_button.setIcon(QIcon(os.path.join(BASE_DIR,"Ida","images","Icons","calenicon.png")))
+        self.calendar_button.setIcon(QIcon(os.path.join(BASE_DIR, "Ida", "images", "Icons", "calenicon.png")))
         self.calendar_button.setIconSize(QSize(150, 150))
         self.calendar_button.setStyleSheet("""
             QPushButton {
@@ -860,7 +895,7 @@ class Window(QDialog):
             self.intro_player.stop()
             self.pages.setCurrentWidget(self.login_system)
 
-    # Output function 
+    # Output function
     def show_shop(self):
         self.shop_page.set_coins(self.coins)
         self.pages.setCurrentWidget(self.shop_page)
@@ -869,21 +904,20 @@ class Window(QDialog):
         self.shop_page.set_coins(self.coins)
         self.inventory_page.show_inventory()
         self.pages.setCurrentWidget(self.inventory_page)
-######## WAITING FOR FULLCODES####### (FROM DIFF FILE)
+
+    ######## WAITING FOR FULLCODES####### (FROM DIFF FILE)
     def show_tdlist(self):
         print("To-Do List clicked!")
 
     def show_timer(self):
-        self.timer_window = CountdownTimer()
-        self.timer_window.show()
+        self.pages.setCurrentWidget(self.timer_page)
 
     def show_statistics(self):
-        print("WHERE IS YOUR PROGRESSIONNN")
+        self.pages.setCurrentWidget(self.statistics_page)
 
     def show_calendar(self):
         self.pages.setCurrentWidget(self.calendar_page)
 
-    
     # Change wallpaper and save previous to inventory
 
     def handle_item_selected(self, category, name, image):
@@ -946,7 +980,7 @@ class Window(QDialog):
 
         item = RoomItem(name, image, self)
         self.scene.addItem(item)
-        item.setPos(400,300)
+        item.setPos(400, 300)
         item.setZValue(10)
 
         # Remember room item
@@ -964,7 +998,7 @@ class Window(QDialog):
     def return_to_inventory(self, name, image):
 
         inventory[name] = {"image": image,
-                            "category": "furniture"}
+                           "category": "furniture"}
         # Save inventory permanently
         player = self.player_records.get_player(self.player_name)
 
@@ -985,6 +1019,14 @@ class Window(QDialog):
         event.accept()
 
 app = QApplication(sys.argv)
+font_id = (QFontDatabase.addApplicationFont(os.path.join(BASE_DIR, "Cave-Story.ttf")))
+
+if font_id != -1:
+    families = (QFontDatabase.applicationFontFamilies(font_id))
+
+    if families:
+        font_family = families[0]
+        app.setFont(QFont(font_family, 20))
 
 window = Window()
 window.show()

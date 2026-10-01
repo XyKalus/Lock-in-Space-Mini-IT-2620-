@@ -1,20 +1,7 @@
 {
     "players": [
         {
-            "name": "a",
-            "gender": "boy",
-            "coins": 60,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {},
-            "last_claim": "2026-10-01"
-        },
-        {
-            "name": "b",
+            "name": "tvtime",
             "gender": "boy",
             "coins": 60,
             "study_time": 0,
