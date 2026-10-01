@@ -6,13 +6,10 @@ class PlayerRecords:
 
     def __init__(self, base_dir):
 
-        self.save_path = os.path.join(
-            base_dir,
-            "player_data.json"
-        )
-
+        self.save_path = os.path.join(base_dir,"player_data.json")
         self.data = self.load_data()
 
+    # Helps to detect same letters
     def get_player(self, name):
         for player in self.data["players"]:
             if player["name"].lower() == name.lower():
@@ -35,11 +32,7 @@ class PlayerRecords:
     def save_data(self):
 
         with open(self.save_path, "w") as file:
-            json.dump(
-                self.data,
-                file,
-                indent=4
-            )
+            json.dump(self.data,file,indent=4)
 
 
     def create_player(self, name, gender):
@@ -52,16 +45,8 @@ class PlayerRecords:
 
             "study_time": 0,
 
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": os.path.join(
-                    "Ida",
-                    "images",
-                    "wallpaper",
-                    "mainbackground.png"
-                )
-            },
-
+            "wallpaper": {"name": "White and Wood",
+                          "image": os.path.join("Ida","images","wallpaper","mainbackground.png")},
             "inventory": {},
 
             "room_items": {},

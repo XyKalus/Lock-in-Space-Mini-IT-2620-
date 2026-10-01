@@ -247,6 +247,292 @@
                 "image": "Ida\\images\\wallpaper\\mainbackground.png"
             },
             "inventory": {},
+            "room_items": {
+                "Siamese Cat": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/pets/cat1.png",
+                    "x": 582.0,
+                    "y": 524.0,
+                    "scale": 1.1859210000000007,
+                    "category": "furniture"
+                },
+                "Meme Poster": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/special/sp3.png",
+                    "x": 523.0,
+                    "y": 169.0,
+                    "scale": 1.6105100000000008,
+                    "category": "furniture"
+                },
+                "door": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
+                    "x": 700.0,
+                    "y": 280.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
+                    "x": 359.0,
+                    "y": 370.0,
+                    "scale": 2.0,
+                    "category": "furniture"
+                }
+            },
+            "last_claim": "2026-09-08"
+        },
+        {
+            "name": "d",
+            "gender": "boy",
+            "coins": 280,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "Pink Wallpaper",
+                "image": "Ida/images/wallpaper/w2.png"
+            },
+            "inventory": {
+                "Aesthethic": {
+                    "image": "Ida/images/wallpaper/w1.png",
+                    "price": 10,
+                    "category": "wallpaper"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
+                    "category": "furniture"
+                },
+                "Morning Day": {
+                    "image": "Ida/images/furnitures/morning.png",
+                    "price": 5,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
+                    "category": "furniture"
+                },
+                "player_character": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida\\images\\characters\\boy.png",
+                    "category": "furniture"
+                },
+                "door": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida\\images\\furnitures\\door.png",
+                    "category": "furniture"
+                },
+                "Radio": {
+                    "image": "Ida/images/furnitures/radio.png",
+                    "price": 10,
+                    "category": "furniture"
+                },
+                "Cat Tree": {
+                    "image": "Ida/images/furnitures/cattoys.png",
+                    "price": 5,
+                    "category": "furniture"
+                },
+                "Sandwich": {
+                    "image": "Ida/images/foods/f2.png",
+                    "price": 1,
+                    "category": "foods"
+                },
+                "Croissant": {
+                    "image": "Ida/images/foods/f1.png",
+                    "price": 10,
+                    "category": "foods"
+                },
+                "Coca Cola": {
+                    "image": "Ida/images/foods/d2.png",
+                    "price": 5,
+                    "category": "foods"
+                },
+                "Strawberry Mojito": {
+                    "image": "Ida/images/foods/d3.png",
+                    "category": "furniture"
+                },
+                "White and Wood": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png",
+                    "category": "wallpaper"
+                },
+                "Yeejing": {
+                    "image": "Ida/images/characters/C1.png",
+                    "price": 20,
+                    "category": "characters"
+                },
+                "Haikal": {
+                    "image": "Ida/images/characters/C2.png",
+                    "price": 10,
+                    "category": "characters"
+                },
+                "Khaled": {
+                    "image": "Ida/images/characters/CCC3.png",
+                    "price": 10,
+                    "category": "characters"
+                },
+                "Coco": {
+                    "image": "Ida/images/characters/C4.png",
+                    "price": 45,
+                    "category": "characters"
+                },
+                "Siew Che": {
+                    "image": "Ida/images/characters/C5.png",
+                    "price": 59,
+                    "category": "characters"
+                },
+                "Dani": {
+                    "image": "Ida/images/characters/C7.png",
+                    "price": 50,
+                    "category": "characters"
+                },
+                "Ida": {
+                    "image": "Ida/images/characters/C8.png",
+                    "price": 50,
+                    "category": "characters"
+                },
+                "Night Wallpaper": {
+                    "image": "Ida/images/wallpaper/w3.png",
+                    "category": "wallpaper"
+                },
+                "Blue Wallpaper": {
+                    "image": "Ida/images/wallpaper/w4.png",
+                    "price": 15,
+                    "category": "wallpaper"
+                },
+                "Modern Wallpaper": {
+                    "image": "Ida/images/wallpaper/w5.png",
+                    "price": 18,
+                    "category": "wallpaper"
+                },
+                "Study Wallpaper": {
+                    "image": "Ida/images/wallpaper/w6.png",
+                    "price": 20,
+                    "category": "wallpaper"
+                },
+                "Siamese Cat": {
+                    "image": "Ida/images/pets/cat1.png",
+                    "price": 13,
+                    "category": "pets"
+                },
+                "Yellow Bird": {
+                    "image": "Ida/images/pets/bird1.png",
+                    "price": 15,
+                    "category": "pets"
+                },
+                "Gary": {
+                    "image": "Ida/images/pets/snail1.png",
+                    "price": 15,
+                    "category": "pets"
+                },
+                "Froggy": {
+                    "image": "Ida/images/pets/frog1.png",
+                    "price": 18,
+                    "category": "pets"
+                },
+                "Donald Duck": {
+                    "image": "Ida/images/pets/duck1.png",
+                    "price": 20,
+                    "category": "pets"
+                },
+                "Nemo": {
+                    "image": "Ida/images/pets/fish1.png",
+                    "price": 23,
+                    "category": "pets"
+                },
+                "Rabbit": {
+                    "image": "Ida/images/pets/rabbit1.png",
+                    "price": 50,
+                    "category": "pets"
+                },
+                "Book Rack": {
+                    "image": "Ida/images/furnitures/bookrack.png",
+                    "price": 10,
+                    "category": "furniture"
+                },
+                "TV": {
+                    "image": "Ida/images/furnitures/TV.png",
+                    "price": 20,
+                    "category": "furniture"
+                },
+                "Flower Vase": {
+                    "image": "Ida/images/furnitures/Vast.png",
+                    "price": 10,
+                    "category": "furniture"
+                },
+                "Harry Potter Books": {
+                    "image": "Ida/images/furnitures/hpbook.png",
+                    "price": 5,
+                    "category": "furniture"
+                },
+                "Coffee": {
+                    "image": "Ida/images/foods/d1.png",
+                    "price": 50,
+                    "category": "foods"
+                },
+                "Guitar": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida/images/furnitures/guitar.png",
+                    "category": "furniture"
+                },
+                "Boba Tea": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida/images/foods/d4.png",
+                    "category": "furniture"
+                }
+            },
+            "room_items": {
+                "Sushi": {
+                    "image": "Ida/images/foods/f4.png",
+                    "x": 246.0,
+                    "y": 53.0,
+                    "scale": 1.7714700000000003,
+                    "category": "furniture"
+                },
+                "Night Day": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida/images/furnitures/night.png",
+                    "x": 235.0,
+                    "y": 68.99999999999997,
+                    "scale": 1.6105100000000008,
+                    "category": "furniture"
+                },
+                "Beagle Dog": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida/images/pets/dog1.png",
+                    "x": 674.0000000000001,
+                    "y": 222.0,
+                    "scale": 3.0,
+                    "category": "furniture"
+                },
+                "Sean": {
+                    "image": "c:\\Users\\yeeji\\Lock In Space\\Ida/images/characters/C6.png",
+                    "x": 400.0,
+                    "y": 300.0,
+                    "scale": 1.0,
+                    "category": "furniture"
+                }
+            },
+            "last_claim": "2026-10-01"
+        },
+        {
+            "name": "67",
+            "gender": "girl",
+            "coins": 71,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {},
+            "last_claim": "2026-10-01"
+        },
+        {
+            "name": "lol",
+            "gender": "boy",
+            "coins": 61,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
             "room_items": {},
             "last_claim": "2026-10-01"
         }
