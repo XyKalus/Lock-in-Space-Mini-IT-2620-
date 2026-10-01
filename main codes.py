@@ -17,9 +17,12 @@ from Ida.inventory import InventoryWindow, RoomItem, inventory
 from Ida.playerecords import PlayerRecords
 from Ida.dailylogin import DailyLogin
 from Yeejing.countdowntimer import CountdownTimer   
+from Yeejing.study_statistics import StudyStatistics
+
+"""
 from Haikal.calendarsystem import CalendarMainWindow
 from Haikal.MusicPlayer import *
-from Haikal.EventSystem import Events, eventsystem
+from Haikal.EventSystem import Events, eventsystem"""
 
 #from Haikal........ import ....... 
 # haikal u need to change something line 2294 to called your function, you can see example like the timer
@@ -32,7 +35,7 @@ class Window(QDialog):
         super().__init__()
 
         
-        self.music = MusicController()
+        """self.music = MusicController()"""
 
         # Button click sound
         self.click_sound = QSoundEffect(self)
@@ -129,6 +132,18 @@ class Window(QDialog):
             self.handle_item_selected
         )
 
+        # TIMER PAGES 
+        self.timer_page = CountdownTimer()
+        # Timer quit btn back to Main 
+        self.timer_page.back_main.connect(self.back_main)
+        # Timer earned coins to Main
+        self.timer_page.coins_earned.connect(self.add_timer_coins)
+
+        # STATISTICS PAGE
+        self.statistics_page = StudyStatistics()
+        # Statistics quit btn back to Main
+        self.statistics_page.back_main.connect(self.back_main)
+
         # ====================================================
         # ADD PAGES
         # ====================================================
@@ -140,6 +155,13 @@ class Window(QDialog):
         self.pages.addWidget(self.room_page)
         self.pages.addWidget(self.shop_page)
         self.pages.addWidget(self.inventory_page)
+
+        #TIMER PAGE ADDWIDGET + connect main
+        self.pages.addWidget(self.timer_page)
+
+        #STATISTICS PAGE ADD WIDGET
+        self.pages.addWidget(self.statistics_page)
+      
 
         self.pages.setGeometry(0,0,1100,800)
 
@@ -195,7 +217,32 @@ class Window(QDialog):
 
         self.intro_player.play()
 
-    
+     # FOR TIMER AND STATISTICS PAGE CONNECT BACK MAIN CODE (ROOM PAGE)
+    def back_main(self):
+        self.pages.setCurrentWidget(self.room_page)
+
+    #HAVE TO ADD ANOTHER FUNC TO CONNECT THE COIN GET BACK TO MAIN
+    def add_timer_coins(self, coins):
+        self.coins += coins
+
+        # Update coin display
+        self.coin_amount.setText(str(self.coins))
+
+        # Update Shopping Cart
+        self.shop_page.set_coins(self.coins)
+
+        # Save coins to current player
+        player = self.player_records.get_player(
+            self.player_name
+        )
+
+        if player is not None:
+            player["coins"] = self.coins
+            self.player_records.save_data()
+
+        print("TIMER COINS EARNED:", coins)
+        print("TOTAL COINS:", self.coins)
+
 
     def show_daily_reward(self):
 
@@ -2331,11 +2378,10 @@ class Window(QDialog):
         print("To-Do List clicked!")
 
     def show_timer(self):
-        self.timer_window = CountdownTimer()
-        self.timer_window.show()
-
+        self.pages.setCurrentWidget(self.timer_page)
+        
     def show_statistics(self):
-        print("WHERE IS YOUR PROGRESSIONNN")
+        self.pages.setCurrentWidget(self.statistics_page)
 
     def show_calendar(self):
         self.calendar = CalendarMainWindow()
@@ -2472,6 +2518,14 @@ class Window(QDialog):
 
 
 app = QApplication(sys.argv)
+font_id = (QFontDatabase.addApplicationFont(os.path.join(BASE_DIR, "Cave-Story.ttf")))
+
+if font_id != -1:
+    families = (QFontDatabase.applicationFontFamilies(font_id))
+
+    if families:
+        font_family = families[0]
+        app.setFont(QFont(font_family,20))
 
 window = Window()
 window.show()
