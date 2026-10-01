@@ -54,20 +54,24 @@ from PyQt6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, 
     QLabel, QCalendarWidget, QPushButton, QMainWindow
 )
-from PyQt6.QtCore import QDate
+from PyQt6.QtCore import QDate, pyqtSignal
 from PyQt6.QtGui import QFont, QFontDatabase
 
-from EventSystem import Events, eventsystem
+from .EventSystem import Events, eventsystem
 
-class Calendar(QWidget):
-    def __init__(self):
-        super().__init__()
+class CalendarMainWindow(QWidget):
+    close_requested = pyqtSignal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle("Interactive PyQt5 Calendar")
-        self.setGeometry(300, 150, 450, 400)
 
+        # X button
+        self.close_button = QPushButton("X", self)
+        self.close_button.setGeometry(1010, 2, 40, 40)
          
         font_id = QFontDatabase.addApplicationFont("Cave-Story.ttf")
 
@@ -99,7 +103,7 @@ class Calendar(QWidget):
         bottom_layout.addWidget(today_btn)
         today_btn.setFont(QFont(font_family,25))
 
-        from EventSystem import Events
+        from .EventSystem import Events, eventsystem
 
         self.event_button = QPushButton('Event adder', self)
         # self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
@@ -141,9 +145,5 @@ class Calendar(QWidget):
         # self.popup_window = MainWindow()
         # self.popup_window.show()
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Calendar()
-    window.show()
-    sys.exit(app.exec())
+
 

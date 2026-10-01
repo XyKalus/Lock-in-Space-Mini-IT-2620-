@@ -17,6 +17,12 @@ class ShoppingCart(QWidget):
 
         super().__init__()
         
+        self.click_sound = QSoundEffect(self)
+
+        self.click_sound.setSource(
+            QUrl.fromLocalFile(os.path.join(BASE_DIR,"Ida","images","audio","clicked.wav")))
+
+        self.click_sound.setVolume(0.3)
 
         # Shared coin system
 
@@ -497,70 +503,97 @@ class ShoppingCart(QWidget):
 
             if index == 0:
 
-                button.setToolTip( "<b>Characters</b><br>"
+                button.setToolTip(
+                    "<b>Characters</b><br>"
                     "Find your perfect study buddy and Loked In!!"
                 )
 
                 button.clicked.connect(
-                    lambda checked=False:
-
-                    self.show_category("characters")
+                    lambda checked=False: self.show_category("characters")
                 )
 
+                button.clicked.connect(
+                    self.play_click_sound
+                )
 
             elif index == 1:
 
-                button.setToolTip( "<b>Wallpapers</b><br>"
+                button.setToolTip(
+                    "<b>Wallpapers</b><br>"
                     "A cozy space to keep you Locked In!!"
                 )
 
                 button.clicked.connect(
-                    lambda checked=False:
-                    self.show_category("wallpaper")
+                    lambda checked=False: self.show_category("wallpaper")
                 )
+
+                button.clicked.connect(
+                    self.play_click_sound
+                )
+
 
             elif index == 2:
 
-                button.setToolTip( "<b>Pets</b><br>"
-                    "Felling Stressed? Adopt a pet and make your study space feel more alive!!")
-                
-                button.clicked.connect(
-                    lambda checked=False:
-                    self.show_category("pets")
+                button.setToolTip(
+                    "<b>Pets</b><br>"
+                    "Felling Stressed? Adopt a pet and make your study space feel more alive!!"
                 )
+
+                button.clicked.connect(
+                    lambda checked=False: self.show_category("pets")
+                )
+
+                button.clicked.connect(
+                    self.play_click_sound
+                )
+
 
             elif index == 3:
 
-                button.setToolTip( "<b>Furnitures</b><br>"
+                button.setToolTip(
+                    "<b>Furnitures</b><br>"
                     "Upgrade your room, Upgrade your study vibe!!"
                 )
-                        
+
                 button.clicked.connect(
-                    lambda checked=False:
-                    self.show_category("furniture")
+                    lambda checked=False: self.show_category("furniture")
                 )
+
+                button.clicked.connect(
+                    self.play_click_sound
+                )
+
 
             elif index == 4:
 
-                button.setToolTip( "<b>Foods</b><br>"
+                button.setToolTip(
+                    "<b>Foods</b><br>"
                     "Fuel Up!! and Stay Locked In"
                 )
 
                 button.clicked.connect(
-                    lambda checked=False:
-                    self.show_category("foods")
+                    lambda checked=False: self.show_category("foods")
                 )
+
+                button.clicked.connect(
+                    self.play_click_sound
+                )
+
 
             elif index == 5:
 
-                button.setToolTip( "<b>Special</b><br>"
+                button.setToolTip(
+                    "<b>Special</b><br>"
                     "Something special to keep you Locked In"
                 )
-                        
+
                 button.clicked.connect(
-                    lambda checked=False:
-                    self.show_category("Special")
+                    lambda checked=False: self.show_category("Special")
                 )
+
+                button.clicked.connect(
+                    self.play_click_sound
+                )            
 
             category_layout.addWidget(
                 button
@@ -700,12 +733,12 @@ class ShoppingCart(QWidget):
         # ====================================================
         # SHOW CHARACTERS FIRST
         # ====================================================
+        print("SHOPPING CART FILE:", __file__)
+        print("HAS ITEMS LAYOUT:", hasattr(self, "items_layout"))
+        self.show_category("characters")
 
-        self.show_category(
-            "characters"
-        )
-
-    
+    def play_click_sound(self):
+        self.click_sound.play()    
 
     def resizeEvent(self, event):
 
@@ -1125,53 +1158,29 @@ class ShoppingCart(QWidget):
 
             items = [
 
-                ("Aesthethic","Ida/images/wallpaper/w1.png",
-                    10
-                ),
+                ("Brown Wall","Ida/images/wallpaper/w1.png",2),
 
-                ("Pink Wallpaper","Ida/images/wallpaper/w2.png",
-                    10
-                ),
+                ("Blue Wall","Ida/images/wallpaper/w2.png",5),
 
-                ("Night Wallpaper","Ida/images/wallpaper/w3.png",
-                    15
-                ),
+                ("Mr.Bean Wall","Ida/images/wallpaper/w3.png",15),
 
-                ("Blue Wallpaper","Ida/images/wallpaper/w4.png",
-                    15
-                ),
+                ("Fantasy Wall","Ida/images/wallpaper/w4.png",15),
 
-                ("Modern Wallpaper","Ida/images/wallpaper/w5.png",
-                    18
-                ),
+                ("Polka Wall","Ida/images/wallpaper/w5.png",20),
 
-                ("Study Wallpaper","Ida/images/wallpaper/w6.png",
-                    20
-                ),
+                ("Blue Stripz Wall","Ida/images/wallpaper/w6.png",20),
 
-                ("Study Wallpaper","Ida/images/wallpaper/w7.png",
-                    20
-                ),
+                ("Lullaby Wall","Ida/images/wallpaper/w7.png",20),
 
-                ("Study Wallpaper","Ida/images/wallpaper/w8.png",
-                    20
-                ),
+                ("Starry Night Wall","Ida/images/wallpaper/w8.png",20),
 
-                ("Study Wallpaper","Ida/images/wallpaper/w9.png",
-                    20
-                ),
+                ("Sorrow Wall","Ida/images/wallpaper/w9.png",20),
 
-                ("Study Wallpaper","Ida/images/wallpaper/w10.png",
-                    20
-                ),
+                ("Adventure Time Wall","Ida/images/wallpaper/w10.png",20),
 
-                ("Study Wallpaper","Ida/images/wallpaper/w11.png",
-                    20
-                ),
+                ("Kachow Wall","Ida/images/wallpaper/w11.png",20),
 
-                ("Study Wallpaper","Ida/images/wallpaper/w12.png",
-                    20
-                )
+                ("Modern Wall","Ida/images/wallpaper/w12.png",20)
 
             ]
 
@@ -1271,77 +1280,41 @@ class ShoppingCart(QWidget):
 
             items = [
             
-                ("Croissant","Ida/images/foods/f1.png",
-                    10
-                ),
+                ("Croissant","Ida/images/foods/f1.png", 10),
 
-                ("Coffee","Ida/images/foods/d1.png",
-                    50
-                ),
+                ("Coffee","Ida/images/foods/d1.png", 50),
 
-                ("Sandwich","Ida/images/foods/f2.png",
-                    1
-                ),
+                ("Sandwich","Ida/images/foods/f2.png",1),
 
-                ("Coca Cola","Ida/images/foods/d2.png",
-                    5
-                ),
+                ("Coca Cola","Ida/images/foods/d2.png",5),
 
-                ("Doritos","Ida/images/foods/f3.png",
-                    10
-                ),
+                ("Doritos","Ida/images/foods/f3.png",10),
 
-                ("Strawberry Mojito","Ida/images/foods/d3.png",
-                    5
-                ),
+                ("Strawberry Mojito","Ida/images/foods/d3.png",5),
 
-                ("Sushi","Ida/images/foods/f4.png",
-                    3
-                ),
+                ("Sushi","Ida/images/foods/f4.png",3),
 
-                ("Boba Tea","Ida/images/foods/d4.png",
-                    7
-                ),
+                ("Boba Tea","Ida/images/foods/d4.png",7),
 
-                ("Donut","Ida/images/foods/f5.png",
-                    10
-                ),
+                ("Donut","Ida/images/foods/f5.png",10),
 
-                ("Lime Milkshake","Ida/images/foods/d5.png",
-                    50
-                ),
+                ("Lime Milkshake","Ida/images/foods/d5.png",50),
 
-                ("Pizza","Ida/images/foods/f6.png",
-                    10
-                ),
+                ("Pizza","Ida/images/foods/f6.png",10),
 
-                ("Root Beer","Ida/images/foods/d6.png",
-                    5
-                ),
+                ("Root Beer","Ida/images/foods/d6.png",5),
 
-                ("Ramen","Ida/images/foods/f7.png",
-                    10
-                ),
+                ("Ramen","Ida/images/foods/f7.png",10),
 
-                ("Coconut","Ida/images/foods/d7.png",
-                    5
-                ),
+                ("Coconut","Ida/images/foods/d7.png",5),
 
-                ("Spaghetti","Ida/images/foods/f8.png",
-                    4
-                ),
+                ("Spaghetti","Ida/images/foods/f8.png",4),
 
-                ("Sundae Ice Cream","Ida/images/foods/d8.png",
-                    2
-                ),
+                ("Sundae Ice Cream","Ida/images/foods/d8.png",2),
 
-                ("Pancake","Ida/images/foods/f9.png",
-                    10
-                ),
+                ("Pancake","Ida/images/foods/f9.png",10),
 
-                ("Magnum","Ida/images/foods/d9.png",
-                    500
-                )
+                ("Magnum","Ida/images/foods/d9.png",500)
 
             ]
 
@@ -1353,33 +1326,19 @@ class ShoppingCart(QWidget):
 
             items = [
             
-                ("Statue Fountain","Ida/images/special/sp1.png",
-                    10
-                ),
+                ("Statue Fountain","Ida/images/special/sp1.png",10),
 
-                ("THE Flower","Ida/images/special/sp2.png",
-                    50
-                ),
+                ("THE Flower","Ida/images/special/sp2.png",50),
 
-                ("Meme Poster","Ida/images/special/sp3.png",
-                    10
-                ),
+                ("Meme Poster","Ida/images/special/sp3.png",10),
 
-                ("Fountain","Ida/images/special/sp4.png",
-                    50
-                ),
+                ("Fountain","Ida/images/special/sp4.png",50),
 
-                ("Special Frame","Ida/images/special/sp5.png",
-                    10
-                ),
+                ("Special Frame","Ida/images/special/sp5.png",10),
 
-                ("Wall-E Friends","Ida/images/special/sp6.png",
-                    50
-                ),
+                ("Wall-E Friends","Ida/images/special/sp6.png",50),
 
-                ("EBWISE","Ida/images/special/sp7.png",
-                    30
-                )
+                ("EBWISE","Ida/images/special/sp7.png",30)
 
             ]
 
