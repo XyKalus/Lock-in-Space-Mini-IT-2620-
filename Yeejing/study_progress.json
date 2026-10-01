@@ -238,5 +238,13 @@
     "duration": "00:02:00",
     "status": "Incomplete",
     "coin_earned": 0
+  },
+  {
+    "description": "(no description)",
+    "start_time": "2026-10-01 14:21:16",
+    "end_time": "2026-10-01 14:22:41",
+    "duration": "00:01:00",
+    "status": "Completed",
+    "coin_earned": 1
   }
 ]

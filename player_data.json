@@ -227,6 +227,19 @@
         {
             "name": "67",
             "gender": "girl",
+            "coins": 71,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {},
+            "last_claim": "2026-10-01"
+        },
+        {
+            "name": "lol",
+            "gender": "boy",
             "coins": 61,
             "study_time": 0,
             "wallpaper": {
@@ -235,7 +248,7 @@
             },
             "inventory": {},
             "room_items": {},
-            "last_claim": "2026-09-30"
+            "last_claim": "2026-10-01"
         }
     ]
 }
