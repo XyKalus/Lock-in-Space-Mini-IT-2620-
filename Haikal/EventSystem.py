@@ -14,6 +14,31 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLay
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
 from PyQt6.QtCore import Qt #Qt is used for alignment
 
+import json
+import pathlib
+from pathlib import Path
+
+event_folder_checker = Path.cwd()/"events"
+if (event_folder_checker.exists()): #check if the folder named "todolists" exist
+# print('this file exists') << old code, used and being kept for trouble shooting
+    pass
+else : 
+    os.mkdir('events')
+
+event_folder = Path.cwd()/"events"
+json_file = event_folder/"My events.json" #PATHLIB : finds (or the intended use for this, create) a file with the name
+event_files = event_folder.iterdir() #PATHLIB : views the files in the directory
+empty_chker = not any(event_files) #PATHLIB : checks if the directory has any files
+
+
+if empty_chker :
+        json_file.write_text(json.dumps(['test']), encoding="utf-8")
+        print("File created using pathlib!") #Thank you Gemini for the help lol
+else :
+        print('has files')
+        pass
+
+    
 class Events(QMainWindow): #self in the entire function refers to the "MainWindow" class (adding this here as a reminder to myself)
     def __init__(self):
         super().__init__()
@@ -56,7 +81,20 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
     def on_click(self):
         print('event added!')
-        
+
+        file_path = Path.cwd()/"events"/"My events.json"
+
+        with open(file_path, 'r') as f:
+                todo = json.load(f)
+
+        todo['test'].append({
+                "task" : todo,
+                "completed" : False,
+        })
+
+        with open(file_path,'w') as f:
+                json.dump(todo, f, indent=4)
+
             
     
 
@@ -72,38 +110,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-def eventsystem():
-    today = dt.datetime.today() 
-    print(today)
-
-    #this entire section is for the user to input their event times, the E in each variable represents "Event"
-    Eyear = (int(input('enter your event year: ')))
-    Emonth = (int(input('enter your event month: ')))
-    Eday = (int(input('enter your event day: ')))
-    Ehour = (int(input('input the starting hour: ')))
-    Eminute = (int(input('input the starting minute: ')))
-
-
-    #checks if months goes beyond 12 and add year value by 1 for every 12 months it goes over
-    if Emonth > 12:  
-        extra_years = (Emonth - 1) // 12
-        Eyear += extra_years
-        Emonth = ((Emonth - 1) % 12) + 1
-
-    empty, DaysInMonth = calendar.monthrange(Eyear,Emonth) 
-    #checks how many days are in the month selected, this is used to determine at what value (28,30 or 31) to change Emonth to the following the month
-    print(DaysInMonth) 
-    #"empty" is ignored because we only want to know the amount of days in EventMonth (Emonth), not EventYear (Eyear), its only purpose is so Eyear is never defined because it is not needed
-
-    if Eday > DaysInMonth:
-        extra_days = (Eday - 1)// dt.datetime.month(Emonth)
-
-    date2 = dt.datetime(Eyear,Emonth,Eday,Ehour,Eminute)
-    print(date2)
-
-    calc = date2 - today
-
-    print(calc)
-
