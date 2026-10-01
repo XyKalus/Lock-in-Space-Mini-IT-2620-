@@ -236,7 +236,7 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QCalendarWidget, QPushButton, QStackedWidget
 )
-from PyQt6.QtCore import QDate
+from PyQt6.QtCore import QDate, pyqtSignal
 from PyQt6.QtGui import QFont, QFontDatabase
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 
@@ -363,7 +363,7 @@ class CalendarMainWindow(QWidget):
         from Haikal.EventSystem import Events
 
         # NOT self.window: that name is a built-in QWidget method
-        self.event_window = Events()
+        self.event_window = Events(calendardate=self)
         self.event_window.show()
 
     def on_date_selected(self):
@@ -372,6 +372,9 @@ class CalendarMainWindow(QWidget):
         formatted_date = selected_qdate.toString("dddd, MMMM d, yyyy")
         self.info_label.setText(f"Selected Date: {formatted_date}")
 
+    def datefetcher(self):
+        return self.calendar.selectedDate()
+
     def go_to_today(self):
         """Resets the calendar view and selection to today's date."""
         today = QDate.currentDate()
@@ -379,6 +382,9 @@ class CalendarMainWindow(QWidget):
 
     def open_music_settings(self):
         MusicDialog(self.music, parent=self).exec()
+
+    def get_selected_date(self):
+        return self.on_date_selected
 
 
 # if __name__ == "__main__":

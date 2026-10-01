@@ -10,9 +10,9 @@ from datetime import timedelta
 import calendar
 import sys, os
 import PyQt6
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QGridLayout, QPushButton, QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QGridLayout, QPushButton, QLineEdit, QComboBox
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
-from PyQt6.QtCore import Qt #Qt is used for alignment
+from PyQt6.QtCore import Qt, QDate #Qt is used for alignment
 
 import json
 import pathlib
@@ -40,11 +40,16 @@ else :
 
     
 class Events(QMainWindow): #self in the entire function refers to the "MainWindow" class (adding this here as a reminder to myself)
-    def __init__(self):
+    def __init__(self, calendardate):
         super().__init__()
         self.setWindowTitle('Set an event date') # title of the window
         self.setGeometry(600,250,400,80) # (x,y,width,height)
         self.setWindowIcon(QIcon("cat.png")) #Window Icon (the thing you see on the top left)
+
+        self.calendardate = calendardate
+        
+        print(type(calendardate))
+        
         self.initUI() #initialise the "layout" manager
 
     def initUI(self): #you can't normally make a layout manager inside of MainWindow, the method is : Create a main.central widget > Create the layout manager within the widget, the main widget is then added to the window (in this case (MainWindow class)), learning sources : Bro Code (YouTube)
@@ -57,54 +62,100 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         if font_id != -1:
             font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
 
-        label = QLineEdit() #for my understanding > self means the Window
-        label.setPlaceholderText('type your event here')
-        label.setFont(QFont(font_family,30))
-        label.setGeometry(0,0,90,90) #(x,y,width,height)
-        label.setStyleSheet("color: black;"
+
+        "Input field"
+        self.label = QLineEdit() #for my understanding > self means the Window
+        self.label.setPlaceholderText('type your event here')
+        self.label.setFont(QFont(font_family,30))
+        self.label.setGeometry(0,0,90,90) #(x,y,width,height)
+        self.label.setStyleSheet("color: black;"
                             "background-color: white;") # this code is only here for testing, will either keep or change
         # label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
 
-        self.event_button = QPushButton('Add event', self)
+        "button that adds the input"
+        self.event_button = QPushButton('+', self)
         USEREVENT = self.event_button
         # self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
         self.event_button.setFont(QFont(font_family,25))
         self.event_button.clicked.connect(self.on_click)
 
-    
-        layout = QFormLayout()
+        "making....a dropdown for the events..."
+        #THIS ONE IS FOR THE FILE/TYPE OF EVENTS
+        eventsfolder = Path.cwd()/"events"
+        eventjsons = list(eventsfolder.glob("*.json"))
+        names = [filename.stem for filename in eventjsons]
 
-        layout.addWidget(label)
-        layout.addWidget(self.event_button)
+        self.dropdown = QComboBox()
+        
+        # self.dropdown = 
+
+        # =======================================================
+        # THIS ONE IS FOR FETCHING THE SELECTED DATE FROM CALENDAR
+        # ========================================================
+
+        self.tester = QLabel()
+        self.button_test = QPushButton('get date')
+
+        self.button_test.clicked.connect(self.date_fetcher)
+        
+        
+
+
+        "All layouts  down here"
+
+        layout = QVBoxLayout() #<<<< MAIN LAYOUT
+        horizontal = QHBoxLayout() #<<< FOR LABEL AND ADDING BUTTON
+
+        horizontal.addWidget(self.label)
+        horizontal.addWidget(self.event_button)
+
+        layout.addLayout(horizontal)
+        layout.addWidget(self.dropdown)
+        layout.addWidget(self.tester)
+        layout.addWidget(self.button_test)
+
 
         central_widget.setLayout(layout)
 
-    def on_click(self):
+    def on_click(self): #<<< make this save the input 
         print('event added!')
+        ayamgepuk = self.label.text()
+        print(ayamgepuk)
 
-        file_path = Path.cwd()/"events"/"My events.json"
+        # file_path = Path.cwd()/"events"/"My events.json"
 
-        with open(file_path, 'r') as f:
-                todo = json.load(f)
+        # with open(file_path, 'r') as f:
+        #         todo = json.load(f)
 
-        todo['test'].append({
-                "task" : todo,
-                "completed" : False,
-        })
+        # todo['test'].append({
+        #         "task" : todo,
+        #         "completed" : False,
+        # })
 
-        with open(file_path,'w') as f:
-                json.dump(todo, f, indent=4)
+        # with open(file_path,'w') as f:
+        #         json.dump(todo, f, indent=4)
+
+    def date_fetcher(self):
+        datewanted = self.calendardate.datefetcher()
+        print(datewanted)
+
+
+
+
 
             
     
 
+class FakeCalendar:
+    def datefetcher(self):
+        return QDate.currentDate()
    
             
         
 
 def main():
     app = QApplication(sys.argv)
-    window = Events()
+    window = Events(calendardate=FakeCalendar())
     window.show()
     sys.exit(app.exec())       
 
