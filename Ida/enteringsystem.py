@@ -215,11 +215,7 @@ class LoginSystem(QWidget):
         self.name_next_button.clicked.connect(
             self.play_click_sound
         )
-
-        # ====================================================
         # NO BUTTON
-        # ====================================================
-
         self.name_no_button = QPushButton(
             "NO",
             self.name_popup
@@ -309,10 +305,8 @@ class LoginSystem(QWidget):
             }
         """)
 
-        # =========================
         # TITLE
-        # =========================
-
+    
         self.name_error_title = QLabel(
             "USER FOUND!",
             self.name_error_popup
@@ -1084,9 +1078,7 @@ class LoginSystem(QWidget):
         """)
 
         self.welcome_no.setFont(QFont("Cave Story", 15, QFont.Weight.Bold))
-
         self.welcome_no.clicked.connect(self.back_to_name)
-
         self.welcome_no.clicked.connect(self.play_click_sound)
 
 

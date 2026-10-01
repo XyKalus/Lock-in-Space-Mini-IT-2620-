@@ -945,10 +945,8 @@ class Window(QDialog):
         )
 
         item = RoomItem(name, image, self)
-
         self.scene.addItem(item)
         item.setPos(400,300)
-
         item.setZValue(10)
 
         # Remember room item
@@ -967,7 +965,6 @@ class Window(QDialog):
 
         inventory[name] = {"image": image,
                             "category": "furniture"}
-
         # Save inventory permanently
         player = self.player_records.get_player(self.player_name)
 
