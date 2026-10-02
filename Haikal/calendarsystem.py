@@ -364,6 +364,8 @@ class CalendarMainWindow(QWidget):
 
         # NOT self.window: that name is a built-in QWidget method
         self.event_window = Events(calendardate=self)
+        # self.event_window.windowFlags(Qt.WindowType.WindowStaysOnTopHint)
+
         self.event_window.show()
 
     def on_date_selected(self):

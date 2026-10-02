@@ -10,9 +10,9 @@ from datetime import timedelta
 import calendar
 import sys, os
 import PyQt6
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QGridLayout, QPushButton, QLineEdit, QComboBox
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QGridLayout, QPushButton, QLineEdit, QComboBox, QDateEdit, QTimeEdit
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
-from PyQt6.QtCore import Qt, QDate #Qt is used for alignment
+from PyQt6.QtCore import Qt, QDate, QTime #Qt is used for alignment
 
 import json
 import pathlib
@@ -43,10 +43,12 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
     def __init__(self, calendardate):
         super().__init__()
         self.setWindowTitle('Set an event date') # title of the window
-        self.setGeometry(600,250,400,80) # (x,y,width,height)
+        self.setGeometry(600,250,490,80) # (x,y,width,height)
         self.setWindowIcon(QIcon("cat.png")) #Window Icon (the thing you see on the top left)
 
         self.calendardate = calendardate
+
+        self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
         
         print(type(calendardate))
         
@@ -79,6 +81,19 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.event_button.setFont(QFont(font_family,25))
         self.event_button.clicked.connect(self.on_click)
 
+        "MANUAL DATE SELECTOR >> this is for the date selector INSIDE this thing"
+        self.manualdateselector = QDateEdit()
+        self.manualdateselector.setCalendarPopup(True)
+        self.manualdateselector.setDate(QDate.currentDate())
+        self.manualdateselector.setDisplayFormat("dd/MM/yyyy")
+        self.manualdateselector.setFont(QFont(font_family, 20))
+
+        "MANUAL HOUR SELECTOR>> this is the thing lets you set the hour of the event"
+        self.hourselector = QTimeEdit()
+        self.hourselector.setTime(QTime.currentTime())
+        self.hourselector.setDisplayFormat("HH:mm")
+        self.hourselector.setFont(QFont(font_family, 20))
+
         "making....a dropdown for the events..."
         #THIS ONE IS FOR THE FILE/TYPE OF EVENTS
         eventsfolder = Path.cwd()/"events"
@@ -105,14 +120,21 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         layout = QVBoxLayout() #<<<< MAIN LAYOUT
         horizontal = QHBoxLayout() #<<< FOR LABEL AND ADDING BUTTON
+        DateAndTime = QHBoxLayout() #<<<<< FOR THE EVENT AND TIME SELECTOR THINGY 
 
         horizontal.addWidget(self.label)
         horizontal.addWidget(self.event_button)
 
+        DateAndTime.addWidget(self.manualdateselector)
+        DateAndTime.addWidget(self.hourselector)
+        
+
         layout.addLayout(horizontal)
+        layout.addLayout(DateAndTime)
         layout.addWidget(self.dropdown)
-        layout.addWidget(self.tester)
+        # layout.addWidget(self.tester)
         layout.addWidget(self.button_test)
+        
 
 
         central_widget.setLayout(layout)
@@ -139,6 +161,18 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         datewanted = self.calendardate.datefetcher()
         print(datewanted)
 
+    def on_calendar_date_changed(self):
+        selected_qdate = self.calendardate.datefetcher()   # fetch current value, fresh
+        current_time = self.hourselector.time()
+        self.manualdateselector.setDate(QDate(selected_qdate))
+        self.hourselector.setTime(QTime(current_time))
+
+    def dateselectorgetter(self):
+        return self.manualdateselector.date()
+
+    def hourselectorgetting(self):
+        return self.hourselector.time()
+
 
 
 
@@ -156,6 +190,7 @@ class FakeCalendar:
 def main():
     app = QApplication(sys.argv)
     window = Events(calendardate=FakeCalendar())
+    window.setWindowFlags(window.windowFlags() | Qt.WindowType.WindowStaysOnTopHint)
     window.show()
     sys.exit(app.exec())       
 
