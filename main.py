@@ -476,8 +476,10 @@ class Window(QDialog):
     
             if saved_items:
 
+                # LOAD EVERY SAVED ITEM
                 for name, data in saved_items.items():
 
+                    # GET IMAGE PATH
                     image = data.get("image")
 
                     if not image:
