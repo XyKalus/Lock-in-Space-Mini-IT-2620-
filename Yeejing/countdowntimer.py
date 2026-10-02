@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime
 
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QSpinBox, QVBoxLayout, QHBoxLayout, QLineEdit, QFrame
+from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QSpinBox, QVBoxLayout, QHBoxLayout, QLineEdit, QFrame, QStackedWidget
 from PyQt6.QtCore import QTimer, Qt, QRectF, QUrl, pyqtSignal
 from PyQt6.QtGui import QPainter, QColor, QPen, QFont
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput

@@ -56,14 +56,9 @@ class LoginSystem(QWidget):
 
     def create_name_page(self):
 
-        # ====================================================
         # NAME PAGE BACKGROUND
-        # ====================================================
-
         self.name_background = QLabel(self.name_page)
-
         background_path = os.path.join(BASE_DIR,"Ida","images","background","loginbg.png")
-
         pixmap = QPixmap(background_path)
 
         self.name_background.setPixmap(pixmap)
@@ -73,10 +68,8 @@ class LoginSystem(QWidget):
         # Make sure background stays behind everything
         self.name_background.lower()
 
-        # ====================================================
         # NAME POPUP - CUSTOM PNG BORDER
-        # ====================================================
-
+ 
         self.name_popup = QLabel(self.name_page)
 
         border_path = os.path.join(BASE_DIR,"Ida","images","background","border.png")
@@ -89,18 +82,10 @@ class LoginSystem(QWidget):
         # Center of 1100 x 800 screen
         self.name_popup.setGeometry(-70,100,1200,600)
 
-        # ====================================================
-        # POPUP TITLE
-        # ====================================================
 
-        self.name_title = QLabel(
-            "ARE YOU A NEWBIE?",
-            self.name_popup
-        )
-
+        # POPUP TITLE     
+        self.name_title = QLabel("ARE YOU A NEWBIE?",self.name_popup)
         self.name_title.setGeometry(90,90,1000,70)
-
-
         self.name_title.setStyleSheet("""
             QLabel {
                 color: white;
@@ -111,20 +96,11 @@ class LoginSystem(QWidget):
 
         self.name_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.name_title.setFont(QFont("Cave Story", 39, QFont.Weight.Bold))
-        # ====================================================
+
         # ENTER YOUR NAME
-        # ====================================================
-
-        self.name_title = QLabel(
-            "ENTER YOUR NAME",
-            self.name_popup
-        )
-
+        self.name_title = QLabel("ENTER YOUR NAME",self.name_popup)
         self.name_title.setGeometry(100,190,1000,60)
-
         self.name_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-
         self.name_title.setStyleSheet("""
             QLabel {
                 6color: #202e63;
@@ -133,26 +109,13 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.name_title.setFont(
-            QFont("Cave Story", 30, QFont.Weight.Bold))
+        self.name_title.setFont(QFont("Cave Story", 30, QFont.Weight.Bold))
 
-
-        # ====================================================
         # NAME INPUT
-        # ====================================================
-
         self.name_input = QLineEdit(self.name_popup)
-
         self.name_input.setGeometry(410,260,350,60)
-
-        self.name_input.setPlaceholderText(
-            "Enter your name..."
-        )
-
-        self.name_input.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
+        self.name_input.setPlaceholderText("Enter your name...")
+        self.name_input.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.name_input.setStyleSheet("""
             QLineEdit {
                 background-color: #eeeeee;
@@ -166,27 +129,11 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.name_input.setFont(
-            QFont("Cave Story", 30, QFont.Weight.Bold)
-        )
+        self.name_input.setFont(QFont("Cave Story", 30, QFont.Weight.Bold))
 
-
-        # ====================================================
         # NEXT BUTTON
-        # ====================================================
-
-        self.name_next_button = QPushButton(
-            "NEXT",
-            self.name_popup
-        )
-
-        self.name_next_button.setGeometry(
-            610,
-            350,
-            150,
-            60
-        )
-
+        self.name_next_button = QPushButton("NEXT",self.name_popup)
+        self.name_next_button.setGeometry(610, 350, 150, 60)
         self.name_next_button.setStyleSheet("""
             QPushButton {
                 background-color: #eeeeee;
@@ -204,30 +151,14 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.name_next_button.setFont(
-            QFont("Cave Story", 20, QFont.Weight.Bold)
-        )
+        self.name_next_button.setFont(QFont("Cave Story", 20, QFont.Weight.Bold))
 
-        self.name_next_button.clicked.connect(
-            self.name_next_clicked
-        )
+        self.name_next_button.clicked.connect(self.name_next_clicked)
+        self.name_next_button.clicked.connect(self.play_click_sound)
 
-        self.name_next_button.clicked.connect(
-            self.play_click_sound
-        )
         # NO BUTTON
-        self.name_no_button = QPushButton(
-            "NO",
-            self.name_popup
-        )
-
-        self.name_no_button.setGeometry(
-            410,
-            350,
-            150,
-            60
-        )
-
+        self.name_no_button = QPushButton("NO",self.name_popup)
+        self.name_no_button.setGeometry(410, 350, 150, 60)
         self.name_no_button.setStyleSheet("""
             QPushButton {
                 background-color: #eeeeee;
@@ -245,17 +176,9 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.name_no_button.setFont(
-            QFont("Cave Story", 20, QFont.Weight.Bold)
-        )
-
-        self.name_no_button.clicked.connect(
-            self.no_name_clicked
-        )
-
-        self.name_no_button.clicked.connect(
-            self.play_click_sound
-        )
+        self.name_no_button.setFont(QFont("Cave Story", 20, QFont.Weight.Bold))
+        self.name_no_button.clicked.connect(self.no_name_clicked)
+        self.name_no_button.clicked.connect(self.play_click_sound)
 
     def name_next_clicked(self):
 
@@ -263,9 +186,7 @@ class LoginSystem(QWidget):
 
         # Check if name is empty
         if not name:
-            self.name_input.setPlaceholderText(
-                "Please enter your name!"
-            )
+            self.name_input.setPlaceholderText("Please enter your name!")
             return
 
         # Check if username already exists
@@ -281,22 +202,12 @@ class LoginSystem(QWidget):
 
         # Name is available
         self.player_name = name
-
-        self.pages.setCurrentWidget(
-            self.character_page
-        )
+        self.pages.setCurrentWidget(self.character_page)
 
     def show_name_error(self, message):
 
         self.name_error_popup = QFrame(self.name_page)
-
-        self.name_error_popup.setGeometry(
-            300,
-            270,
-            500,
-            260
-        )
-
+        self.name_error_popup.setGeometry(300, 270, 500, 260)
         self.name_error_popup.setStyleSheet("""
             QFrame {
                 background-color: #d4be9f;
@@ -305,24 +216,10 @@ class LoginSystem(QWidget):
             }
         """)
 
-        # TITLE
-    
-        self.name_error_title = QLabel(
-            "USER FOUND!",
-            self.name_error_popup
-        )
-
-        self.name_error_title.setGeometry(
-            30,
-            25,
-            440,
-            55
-        )
-
-        self.name_error_title.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
+        # TITLE UI
+        self.name_error_title = QLabel("USER FOUND!",self.name_error_popup)
+        self.name_error_title.setGeometry(30, 25, 440, 55)
+        self.name_error_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.name_error_title.setStyleSheet("""
             QLabel {
                 color: #11152d;
@@ -331,32 +228,13 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.name_error_title.setFont(
-            QFont("Cave Story", 30, QFont.Weight.Bold)
-        )
+        self.name_error_title.setFont(QFont("Cave Story", 30, QFont.Weight.Bold))
 
-        # =========================
         # MESSAGE
-        # =========================
-
-        self.name_error_message = QLabel(
-            message,
-            self.name_error_popup
-        )
-
-        self.name_error_message.setGeometry(
-            30,
-            85,
-            440,
-            80
-        )
-
-        self.name_error_message.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
+        self.name_error_message = QLabel(message,self.name_error_popup)
+        self.name_error_message.setGeometry(30, 85, 440, 80)
+        self.name_error_message.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.name_error_message.setWordWrap(True)
-
         self.name_error_message.setStyleSheet("""
             QLabel {
                 color: #11152d;
@@ -365,26 +243,11 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.name_error_message.setFont(
-            QFont("Cave Story", 19, QFont.Weight.Bold)
-        )
+        self.name_error_message.setFont(QFont("Cave Story", 19, QFont.Weight.Bold))
 
-        # =========================
         # OK BUTTON
-        # =========================
-
-        self.name_error_button = QPushButton(
-            "OK",
-            self.name_error_popup
-        )
-
-        self.name_error_button.setGeometry(
-            175,
-            180,
-            150,
-            50
-        )
-
+        self.name_error_button = QPushButton("OK", self.name_error_popup)
+        self.name_error_button.setGeometry(175, 180, 150, 500)
         self.name_error_button.setStyleSheet("""
             QPushButton {
                 background-color: #eeeeee;
@@ -403,17 +266,9 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.name_error_button.setFont(
-            QFont("Cave Story", 20, QFont.Weight.Bold)
-        )
-
-        self.name_error_button.clicked.connect(
-            self.name_error_popup.deleteLater
-        )
-
-        self.name_error_button.clicked.connect(
-            self.play_click_sound
-        )
+        self.name_error_button.setFont(QFont("Cave Story", 20, QFont.Weight.Bold))
+        self.name_error_button.clicked.connect(self.name_error_popup.deleteLater)
+        self.name_error_button.clicked.connect(self.play_click_sound)
 
         self.name_error_popup.raise_()
         self.name_error_popup.show()
@@ -422,74 +277,30 @@ class LoginSystem(QWidget):
     def create_character_page(self):
         layout = QVBoxLayout(self.character_page)
 
-        # ====================================================
         # BACKGROUND
-        # ====================================================
+        self.character_background = QLabel(self.character_page)
 
-        self.character_background = QLabel(
-            self.character_page
-        )
-
-        background_path = os.path.join(
-            BASE_DIR,
-            "Ida",
-            "images",
-            "background",
-            "loginbg.png"
-        )
+        background_path = os.path.join(BASE_DIR,"Ida","images","background","loginbg.png")
 
         pixmap = QPixmap(background_path)
 
         self.character_background.setPixmap(pixmap)
         self.character_background.setScaledContents(True)
-        self.character_background.setGeometry(
-            0, 0, 1100, 800
-        )
-
+        self.character_background.setGeometry(0, 0, 1100, 800)
         self.character_background.lower()
 
-
-        # ====================================================
         # POPUP
-        # ====================================================
-
         self.character_popup = QLabel(self.character_page)
-
-        border_path = os.path.join(
-            BASE_DIR,
-            "Ida",
-            "images",
-            "background",
-            "border.png"
-        )
-
+        border_path = os.path.join(BASE_DIR,"Ida","images","background","border.png")
         border_pixmap = QPixmap(border_path)
 
         self.character_popup.setPixmap(border_pixmap)
         self.character_popup.setScaledContents(True)
-
-        self.character_popup.setGeometry(
-            -70,
-            100,
-            1200,
-            600
-        )
-
-        # ====================================================
+        self.character_popup.setGeometry(-70, 100, 1200, 600)
+        
         # TITLE
-        # ====================================================
-
-        self.character_title = QLabel(
-            "SELECT YOUR CHARACTER",
-            self.character_popup
-        )
-
-        self.character_title.setGeometry(
-            100,
-            70,
-            1000,
-            110
-        )
+        self.character_title = QLabel("SELECT YOUR CHARACTER",self.character_popup)
+        self.character_title.setGeometry(100, 79, 1000, 110)
         self.character_title.setStyleSheet("""
             QLabel {
                 color: white;
@@ -498,32 +309,12 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.character_title.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
+        self.character_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.character_title.setFont(QFont("Cave Story", 45, QFont.Weight.Bold))
 
-
-        self.character_title.setFont(
-            QFont("Cave Story", 45, QFont.Weight.Bold)
-        )
-
-
-        # ====================================================
         # BOY BUTTON
-        # ====================================================
-
-        self.boy_button = QPushButton(
-            "BOY",
-            self.character_popup
-        )
-
-        self.boy_button.setGeometry(
-            420,
-            225,
-            340,
-            75
-        )
-
+        self.boy_button = QPushButton("BOY",self.character_popup)
+        self.boy_button.setGeometry(420,225, 340, 75)
         self.boy_button.setStyleSheet("""
             QPushButton {
                 background-color: #eeeeee;
@@ -541,35 +332,17 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.boy_button.setFont(
-            QFont("Cave Story", 30, QFont.Weight.Bold)
-        )
+        self.boy_button.setFont(QFont("Cave Story", 30, QFont.Weight.Bold))
 
         self.boy_button.clicked.connect(
             lambda: self.select_gender("boy")
         )
 
-        self.boy_button.clicked.connect(
-            self.play_click_sound
-        )
+        self.boy_button.clicked.connect(self.play_click_sound)
 
-
-        # ====================================================
         # GIRL BUTTON
-        # ====================================================
-
-        self.girl_button = QPushButton(
-            "GIRL",
-            self.character_popup
-        )
-
-        self.girl_button.setGeometry(
-            420,
-            320,
-            340,
-            75
-        )
-
+        self.girl_button = QPushButton("GIRL",self.character_popup)
+        self.girl_button.setGeometry(420, 320, 340, 75)
         self.girl_button.setStyleSheet("""
             QPushButton {
                 background-color: #eeeeee;
@@ -587,32 +360,23 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.girl_button.setFont(
-            QFont("Cave Story", 30, QFont.Weight.Bold)
-        )
+        self.girl_button.setFont(QFont("Cave Story", 30, QFont.Weight.Bold))
 
         self.girl_button.clicked.connect(
             lambda: self.select_gender("girl")
         )
 
-        self.girl_button.clicked.connect(
-            self.play_click_sound
-        )
+        self.girl_button.clicked.connect(self.play_click_sound)
 
     def select_gender(self, gender):
 
         self.player_gender = gender
 
         # Create and save the new player
-        self.player_records.create_player(
-            self.player_name,
-            self.player_gender
-        )
+        self.player_records.create_player(self.player_name, self.player_gender)
 
         # Starting coins
-        player = self.player_records.get_player(
-            self.player_name
-        )
+        player = self.player_records.get_player(self.player_name)
 
         if player is not None:
             player["coins"] = 50
@@ -622,84 +386,31 @@ class LoginSystem(QWidget):
         print("PLAYER GENDER:", self.player_gender)
         print("STARTING COINS: 50")
 
-        self.welcome_label.setText(
-            f"Are You Ready To Lock In, {self.player_name}?"
-        )
+        self.welcome_label.setText(f"Are You Ready To Lock In, {self.player_name}?")
 
-        self.pages.setCurrentWidget(
-            self.welcome_page
-        )
+        self.pages.setCurrentWidget(self.welcome_page)
 
     def create_player_list_page(self):
 
-        # Create the page only once
-
-        # =========================
         # BACKGROUND
-        # =========================
-
         background = QLabel(self.player_list_page)
-
-        background_path = os.path.join(
-            BASE_DIR,
-            "Ida",
-            "images",
-            "background",
-            "loginbg.png"
-        )
-
+        background_path = os.path.join(BASE_DIR,"Ida","images","background","loginbg.png")
         background.setPixmap(QPixmap(background_path))
         background.setScaledContents(True)
-        background.setGeometry(
-            0, 0, 1100, 800
-        )
-
+        background.setGeometry(0, 0, 1100, 800)
         background.lower()
 
-        # =========================
         # POPUP
-        # =========================
-
         popup = QLabel(self.player_list_page)
-
-        border_path = os.path.join(
-            BASE_DIR,
-            "Ida",
-            "images",
-            "background",
-            "border2.png"
-        )
-
+        border_path = os.path.join(BASE_DIR,"Ida","images","background","border2.png")
         popup.setPixmap(QPixmap(border_path))
         popup.setScaledContents(True)
+        popup.setGeometry(-70, 80, 1200, 600)
 
-        popup.setGeometry(
-            -70,
-            80,
-            1200,
-            600
-        )
-
-        # =========================
         # TITLE
-        # =========================
-
-        title = QLabel(
-            "SELECT YOUR PROFILE",
-            popup
-        )
-
-        title.setGeometry(
-            100,
-            40,
-            1000,
-            80
-        )
-
-        title.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
+        title = QLabel("SELECT YOUR PROFILE", popup)
+        title.setGeometry(100, 40, 1000, 80)
+        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title.setStyleSheet("""
             QLabel {
                 color: white;
@@ -708,42 +419,20 @@ class LoginSystem(QWidget):
             }
         """)
 
-        title.setFont(
-            QFont(
-                "Cave Story",
-                38,
-                QFont.Weight.Bold
-            )
-        )
-
-        # =========================
+        title.setFont(QFont("Cave Story",38,QFont.Weight.Bold))
+    
         # PLAYER LIST
-        # =========================
-
         players = self.player_records.data.get(
             "players",
             []
         )
 
-        # Scroll area
+        # SCROLL AREA UI
         scroll_area = QScrollArea(self.player_list_page)
-
-        scroll_area.setGeometry(
-            360,
-            220,
-            400,
-            330
-        )
-
+        scroll_area.setGeometry(360, 220, 400, 330,)
         scroll_area.setWidgetResizable(True)
-
-        scroll_area.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
-        )
-
-        scroll_area.setVerticalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAsNeeded
-        )
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         # Make scroll area transparent
         scroll_area.setStyleSheet("""
@@ -764,9 +453,7 @@ class LoginSystem(QWidget):
 
         """)
 
-        scroll_area.setFrameShape(
-            QFrame.Shape.NoFrame
-        )
+        scroll_area.setFrameShape(QFrame.Shape.NoFrame)
 
         # Widget inside scroll area
         player_container = QWidget()
@@ -777,53 +464,23 @@ class LoginSystem(QWidget):
             }
         """)
 
-        scroll_area.setWidget(
-            player_container
-        )
+        scroll_area.setWidget(player_container)
 
         # Layout for player buttons
-        player_layout = QVBoxLayout(
-            player_container
-        )
-
-        player_layout.setContentsMargins(
-            20,
-            10,
-            2,
-            2
-        )
-
+        player_layout = QVBoxLayout(player_container)
+        player_layout.setContentsMargins(20, 10, 2, 2,)
         player_layout.setSpacing(15)
 
         # Add player buttons
         for player in players:
 
-            name = player.get(
-                "name",
-                "Unknown"
-            )
+            name = player.get("name","Unknown")
 
-            player_button = QPushButton(
-                name,
-                player_container
-            )
-
-            player_button.setFixedHeight(
-                60
-            )
-
-            player_button.setFixedWidth(
-                300
-            )
-
-            player_button.setFont(
-                QFont(
-                    "Cave Story",
-                    22,
-                    QFont.Weight.Bold
-                )
-            )
-
+            player_button = QPushButton(name,player_container)
+            player_button.setFixedHeight(60)
+            player_button.setFixedWidth(300)
+            player_button.setFont(QFont("Cave Story",22,QFont.Weight.Bold))
+            
             player_button.setStyleSheet("""
                 QPushButton {
                     background-color: #eeeeee;
@@ -845,37 +502,13 @@ class LoginSystem(QWidget):
                     self.load_existing_player(player_name)
             )
 
-            player_button.clicked.connect(
-                self.play_click_sound
-            )
+            player_button.clicked.connect(self.play_click_sound)
+            player_layout.addWidget(player_button)
 
-            player_layout.addWidget(
-                player_button
-            )
-
-        # =========================
         # BACK BUTTON
-        # =========================
-
-        back_button = QPushButton(
-            "BACK",
-            self.player_list_page
-        )
-
-        back_button.setGeometry(
-            430,
-            580,
-            200,
-            60
-        )
-
-        back_button.setFont(
-            QFont(
-                "Cave Story",
-                20,
-                QFont.Weight.Bold
-            )
-        )
+        back_button = QPushButton("BACK",self.player_list_page)
+        back_button.setGeometry(430, 580, 200, 60)
+        back_button.setFont(QFont("Cave Story",20,QFont.Weight.Bold))
 
         back_button.setStyleSheet("""
             QPushButton {
@@ -894,14 +527,10 @@ class LoginSystem(QWidget):
         """)
 
         back_button.clicked.connect(
-            lambda: self.pages.setCurrentWidget(
-                self.name_page
-            )
+            lambda: self.pages.setCurrentWidget(self.name_page)
         )
 
-        back_button.clicked.connect(
-            self.play_click_sound
-        )
+        back_button.clicked.connect(self.play_click_sound)
 
     def load_existing_player(self, player_name):
         player = self.player_records.get_player(player_name)
@@ -924,50 +553,22 @@ class LoginSystem(QWidget):
         self.pages.setCurrentWidget(self.player_list_page)
 
 
+    # BOX NOTIFICATIONS
     def create_welcome_page(self):
 
-        # ====================================================
         # BACKGROUND
-        # ====================================================
-
-        self.welcome_background = QLabel(
-            self.welcome_page
-        )
-
-        background_path = os.path.join(
-            BASE_DIR,
-            "Ida",
-            "images",
-            "wallpaper",
-            "mainbackground.png"
-        )
+        self.welcome_background = QLabel(self.welcome_page)
+        background_path = os.path.join(BASE_DIR,"Ida","images","wallpaper","mainbackground.png")
 
         pixmap = QPixmap(background_path)
-
         self.welcome_background.setPixmap(pixmap)
         self.welcome_background.setScaledContents(True)
-        self.welcome_background.setGeometry(
-            0, 0, 1100, 800
-        )
-
+        self.welcome_background.setGeometry(0,0, 1100, 800)
         self.welcome_background.lower()
 
-
-        # ====================================================
         # POPUP
-        # ====================================================
-
-        self.welcome_popup = QFrame(
-            self.welcome_page
-        )
-
-        self.welcome_popup.setGeometry(
-            325,
-            220,
-            450,
-            330
-        )
-
+        self.welcome_popup = QFrame(self.welcome_page)
+        self.welcome_popup.setGeometry(325,220, 450, 330)
         self.welcome_popup.setStyleSheet("""
             QFrame {
                 background-color: #29469b;
@@ -975,29 +576,12 @@ class LoginSystem(QWidget):
             }
         """)
 
-
-        # ====================================================
         # WELCOME TEXT
-        # ====================================================
 
-        self.welcome_label = QLabel(
-            f"Are You Ready To Lock In, {self.player_name}?",
-            self.welcome_popup
-        )
-
-        self.welcome_label.setGeometry(
-            35,
-            45,
-            380,
-            130
-        )
-
-        self.welcome_label.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
-        self.welcome_label.setWordWrap(True)
-
+        self.welcome_label = QLabel(f"Are You Ready To Lock In, {self.player_name}?", self.welcome_popup)
+        self.welcome_label.setGeometry(35, 45, 380, 130)
+        self.welcome_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.welcome_label.setWordWrap(True) # Enable line wrapping
         self.welcome_label.setStyleSheet("""
             QLabel {
                 color: white;
@@ -1006,25 +590,11 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.welcome_label.setFont(
-            QFont("Cave Story", 40, QFont.Weight.Bold)
-        )
-        # ====================================================
-        # YES BUTTON
-        # ====================================================
+        self.welcome_label.setFont(QFont("Cave Story", 40, QFont.Weight.Bold))
 
-        self.welcome_yes = QPushButton(
-            "YES",
-            self.welcome_popup
-        )
-
-        self.welcome_yes.setGeometry(
-            65,
-            215,
-            140,
-            60
-        )
-
+        # YES BUTTON UI
+        self.welcome_yes = QPushButton("YES",self.welcome_popup)
+        self.welcome_yes.setGeometry(65, 215, 140, 60)
         self.welcome_yes.setStyleSheet("""
             QPushButton {
                 background-color: #eeeeee;
@@ -1038,31 +608,16 @@ class LoginSystem(QWidget):
             }
         """)
 
-        self.welcome_yes.setFont(
-            QFont("Cave Story", 15, QFont.Weight.Bold)
-        )
-
+        self.welcome_yes.setFont(QFont("Cave Story", 15, QFont.Weight.Bold))
         self.welcome_yes.clicked.connect(self.welcome_yes_clicked)
+        self.welcome_yes.clicked.connect(self.play_click_sound)
 
-        self.welcome_yes.clicked.connect(
-            self.play_click_sound
-        )
 
-        # ====================================================
         # NO BUTTON
-        # ====================================================
 
-        self.welcome_no = QPushButton(
-            "NO",
-            self.welcome_popup
-        )
 
-        self.welcome_no.setGeometry(
-            245,
-            215,
-            140,
-            60
-        )
+        self.welcome_no = QPushButton("NO", self.welcome_popup)
+        self.welcome_no.setGeometry(245, 215, 140, 60)
 
         self.welcome_no.setStyleSheet("""
             QPushButton {
@@ -1084,10 +639,7 @@ class LoginSystem(QWidget):
 
    # SEND THE INFORMATION BACK TO WINDOW
     def welcome_yes_clicked(self):
-        self.login_success.emit(
-            self.player_name,
-            self.player_gender
-        )
-    
+        self.login_success.emit(self.player_name,self.player_gender)
+        
     def back_to_name(self):
         self.pages.setCurrentWidget(self.name_page)

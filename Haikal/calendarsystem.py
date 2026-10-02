@@ -7,6 +7,7 @@ from PyQt6.QtWidgets import (
     QLabel, QCalendarWidget, QPushButton, QStackedWidget
 )
 from PyQt6.QtCore import QDate
+from PyQt6.QtCore import QDate
 from PyQt6.QtGui import QFont, QFontDatabase
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 

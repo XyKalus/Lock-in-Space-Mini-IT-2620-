@@ -134,14 +134,24 @@ class TodoList(QMainWindow):
         
 
             for i, name in enumerate(list_names):
+<<<<<<< HEAD
                   self.ListOfTasks.addItem(name)
                   self.ListOfTasks.setItemData(i, todolists_json[i])
+=======
+                self.ListOfTasks.addItem(name)
+                self.ListOfTasks.setItemData(i, todolists_json[i])
+>>>>>>> 61ff19c3f3df83554f577733316b3f0dfc5ece58
 
             self.ListOfTasks.currentIndexChanged.connect(self.ListSwitcher)
 
             if list_names:
+<<<<<<< HEAD
                  self.ListSwitcher()
              
+=======
+                self.ListSwitcher()
+
+>>>>>>> 61ff19c3f3df83554f577733316b3f0dfc5ece58
             
             """Where you type in the task"""
             self.TaskName = QLineEdit()
