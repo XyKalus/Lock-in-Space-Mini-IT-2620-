@@ -84,7 +84,7 @@ class Window(QDialog):
         
 
         # VIDEO PATH
-        video_path =  #"Ida/images/audio/intro.mp4" 
+        video_path =  "Ida/images/audio/intro.mp4" 
         print("VIDEO PATH:", video_path)
         print("VIDEO EXISTS:", os.path.exists(video_path))
         self.intro_player.setSource(QUrl.fromLocalFile(video_path))
@@ -482,8 +482,10 @@ class Window(QDialog):
     
             if saved_items:
 
+                # LOAD EVERY SAVED ITEM
                 for name, data in saved_items.items():
 
+                    # GET IMAGE PATH
                     image = data.get("image")
 
                     if not image:

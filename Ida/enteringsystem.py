@@ -54,6 +54,7 @@ class LoginSystem(QWidget):
     def play_click_sound(self):
         self.click_sound.play()
 
+    # UI
     def create_name_page(self):
 
         # NAME PAGE BACKGROUND
@@ -180,6 +181,7 @@ class LoginSystem(QWidget):
         self.name_no_button.clicked.connect(self.no_name_clicked)
         self.name_no_button.clicked.connect(self.play_click_sound)
 
+    # NEXT FUNCTION 
     def name_next_clicked(self):
 
         name = self.name_input.text().strip()
@@ -187,7 +189,7 @@ class LoginSystem(QWidget):
         # Check if name is empty
         if not name:
             self.name_input.setPlaceholderText("Please enter your name!")
-            return
+            return #TRUE
 
         # Check if username already exists
         if self.player_records.player_exists(name):
