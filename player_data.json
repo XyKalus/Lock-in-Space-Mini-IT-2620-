@@ -1,657 +1,7 @@
 {
     "players": [
         {
-            "name": "rafe",
-            "gender": "boy",
-            "coins": 5,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "Blue Stripz Wall",
-                "image": "Ida/images/wallpaper/w6.png"
-            },
-            "inventory": {
-                "Lullaby Wall": {
-                    "image": "Ida/images/wallpaper/w7.png",
-                    "price": 20,
-                    "category": "wallpaper"
-                },
-                "White and Wood": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png",
-                    "category": "wallpaper"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "category": "furniture"
-                },
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "category": "furniture"
-                }
-            },
-            "room_items": {
-                "Book Rack": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bookrack.png",
-                    "x": 196.00000000000006,
-                    "y": 440.0,
-                    "scale": 1.6105100000000008,
-                    "category": "furniture"
-                },
-                "Harry Potter Books": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/hpbook.png",
-                    "x": 595.0,
-                    "y": 162.0,
-                    "scale": 1.4641000000000006,
-                    "category": "furniture"
-                },
-                "Cat Tree": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/cattoys.png",
-                    "x": 600.0,
-                    "y": 447.9999999999999,
-                    "scale": 1.4641000000000006,
-                    "category": "furniture"
-                },
-                "Morning Day": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/morning.png",
-                    "x": 117.0,
-                    "y": 121.99999999999994,
-                    "scale": 1.871929870878773,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-08"
-        },
-        {
-            "name": "kd",
-            "gender": "boy",
-            "coins": 32,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "Modern Wall",
-                "image": "Ida/images/wallpaper/w12.png"
-            },
-            "inventory": {
-                "Sushi": {
-                    "image": "Ida/images/foods/f4.png",
-                    "category": "furniture"
-                },
-                "White and Wood": {
-                    "image": "Ida\\images\\wallpaper\\mainbackground.png",
-                    "category": "wallpaper"
-                },
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "category": "furniture"
-                }
-            },
-            "room_items": {
-                "Khaled": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/CCC3.png",
-                    "x": 712.0,
-                    "y": 346.0,
-                    "scale": 2.5937424601000023,
-                    "category": "furniture"
-                },
-                "Harry Potter Books": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/hpbook.png",
-                    "x": 585.0,
-                    "y": 264.99999999999994,
-                    "scale": 1.2100000000000002,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-08"
-        },
-        {
-            "name": "lea",
-            "gender": "girl",
-            "coins": 110,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "Siamese Cat": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/pets/cat1.png",
-                    "x": 582.0,
-                    "y": 524.0,
-                    "scale": 1.1859210000000007,
-                    "category": "furniture"
-                },
-                "Meme Poster": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/special/sp3.png",
-                    "x": 523.0,
-                    "y": 169.0,
-                    "scale": 1.6105100000000008,
-                    "category": "furniture"
-                },
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
-                    "x": 359.0,
-                    "y": 370.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-08"
-        },
-        {
-            "name": "d",
-            "gender": "boy",
-            "coins": 70,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-08"
-        },
-        {
-            "name": "j",
-            "gender": "boy",
-            "coins": 100,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                },
-                "Siamese Cat": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/pets/cat1.png",
-                    "x": 595.0,
-                    "y": 503.0,
-                    "scale": 1.3310000000000004,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "lin",
-            "gender": "girl",
-            "coins": 35,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "Lullaby Wall",
-                "image": "Ida/images/wallpaper/w7.png"
-            },
-            "inventory": {
-                "White and Wood": {
-                    "image": "Ida\\images\\wallpaper\\mainbackground.png",
-                    "category": "wallpaper"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "category": "furniture"
-                }
-            },
-            "room_items": {
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "Morning Day": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/morning.png",
-                    "x": 124.0,
-                    "y": 223.0,
-                    "scale": 1.9487171000000014,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "n",
-            "gender": "girl",
-            "coins": 2,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "Polka Wall",
-                "image": "Ida/images/wallpaper/w5.png"
-            },
-            "inventory": {
-                "Haikal": {
-                    "image": "Ida/images/characters/C2.png",
-                    "price": 10,
-                    "category": "characters"
-                },
-                "White and Wood": {
-                    "image": "Ida\\images\\wallpaper\\mainbackground.png",
-                    "category": "wallpaper"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "category": "furniture"
-                }
-            },
-            "room_items": {
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "Harry Potter Books": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/hpbook.png",
-                    "x": 577.0,
-                    "y": 225.0,
-                    "scale": 1.3310000000000004,
-                    "category": "furniture"
-                },
-                "Nemo": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/pets/fish1.png",
-                    "x": 183.0,
-                    "y": 440.0,
-                    "scale": 1.2100000000000002,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "lol",
-            "gender": "boy",
-            "coins": 60,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "ko",
-            "gender": "boy",
-            "coins": 60,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "l",
-            "gender": "boy",
-            "coins": 60,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "lo",
-            "gender": "girl",
-            "coins": 60,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "we",
-            "gender": "boy",
-            "coins": 0,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "Lullaby Wall",
-                "image": "Ida/images/wallpaper/w7.png"
-            },
-            "inventory": {
-                "Yeejing": {
-                    "image": "Ida/images/characters/C1.png",
-                    "price": 20,
-                    "category": "characters"
-                },
-                "White and Wood": {
-                    "image": "Ida\\images\\wallpaper\\mainbackground.png",
-                    "category": "wallpaper"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "category": "furniture"
-                }
-            },
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "TV": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/TV.png",
-                    "x": 551.0,
-                    "y": 442.0,
-                    "scale": 1.4641000000000006,
-                    "category": "furniture"
-                },
-                "Khaled": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/CCC3.png",
-                    "x": 394.0,
-                    "y": 397.0,
-                    "scale": 1.9487171000000014,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-08"
-        },
-        {
-            "name": "momo",
-            "gender": "girl",
-            "coins": 60,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {},
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
-                    "x": 421.0,
-                    "y": 374.0,
-                    "scale": 2.0,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-07"
-        },
-        {
-            "name": "jojo",
+            "name": "dk",
             "gender": "boy",
             "coins": 15,
             "study_time": 0,
@@ -664,52 +14,144 @@
                     "image": "Ida\\images\\wallpaper\\mainbackground.png",
                     "category": "wallpaper"
                 },
-                "Adventure Time Wall": {
-                    "image": "Ida/images/wallpaper/w10.png",
-                    "category": "wallpaper"
-                }
-            },
-            "room_items": {
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
+                "curtain": {
+                    "image": "Ida/images/furnitures/curtain.png",
                     "category": "furniture"
                 },
                 "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
+                    "image": "Ida/images/furnitures/bed.png",
                     "category": "furniture"
                 },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/boy.png",
                     "category": "furniture"
-                },
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
+                }
+            },
+            "room_items": {
+                "Yeejing": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/C1.png",
+                    "x": 481.0000000000001,
+                    "y": 446.0,
+                    "scale": 1.9487171000000014,
                     "category": "furniture"
                 },
                 "Harry Potter Books": {
                     "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/hpbook.png",
-                    "x": 564.0,
-                    "y": 210.0,
-                    "scale": 1.3310000000000004,
+                    "x": 311.0,
+                    "y": 203.0,
+                    "scale": 1.2100000000000002,
+                    "category": "furniture"
+                },
+                "Book Rack": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bookrack.png",
+                    "x": 767.9999999999999,
+                    "y": 424.0,
+                    "scale": 1.6105100000000008,
+                    "category": "furniture"
+                },
+                "door": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/door.png",
+                    "x": 45.0,
+                    "y": 326.0,
+                    "scale": 2.1435888100000016,
+                    "category": "furniture"
+                },
+                "Haikal": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/C2.png",
+                    "x": 308.0,
+                    "y": 442.0000000000001,
+                    "scale": 1.9487171000000014,
                     "category": "furniture"
                 }
             },
-            "last_claim": "2026-09-07"
+            "last_claim": "2026-10-02"
         },
         {
-            "name": "sofia",
+            "name": "mk",
+            "gender": "boy",
+            "coins": 70,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {
+                "door": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/door.png",
+                    "x": 552.0,
+                    "y": 282.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bed.png",
+                    "x": 5.0,
+                    "y": 500.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/boy.png",
+                    "x": 400.0,
+                    "y": 380.0,
+                    "scale": 2.0,
+                    "category": "furniture"
+                }
+            },
+            "last_claim": "2026-10-02"
+        },
+        {
+            "name": "kd",
+            "gender": "boy",
+            "coins": 70,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {
+                "door": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/door.png",
+                    "x": 700.0,
+                    "y": 280.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bed.png",
+                    "x": 5.0,
+                    "y": 500.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/boy.png",
+                    "x": 400.0,
+                    "y": 380.0,
+                    "scale": 2.0,
+                    "category": "furniture"
+                }
+            },
+            "last_claim": "2026-10-02"
+        },
+        {
+            "name": "foo",
             "gender": "girl",
             "coins": 60,
             "study_time": 0,
@@ -719,92 +161,130 @@
             },
             "inventory": {},
             "room_items": {
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/girl.png",
+                    "x": 400.0,
+                    "y": 380.0,
+                    "scale": 2.0,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bed.png",
+                    "x": 5.0,
+                    "y": 500.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
                 "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/door.png",
+                    "x": 700.0,
+                    "y": 280.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                }
+            },
+            "last_claim": "2026-10-02"
+        },
+        {
+            "name": "loui",
+            "gender": "boy",
+            "coins": 60,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "room_items": {
+                "door": {
+                    "image": "Ida/images/furnitures/door.png",
                     "x": 700.0,
                     "y": 280.0,
                     "scale": 2.5,
                     "category": "furniture"
                 },
+                "curtain": {
+                    "image": "Ida/images/furnitures/curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "Ida/images/furnitures/bed.png",
+                    "x": 5.0,
+                    "y": 500.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
                 "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
+                    "image": "Ida/images/characters/boy.png",
                     "x": 400.0,
                     "y": 380.0,
                     "scale": 2.0,
                     "category": "furniture"
                 }
             },
-            "last_claim": "2026-09-08"
+            "last_claim": "2026-10-02"
         },
         {
-            "name": "dy",
+            "name": "lola",
             "gender": "girl",
-            "coins": 10,
+            "coins": 40,
             "study_time": 0,
             "wallpaper": {
-                "name": "Polka Wall",
-                "image": "Ida/images/wallpaper/w5.png"
+                "name": "Mr.Bean Wall",
+                "image": "Ida/images/wallpaper/w3.png"
             },
             "inventory": {
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "category": "furniture"
-                },
                 "White and Wood": {
                     "image": "Ida\\images\\wallpaper\\mainbackground.png",
                     "category": "wallpaper"
                 },
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\girl.png",
+                "door": {
+                    "image": "Ida/images/furnitures/door.png",
                     "category": "furniture"
                 },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
+                "curtain": {
+                    "image": "Ida/images/furnitures/curtain.png",
                     "category": "furniture"
                 }
             },
             "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
+                "Night Day": {
+                    "image": "Ida/images/furnitures/night.png",
+                    "x": 134.0,
+                    "y": 216.0,
+                    "scale": 1.771561000000001,
+                    "category": "furniture"
+                },
+                "bed": {
+                    "image": "Ida/images/furnitures/bed.png",
+                    "x": 5.0,
+                    "y": 500.0,
                     "scale": 2.5,
                     "category": "furniture"
                 },
-                "Special Frame": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/special/sp5.png",
-                    "x": 454.0,
-                    "y": 228.0,
-                    "scale": 1.1623211721000006,
-                    "category": "furniture"
-                },
-                "Morning Day": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/morning.png",
-                    "x": 60.99999999999994,
-                    "y": 224.0,
-                    "scale": 1.7363069361000014,
-                    "category": "furniture"
-                },
-                "Cat Tree": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/cattoys.png",
-                    "x": 542.0,
-                    "y": 409.0,
-                    "scale": 1.6105100000000008,
-                    "category": "furniture"
-                },
-                "Khaled": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/CCC3.png",
-                    "x": 291.0,
-                    "y": 376.0,
-                    "scale": 2.1435888100000016,
+                "BOY": {
+                    "image": "Ida/images/characters/girl.png",
+                    "x": 400.0,
+                    "y": 380.0,
+                    "scale": 2.0,
                     "category": "furniture"
                 }
             },
-            "last_claim": "2026-09-08"
+            "last_claim": "2026-10-02"
         },
         {
-            "name": "h",
-            "gender": "boy",
+            "name": "loop",
+            "gender": "girl",
             "coins": 60,
             "study_time": 0,
             "wallpaper": {
@@ -814,79 +294,35 @@
             "inventory": {},
             "room_items": {
                 "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
+                    "image": "Ida/images/furnitures/door.png",
                     "x": 700.0,
                     "y": 280.0,
                     "scale": 2.5,
                     "category": "furniture"
                 },
                 "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
+                    "image": "Ida/images/furnitures/curtain.png",
                     "x": 50.0,
                     "y": 200.0,
                     "scale": 2.5,
                     "category": "furniture"
                 },
                 "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
+                    "image": "Ida/images/furnitures/bed.png",
                     "x": 5.0,
                     "y": 500.0,
                     "scale": 2.5,
                     "category": "furniture"
                 },
                 "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
+                    "image": "Ida/images/characters/girl.png",
                     "x": 400.0,
                     "y": 380.0,
                     "scale": 2.0,
                     "category": "furniture"
                 }
             },
-            "last_claim": "2026-09-08"
-        },
-        {
-            "name": "kol",
-            "gender": "boy",
-            "coins": 50,
-            "study_time": 0,
-            "wallpaper": {
-                "name": "White and Wood",
-                "image": "Ida\\images\\wallpaper\\mainbackground.png"
-            },
-            "inventory": {
-                "BOY": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\characters\\boy.png",
-                    "category": "furniture"
-                },
-                "Haikal": {
-                    "image": "Ida/images/characters/C2.png",
-                    "category": "furniture"
-                }
-            },
-            "room_items": {
-                "door": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "bed": {
-                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida\\images\\furnitures\\bed.png",
-                    "x": 5.0,
-                    "y": 500.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                }
-            },
-            "last_claim": "2026-09-08"
+            "last_claim": "2026-10-02"
         }
     ]
 }

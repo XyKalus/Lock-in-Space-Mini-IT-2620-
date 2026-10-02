@@ -37,17 +37,9 @@ class ShoppingCart(QWidget):
 
         self.background = QLabel(self)
 
-        background_path = os.path.join(
-            BASE_DIR,
-            "Ida",
-            "images",
-            "Icons",
-            "stallbg.jpg"
-        )
+        background_path = os.path.join(BASE_DIR,"Ida","images", "Icons","stallbg.jpg")
 
-        background_pixmap = QPixmap(
-            background_path
-        )
+        background_pixmap = QPixmap(background_path)
 
         self.background.setPixmap(
             background_pixmap
@@ -973,78 +965,30 @@ class ShoppingCart(QWidget):
         )
 
 
-        price_image.setStyleSheet(
-            "background-color: transparent; border: none;"
-        )
+        price_image.setStyleSheet("background-color: transparent; border: none;")
 
-
-        # -------------------------------------------------
         # PRICE NUMBER
-        # -------------------------------------------------
 
-        price_label = QLabel(
-            str(price)
-        )
-
-
-        price_label.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
-
-        # Use Cave Story font
-        font_id = QFontDatabase.addApplicationFont(
-            "Cave-Story.ttf"
-        )
-
+        price_label = QLabel(str(price))
+        price_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            
+        # USE CAVE STORY FONT
+        font_id = QFontDatabase.addApplicationFont("Cave-Story.ttf")
 
         if font_id != -1:
 
-            font_family = QFontDatabase.applicationFontFamilies(
-                font_id
-            )[0]
+            font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
 
+            price_label.setFont(QFont(font_family,20,QFont.Weight.Bold))
+                
+        price_label.setStyleSheet("border: none;")
+        price_layout.addWidget(price_image)
+        price_layout.addWidget(price_label)
+        card_layout.addLayout(price_layout)
 
-            price_label.setFont(
-                QFont(
-                    font_family,
-                    20,
-                    QFont.Weight.Bold
-                )
-            )
-
-
-        price_label.setStyleSheet(
-            "border: none;"
-        )
-
-
-        price_layout.addWidget(
-            price_image
-        )
-
-
-        price_layout.addWidget(
-            price_label
-        )
-
-
-        card_layout.addLayout(
-            price_layout
-        )
-
-
-        # =================================================
         # BUY BUTTON
-        buy_button = QPushButton(
-            "BUY"
-        )
-
-
-        buy_button.setFixedHeight(
-            30
-        )
-
+        buy_button = QPushButton("BUY")
+        buy_button.setFixedHeight(30)
 
     # ONLY BUY USES CAVE STORY
         buy_button.setStyleSheet("""
@@ -1066,93 +1010,57 @@ class ShoppingCart(QWidget):
                 background-color: black;
             }
         """)
-
         
-        buy_button.clicked.connect(
-            lambda: self.buy_item(name, image, price)
-        )
-
-        card_layout.addWidget(
-            buy_button
-        )
-
-
-        card.setLayout(
-            card_layout
-        )
-
+        buy_button.clicked.connect(lambda: self.buy_item(name, image, price))
+        card_layout.addWidget(buy_button)
+        card.setLayout(card_layout)
 
         return card
-    # ========================================================
-        # SHOW CATEGORY
+  
+    # SHOW CATEGORY
     def show_category(self, category):
 
         self.current_category = category
 
-    # your existing code continues here...
-        # ====================================================
         # REMOVE CURRENT ITEMS
         while self.items_layout.count():
 
-            layout_item = self.items_layout.takeAt(
-                0
-            )
-
-
+            layout_item = self.items_layout.takeAt(0)
             widget = layout_item.widget()
-
 
             if widget is not None:
 
                 widget.deleteLater()
 
-
-        # ====================================================
         # CHARACTERS
-        # ====================================================
-
+ 
         if category == "characters":
 
             items = [
 
-                ("Yeejing","Ida/images/characters/C1.png",
-                    20
-                ),
+                ("Yeejing","Ida/images/characters/C1.png", 10),
 
-                ("Haikal","Ida/images/characters/C2.png",
-                    10
-                ),
+                ("Haikal","Ida/images/characters/C2.png", 10),
 
-                ("Khaled","Ida/images/characters/CCC3.png",
-                    10
-                ),
+                ("Coco","Ida/images/characters/C3.png", 10),
 
-                ("Coco","Ida/images/characters/C4.png",
-                    45
-                ),
+                ("Khaled","Ida/images/characters/C4.png", 30),
 
-                ("Sean","Ida/images/characters/C6.png",
-                    10
-                ),
+                ("Siew Che","Ida/images/characters/C5.png", 30),
 
-                ("Siew Che","Ida/images/characters/C5.png",
-                    59
-                ),
+                ("Sean","Ida/images/characters/C6.png", 30),
 
-                ("Dani","Ida/images/characters/C7.png",
-                    50
-                ),
+                ("Ida","Ida/images/characters/C8.png", 30),
 
-                ("Ida","Ida/images/characters/C8.png",
-                    50
-                )
+                ("Dani","Ida/images/characters/C7.png", 30),
+
+                ("Sofia","Ida/images/characters/C9.png", 50),
+
+                ("Rafe","Ida/images/characters/C10.png", 50)
 
             ]
 
-
-        # ====================================================
         # WALLPAPER
-        # ====================================================
 
         elif category == "wallpaper":
 
@@ -1174,121 +1082,79 @@ class ShoppingCart(QWidget):
 
                 ("Starry Night Wall","Ida/images/wallpaper/w8.png",20),
 
-                ("Sorrow Wall","Ida/images/wallpaper/w9.png",20),
+                ("Sorrow Wall","Ida/images/wallpaper/w9.png",30),
 
-                ("Adventure Time Wall","Ida/images/wallpaper/w10.png",20),
+                ("Adventure Time Wall","Ida/images/wallpaper/w10.png",50),
 
-                ("Kachow Wall","Ida/images/wallpaper/w11.png",20),
+                ("Kachow Wall","Ida/images/wallpaper/w11.png",50),
 
-                ("Modern Wall","Ida/images/wallpaper/w12.png",20)
+                ("Modern Wall","Ida/images/wallpaper/w12.png",50)
 
             ]
 
-        # ====================================================
-        # Pets
-        # ====================================================
+        # PETS
 
         elif category == "pets":
 
             items = [
 
-                ("Siamese Cat","Ida/images/pets/cat1.png",
-                    13
-                ),
+                ("Siamese Cat","Ida/images/pets/cat1.png", 10),
+        
+                ("Beagle Dog","Ida/images/pets/dog1.png", 15),
 
-                ("Beagle Dog","Ida/images/pets/dog1.png",
-                    20
-                ),
+                ("Yellow Bird","Ida/images/pets/bird1.png", 25),
 
-                ("Yellow Bird","Ida/images/pets/bird1.png",
-                    15
-                ),
+                ("Gary","Ida/images/pets/snail1.png", 25),
 
-                ("Gary","Ida/images/pets/snail1.png",
-                    15
-                ),
+                ("Froggy","Ida/images/pets/frog1.png", 25),
 
-                ("Froggy","Ida/images/pets/frog1.png",
-                    18
-                ),
+                ("Donald Duck","Ida/images/pets/duck1.png", 30),
 
-                ("Donald Duck","Ida/images/pets/duck1.png",
-                    20
-                ),
+                ("Nemo","Ida/images/pets/fish1.png", 30),
 
-                ("Nemo","Ida/images/pets/fish1.png",
-                    23
-                ),
-
-                ("Rabbit","Ida/images/pets/rabbit1.png",
-                    50
-                )
+                ("Rabbit","Ida/images/pets/rabbit1.png", 30)
+                
             ]
 
-        # ======================================================
-        # Furniture
-        # ======================================================
+        # FURNITURE
 
         elif category == "furniture":
 
             items = [
             
-                ("Book Rack","Ida/images/furnitures/bookrack.png",
-                    10
-                ),
+                ("Book Rack","Ida/images/furnitures/bookrack.png", 10),
 
-                ("TV","Ida/images/furnitures/TV.png",
-                    20
-                ),
+                ("TV","Ida/images/furnitures/TV.png", 10),
 
-                ("Flower Vase","Ida/images/furnitures/Vast.png",
-                    10
-                ),
+                ("Flower Vase","Ida/images/furnitures/Vast.png", 5),
+             
+                ("Guitar","Ida/images/furnitures/guitar.png", 10),
 
-                ("Guitar","Ida/images/furnitures/guitar.png",
-                    70
-                ),
+                ("Radio","Ida/images/furnitures/radio.png", 10),
+                
+                ("Cat Tree","Ida/images/furnitures/cattoys.png", 15),
 
-                ("Radio","Ida/images/furnitures/radio.png",
-                    10
-                ),
-
-                ("Cat Tree","Ida/images/furnitures/cattoys.png",
-                    5
-                ),
-
-                ("Morning Day","Ida/images/furnitures/morning.png",
-                    5
-                ),
-
-                ("Night Day","Ida/images/furnitures/night.png",
-                    5
-                ),
-
-                ("Harry Potter Books","Ida/images/furnitures/hpbook.png",
-                    5
-                )
-
-
+                ("Morning Day","Ida/images/furnitures/morning.png", 15),
+                 
+                ("Night Day","Ida/images/furnitures/night.png", 20),
+        
+                ("Harry Potter Books","Ida/images/furnitures/hpbook.png", 20)
             ]
 
-        # ======================================================
-        # Furniture
-        # ======================================================
-
+        # FOODS
         elif category == "foods":
 
             items = [
             
-                ("Croissant","Ida/images/foods/f1.png", 10),
+                ("Croissant","Ida/images/foods/f1.png", 2),
 
-                ("Coffee","Ida/images/foods/d1.png", 50),
+                ("Coffee","Ida/images/foods/d1.png", 3),
 
                 ("Sandwich","Ida/images/foods/f2.png",1),
 
                 ("Coca Cola","Ida/images/foods/d2.png",5),
 
-                ("Doritos","Ida/images/foods/f3.png",10),
+                ("Doritos","Ida/images/foods/f3.png",5),
 
                 ("Strawberry Mojito","Ida/images/foods/d3.png",5),
 
@@ -1296,7 +1162,7 @@ class ShoppingCart(QWidget):
 
                 ("Boba Tea","Ida/images/foods/d4.png",7),
 
-                ("Donut","Ida/images/foods/f5.png",10),
+                ("Donut","Ida/images/foods/f5.png",4),
 
                 ("Lime Milkshake","Ida/images/foods/d5.png",50),
 
@@ -1314,46 +1180,37 @@ class ShoppingCart(QWidget):
 
                 ("Pancake","Ida/images/foods/f9.png",10),
 
-                ("Magnum","Ida/images/foods/d9.png",500)
+                ("Magnum","Ida/images/foods/d9.png",10)
 
             ]
 
-        # ======================================================
-        # Furniture
-        # ======================================================
+        # SPECIAL ITEMS
 
         elif category == "Special":
 
             items = [
             
-                ("Statue Fountain","Ida/images/special/sp1.png",10),
+                ("Statue Fountain","Ida/images/special/sp1.png",50),
 
                 ("THE Flower","Ida/images/special/sp2.png",50),
 
-                ("Meme Poster","Ida/images/special/sp3.png",10),
+                ("Meme Poster","Ida/images/special/sp3.png",50),
 
                 ("Fountain","Ida/images/special/sp4.png",50),
 
-                ("Special Frame","Ida/images/special/sp5.png",10),
+                ("Special Frame","Ida/images/special/sp5.png",50),
 
                 ("Wall-E Friends","Ida/images/special/sp6.png",50),
 
-                ("EBWISE","Ida/images/special/sp7.png",30)
+                ("EBWISE","Ida/images/special/sp7.png",40)
 
             ]
-
-        
-        # OTHER CATEGORIES 
-        
 
         else:
 
             items = []
 
-
-        # ====================================================
         # ADD ITEMS TO GRID
-        # ====================================================
 
         grid_index = 0
 
