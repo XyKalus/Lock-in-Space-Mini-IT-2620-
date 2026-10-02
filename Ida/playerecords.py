@@ -49,6 +49,8 @@ class PlayerRecords:
                           "image": os.path.join("Ida","images","wallpaper","mainbackground.png")},
             "inventory": {},
 
+            "purchased_items": [],
+
             "room_items": {},
 
             "last_claim": ""

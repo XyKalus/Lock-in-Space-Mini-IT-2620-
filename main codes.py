@@ -413,11 +413,14 @@ class Window(QDialog):
             saved_inventory = player.get("inventory", {})
             inventory.update(saved_inventory)
 
-            print(
-                "LOADED INVENTORY:",
-                inventory
-            )
+            print("LOADED INVENTORY:",inventory)
 
+            # LOAD PURCHASED ITEMS
+            saved_purchased_items = player.get("purchased_items",[])
+            self.shop_page.purchased_items = set(saved_purchased_items)
+
+            print("LOADED PURCHASED ITEMS:",self.shop_page.purchased_items)
+            
             # LOAD WALLPAPER
             wallpaper = player.get("wallpaper")
 
@@ -663,27 +666,25 @@ class Window(QDialog):
 
         self.coins = coins
 
-        self.coin_amount.setText(
-            str(coins)
-        )
+        self.coin_amount.setText(str(coins))
 
-        player = self.player_records.get_player(
-            self.player_name
-        )
+        player = self.player_records.get_player(self.player_name)
 
         if player is not None:
 
             player["coins"] = coins
 
-            player["inventory"] = dict(
-                inventory
-            )
+            player["inventory"] = dict(inventory)
 
+             # SAVE PURCHASED ITEMS
+            player["purchased_items"] = list(self.shop_page.purchased_items)
+           
             self.player_records.save_data()
 
             print("PLAYER DATA SAVED")
             print("COINS:", coins)
             print("INVENTORY:", player["inventory"])
+            print("PURCHASED ITEMS:",player["purchased_items"])
 
     def update_shop_coins(self):
         self.shop_page.set_coins(self.coins)

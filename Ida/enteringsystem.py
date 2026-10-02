@@ -89,9 +89,8 @@ class LoginSystem(QWidget):
         # Center of 1100 x 800 screen
         self.name_popup.setGeometry(-70,100,1200,600)
 
-        # ====================================================
-        # POPUP TITLE
-        # ====================================================
+
+        # POPUP TITLE     
 
         self.name_title = QLabel(
             "ARE YOU A NEWBIE?",
@@ -1044,25 +1043,14 @@ class LoginSystem(QWidget):
 
         self.welcome_yes.clicked.connect(self.welcome_yes_clicked)
 
-        self.welcome_yes.clicked.connect(
-            self.play_click_sound
-        )
+        self.welcome_yes.clicked.connect(self.play_click_sound)
 
-        # ====================================================
+
         # NO BUTTON
-        # ====================================================
 
-        self.welcome_no = QPushButton(
-            "NO",
-            self.welcome_popup
-        )
 
-        self.welcome_no.setGeometry(
-            245,
-            215,
-            140,
-            60
-        )
+        self.welcome_no = QPushButton("NO", self.welcome_popup)
+        self.welcome_no.setGeometry(245, 215, 140, 60)
 
         self.welcome_no.setStyleSheet("""
             QPushButton {
@@ -1084,10 +1072,7 @@ class LoginSystem(QWidget):
 
    # SEND THE INFORMATION BACK TO WINDOW
     def welcome_yes_clicked(self):
-        self.login_success.emit(
-            self.player_name,
-            self.player_gender
-        )
-    
+        self.login_success.emit(self.player_name,self.player_gender)
+        
     def back_to_name(self):
         self.pages.setCurrentWidget(self.name_page)
