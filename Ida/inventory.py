@@ -20,60 +20,29 @@ class InventoryWindow(QWidget):
 
         super().__init__(parent)
 
-        # Button click sound
+        # BUTTON CLICK SOUND
         self.click_sound = QSoundEffect(self)
 
-        self.click_sound.setSource(
-            QUrl.fromLocalFile(os.path.join(BASE_DIR,"Ida","images","audio","clicked.wav"))
-        )
+        self.click_sound.setSource(QUrl.fromLocalFile(os.path.join(BASE_DIR,"Ida","images","audio","clicked.wav")))
 
-        # ====================================================
         # BACKGROUND WALLPAPER
-        # ====================================================
-
-        self.background = QLabel(
-            self
-        )
-
-        self.background.setGeometry(
-            0,
-            0,
-            1100,
-            800
-        )
-
-        self.background.setPixmap(
-            QPixmap(
-                os.path.join(
-                    BASE_DIR,
-                    "Ida",
-                    "images",
-                    "wallpaper",
-                    "inventorybg.jpg"
-                )
-            )
-        )
-
-        self.background.setScaledContents(
-            True
-        )
-
+        self.background = QLabel(self)
+        self.background.setGeometry(0, 0, 1100, 800)
+        self.background.setPixmap(QPixmap(os.path.join(BASE_DIR,"Ida","images","wallpaper","inventorybg.jpg")))
+     
+        self.background.setScaledContents(True)
         self.background.lower()
-
         self.setStyleSheet("""
                     QPushButton {
                         font-family: Cave Story;
                     }
                 """)
 
-# ====================================================
         # TOP HEADER
 
         header = QWidget()
 
-        header.setFixedHeight(
-            120
-        )
+        header.setFixedHeight(120)
 
         header.setStyleSheet("""
             QWidget {
@@ -84,54 +53,21 @@ class InventoryWindow(QWidget):
 
 
         header_layout = QVBoxLayout()
-
-        header_layout.setContentsMargins(
-            20,
-            10,
-            20,
-            10
-        )
-
+        header_layout.setContentsMargins(20, 10, 20, 10)
         header_layout.setSpacing(0)
 
-
-        # ====================================================
         # TOP ROW
-        # ====================================================
-
         top_row = QHBoxLayout()
-
-        top_row.setContentsMargins(
-            10,
-            5,
-            10,
-            0
-        )
-
+        top_row.setContentsMargins(10, 5, 10, 0)
         top_row.setSpacing(10)
 
-        # ----------------------------------------------------
         # LEFT SPACE
-        # ----------------------------------------------------
-
         top_row.addStretch()
 
-
-        # ----------------------------------------------------
         # INVENTORY TITLE
-        # ----------------------------------------------------
-
-        inventory_title = QLabel(
-            "My Inventory"
-        )
-
-        inventory_title.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
-
-        font_id = QFontDatabase.addApplicationFont(
-            "Cave-Story.ttf"
-        )
+        inventory_title = QLabel("My Inventory")
+        inventory_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        font_id = QFontDatabase.addApplicationFont("Cave-Story.ttf")
 
         if font_id != -1:
 
@@ -139,21 +75,12 @@ class InventoryWindow(QWidget):
                 font_id
             )[0]
 
-            inventory_title.setFont(
-                QFont(
-                    font_family,
-                    50
-                )
-            )
+            inventory_title.setFont(QFont(font_family,50))
 
         else:
 
-            inventory_title.setFont(
-                QFont(
-                    "Arial",
-                    50
-                )
-            )
+            inventory_title.setFont(QFont("Cave Story", 50))
+            
 
         inventory_title.setStyleSheet("""
             QLabel {
@@ -162,34 +89,16 @@ class InventoryWindow(QWidget):
             }
         """)
 
-
-        # ----------------------------------------------------
         # ADD TITLE TO TOP ROW
-        # ----------------------------------------------------
+        top_row.addWidget(inventory_title)
 
-        top_row.addWidget(
-            inventory_title
-        )
-
-
-        # ----------------------------------------------------
         # RIGHT SPACE
-        # ----------------------------------------------------
-
         top_row.addStretch()
 
-
-        # ----------------------------------------------------
         # CLOSE BUTTON
-        # ----------------------------------------------------
-
         self.close_button = QPushButton("X")
 
-        self.close_button.setFixedSize(
-            55,
-            55
-        )
-
+        self.close_button.setFixedSize(55, 55)
         self.close_button.setStyleSheet("""
             QPushButton {
                 background-color: #c5a979;
@@ -205,63 +114,28 @@ class InventoryWindow(QWidget):
             }
         """)
 
-
-
-
-        # ----------------------------------------------------
         # ADD X TO TOP ROW
-        # ----------------------------------------------------
-
         x_layout = QVBoxLayout()
-
         x_layout.setContentsMargins(0,3,0,10)
-
         x_layout.addWidget(self.close_button)
-
         top_row.addLayout(x_layout)
 
-        # ----------------------------------------------------
         # ADD TOP ROW TO HEADER
-        # ----------------------------------------------------
+        header_layout.addLayout(top_row)
+        header.setLayout(header_layout)
 
-        header_layout.addLayout(
-            top_row
-        )
-
-        header.setLayout(
-            header_layout
-        )
-
-    # =======================================================
     # MAIN LAYOUT (INVENTORY)
-    # =======================================================
-
         main_layout = QVBoxLayout()
 
         #Position Layout
-        main_layout.setContentsMargins(
-            20,
-            20,
-            20,
-            20
-        )
-
+        main_layout.setContentsMargins(20, 20, 20, 20)
         main_layout.setSpacing(15)
-
-        main_layout.addWidget(
-            header
-        )
-
-        self.setLayout(
-            main_layout
-        )
-
-
+        main_layout.addWidget(header)
+        self.setLayout(main_layout)
 
 # ITEMS AREA
 
         self.items_area = QWidget()
-
         self.items_area.setStyleSheet("""
             QWidget {
                 background-color: transparent;
@@ -269,29 +143,20 @@ class InventoryWindow(QWidget):
         """)
 
         self.items_layout = QGridLayout()
+        self.items_layout.setSpacing(20)
+        self.items_area.setLayout(self.items_layout)
 
-        self.items_layout.setSpacing(
-            20
-        )
-
-        self.items_area.setLayout(
-            self.items_layout
-)
 
     # SCROLL AREA
         scroll_area =QScrollArea()
 
-        scroll_area.setWidgetResizable(
-            True
-        )
-
+        scroll_area.setWidgetResizable(True)
         scroll_area.setStyleSheet("""
             QScrollArea {
                 background-color: transparent;
                 border: none;
             }
 
-            
             QScrollBar:vertical {
                 width: 12px;
                 background: #61360c;
@@ -308,13 +173,8 @@ class InventoryWindow(QWidget):
             }
         """)
 
-        scroll_area.setWidget(
-            self.items_area
-        )
-
-        main_layout.addWidget(
-            scroll_area
-        )
+        scroll_area.setWidget(self.items_area)
+        main_layout.addWidget(scroll_area)
 
 
     # BOUGHT ITEM POP-UP 
@@ -342,13 +202,8 @@ class InventoryWindow(QWidget):
             image = data["image"]
 
             # ITEM CARD
-
             item_card = QFrame()
-
-            item_card.setFixedSize(
-                160,
-                175
-            )
+            item_card.setFixedSize(160, 175)
 
         # FOR RESTORE CARD ITEMS
             item_card.setStyleSheet("""
@@ -364,27 +219,12 @@ class InventoryWindow(QWidget):
 
             card_layout = QVBoxLayout()
 
-            card_layout.setContentsMargins(
-                6,
-                6,
-                6,
-                6
-            )
-
-            card_layout.setSpacing(
-                2
-            )
-
-
+            card_layout.setContentsMargins(6, 6, 6, 6)
+            card_layout.setSpacing(2)
+           
             # NAME
-
-            name_label = QLabel(
-                name
-            )
-
-            name_label.setAlignment(
-                Qt.AlignmentFlag.AlignCenter
-            )
+            name_label = QLabel(name)
+            name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
             name_label.setStyleSheet("""
                 QLabel {
@@ -396,20 +236,11 @@ class InventoryWindow(QWidget):
                 }
             """)
 
-            card_layout.addWidget(
-                name_label
-            )
-
+            card_layout.addWidget(name_label)
 
             # PICTURE
-
             image_button = QPushButton()
-
-            image_button.setFixedSize(
-                135,
-                130
-            )
-
+            image_button.setFixedSize(135, 130)
             image_button.setStyleSheet("""
                 QPushButton {
                     background-color: transparent;
@@ -422,33 +253,16 @@ class InventoryWindow(QWidget):
                 }
             """)
 
-            pixmap = QPixmap(
-                image
-            )
+            pixmap = QPixmap(image)
 
             if not pixmap.isNull():
 
-                pixmap = pixmap.scaled(
-                    110,
-                    110,
-                    Qt.AspectRatioMode.KeepAspectRatio,
-                    Qt.TransformationMode.SmoothTransformation  
-                )
+                pixmap = pixmap.scaled(110, 110, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
 
-                image_button.setIcon(
-                    QIcon(pixmap)
-                )
-
-                image_button.setIconSize(
-                    QSize(
-                        110,
-                        110
-                    )
-                )
-
-
+                image_button.setIcon(QIcon(pixmap))
+                image_button.setIconSize(QSize(110,110))
+            
             # CLICK IMAGE
-
             image_button.clicked.connect(
                 lambda checked=False,
                 item_name=name,
@@ -459,21 +273,12 @@ class InventoryWindow(QWidget):
                 )
             )
 
-
-            card_layout.addWidget(
-                image_button,
-                alignment=Qt.AlignmentFlag.AlignCenter
-            )
-
-            item_card.setLayout(
-                card_layout
-            )
-
+            card_layout.addWidget(image_button, alignment=Qt.AlignmentFlag.AlignCenter)
+            item_card.setLayout(card_layout)
 
             # ADD TO GRID
 
             row = index // 4
-
             column = index % 4
 
             self.items_layout.addWidget(
@@ -506,8 +311,6 @@ class InventoryWindow(QWidget):
         self.show_inventory()
 
         
-
-# ============================================================
 # ROOM ITEM
 
 class RoomItem(QGraphicsPixmapItem):
@@ -522,24 +325,12 @@ class RoomItem(QGraphicsPixmapItem):
 
         if not pixmap.isNull():
 
-            pixmap = pixmap.scaled(
-                160,
-                160,
-                Qt.AspectRatioMode.KeepAspectRatio,
-                Qt.TransformationMode.SmoothTransformation
-            )
-
+            pixmap = pixmap.scaled(160, 160, Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation)
             self.setPixmap(pixmap)
-        # Make it Move
-        self.setFlag(
-            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
-            True
-        )
 
-        self.setFlag(
-            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
-            True
-        )
+        # MAKE IT MOVE
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable, True)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,True)
 
     def wheelEvent(self, event):
 
@@ -552,57 +343,31 @@ class RoomItem(QGraphicsPixmapItem):
 
             new_scale = self.scale() * 0.9
 
-        new_scale = max(
-            0.3,
-            min(new_scale, 3.0)
-        )
-
-        self.setScale(
-            new_scale
-        )
+        new_scale = max(0.3, min(new_scale, 3.0))
+        self.setScale(new_scale)
 
         event.accept()
 
-    # ========================================================
-    # LOCK / UNLOCK
 
+    # LOCK / UNLOCK
     def lock(self):
 
         self.locked = True
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable,False)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable, False)
 
-        self.setFlag(
-            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
-            False
-        )
-
-        self.setFlag(
-            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
-            False
-        )
-
-    # Unlock Items
+    # UNLOCK ITEMS
     def unlock(self):
 
         self.locked = False
-
-        self.setFlag(
-            QGraphicsItem.GraphicsItemFlag.ItemIsMovable,
-            True
-        )
-
-        self.setFlag(
-            QGraphicsItem.GraphicsItemFlag.ItemIsSelectable,
-            True
-        )
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable, True)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable, True)
 
     def mousePressEvent(self, event):
+
         if event.button() == Qt.MouseButton.RightButton:
 
-            self.main_window.return_to_inventory(
-                self.item_name,
-                self.image
-            )
-
+            self.main_window.return_to_inventory(self.item_name,self.image)
             self.main_window.scene.removeItem(self)
 
             # Save room AFTER removing the item
@@ -616,11 +381,5 @@ class RoomItem(QGraphicsPixmapItem):
     # SENDING ITEM BACK TO INVENTORY
     def put_back_to_inventory(self):
 
-        self.main_window.return_to_inventory(
-            self.item_name,
-            self.image
-        )
-
-        self.main_window.scene.removeItem(
-            self
-        )
+        self.main_window.return_to_inventory(self.item_name,self.image)
+        self.main_window.scene.removeItem(self)
