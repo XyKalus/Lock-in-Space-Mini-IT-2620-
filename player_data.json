@@ -12,32 +12,32 @@
             "inventory": {},
             "purchased_items": [],
             "room_items": {
-                "door": {
-                    "image": "Ida/images/furnitures/door.png",
-                    "x": 700.0,
-                    "y": 280.0,
-                    "scale": 2.5,
-                    "category": "furniture"
-                },
-                "curtain": {
-                    "image": "Ida/images/furnitures/curtain.png",
-                    "x": 50.0,
-                    "y": 200.0,
-                    "scale": 2.5,
+                "BOY": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/characters/boy.png",
+                    "x": 400.0,
+                    "y": 380.0,
+                    "scale": 2.0,
                     "category": "furniture"
                 },
                 "bed": {
-                    "image": "Ida/images/furnitures/bed.png",
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/bed.png",
                     "x": 5.0,
                     "y": 500.0,
                     "scale": 2.5,
                     "category": "furniture"
                 },
-                "BOY": {
-                    "image": "Ida/images/characters/boy.png",
-                    "x": 400.0,
-                    "y": 380.0,
-                    "scale": 2.0,
+                "curtain": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/curtain.png",
+                    "x": 50.0,
+                    "y": 200.0,
+                    "scale": 2.5,
+                    "category": "furniture"
+                },
+                "door": {
+                    "image": "c:\\Users\\windo\\Downloads\\Lock In Space\\Ida/images/furnitures/door.png",
+                    "x": 700.0,
+                    "y": 280.0,
+                    "scale": 2.5,
                     "category": "furniture"
                 }
             },
