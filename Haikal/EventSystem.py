@@ -49,7 +49,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         self.calendardate = calendardate
 
-        # self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
+        self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
         
         print(type(calendardate))
         
@@ -231,6 +231,10 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
             print("No category selected — nothing saved.")
             return
 
+        self.label.clear()
+        if hasattr(self.calendardate, "refresh_dropdown"):
+            self.calendardate.refresh_dropdown()
+
         # event_start = self.date_picker.dateTime().toPyDateTime()   # ORIGINAL -- self.date_picker doesn't exist, left here commented out
 
         # self.customrecurrence.dateTime().toPyDateTime   # ORIGINAL -- left untouched, does nothing (no parentheses)
@@ -411,6 +415,8 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.refreshdropdownlist()
         self.dropdown.setCurrentText(name)
         self.dropdown.blockSignals(False)
+        if hasattr(self.calendardate, "refresh_dropdown"):
+            self.calendardate.refresh_dropdown()
 
         self.oldname= name
 
@@ -421,6 +427,8 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         if pathtofile.exists():
             pathtofile.unlink() #UNLINK is pathlib's way to delete files
         self.refreshdropdownlist()
+        if hasattr(self.calendardate, "refresh-dropdown"):
+            self.calendardate.refresh_dropdown()
 
     def beforerename(self):
             self.originalname = self.dropdown.currentText()
@@ -445,6 +453,9 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.refreshdropdownlist()
         self.dropdown.setCurrentText(new_name)
         self.dropdown.blockSignals(False)
+
+        if hasattr(self.calendardate, "refresh_dropdown"):
+            self.calendardate.refresh_dropdown()
 
         self.originalname = new_name
 
