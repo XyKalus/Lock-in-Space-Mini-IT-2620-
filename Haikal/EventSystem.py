@@ -57,7 +57,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         self.calendardate = calendardate
 
-        # self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
+        self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
         
         print(type(calendardate))
         
