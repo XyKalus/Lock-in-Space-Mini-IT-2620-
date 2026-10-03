@@ -122,11 +122,11 @@ class Window(QDialog):
         self.calendar_page = CalendarMainWindow()
         self.pages.addWidget(self.calendar_page)
 
-        """ # MUSIC 
+        # MUSIC 
         self.music = MusicController()
 
         # todo list
-        self.todolist_popup = TodoList()"""
+        self.todolist_popup = TodoList()
 
         # CLOSE BUTTONS
         self.shop_page.close_button.clicked.connect(self.show_room)

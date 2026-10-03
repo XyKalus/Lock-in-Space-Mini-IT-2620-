@@ -102,7 +102,11 @@ class CountdownTimer(QWidget):
         return (f"{hours:02d}:" f"{minutes:02d}:"f"{secs:02d}")
 
     def coin_value_for(self, seconds):
-        return seconds // 60
+        minutes = seconds // 60
+        base_coins = minutes
+        hour_bonus = minutes // 60 * 10
+
+        return base_coins + hour_bonus
 
     def save_session(self, description, start_time, end_time, duration, status, coin_earned):
         record = {
