@@ -145,7 +145,6 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         RepeatOrNO.addWidget(self.recurrencelabel)
         RepeatOrNO.addWidget(self.recurrence)
-        RepeatOrNO.addRow(self.recurrencelabel)
 
         layout.addLayout(horizontal)
         layout.addLayout(DateAndTime)
