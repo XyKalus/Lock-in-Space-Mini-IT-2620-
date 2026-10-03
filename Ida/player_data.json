@@ -1,0 +1,32 @@
+{
+    "players": [
+        {
+            "name": "a",
+            "gender": "boy",
+            "coins": 50,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "purchased_items": [],
+            "room_items": {},
+            "last_claim": ""
+        },
+        {
+            "name": "aqq",
+            "gender": "girl",
+            "coins": 60,
+            "study_time": 0,
+            "wallpaper": {
+                "name": "White and Wood",
+                "image": "Ida\\images\\wallpaper\\mainbackground.png"
+            },
+            "inventory": {},
+            "purchased_items": [],
+            "room_items": {},
+            "last_claim": "2026-10-03"
+        }
+    ]
+}
