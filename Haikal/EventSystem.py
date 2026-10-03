@@ -103,20 +103,25 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.hourselector.setFont(QFont(font_family, 20))
 
         "making....a dropdown for the events..."
-        #THIS ONE IS FOR THE FILE/TYPE OF EVENTS
+        #THIS ONE IS FOR THE FILE/TYPE OF EVENTS\
         eventsfolder = Path.cwd()/"events"
+        # print(f"eventsfolder is {eventsfolder}") << used for troubleshooting
         jsononly = list(eventsfolder.glob("*json"))
         for file in eventsfolder.iterdir():
             print(file.name)
         print(jsononly)
 
+        names = [file.stem for file in eventsfolder.glob("*.json")]
+        print(names)
+
         self.dropdownlabel = QLabel('Save to:')
         self.dropdownlabel.setFont(QFont(font_family,20))
         self.dropdown = QComboBox()
+        self.dropdown.setFont(QFont(font_family, 20))
         self.dropdown.setEditable(True)
         self.dropdown.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
-        self.dropdown.lineEdit().editingFinished.connect.self(self.renamer)
-        # self.dropdown.addItems(eventsfolder)
+        # self.dropdown.lineEdit().editingFinished.connect.self(self.renamer)
+        self.dropdown.addItems(names)
 
         
         # self.dropdown = 
@@ -274,8 +279,17 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
     def hourselectorgetting(self):
         return self.hourselector.time()
 
+    def selected_event_file(self):
+        currentfile = self.dropdown.currentText()
+        PathToFile = Path.cwd()/"events"/f"{currentfile}".json
 
+        with open(PathToFile, 'r') as file:
+            data = json.load(file)
 
+        #data.append(event_date)
+
+        with open(PathToFile, 'w') as file :
+            json.dump(data, indent=4) #rewrite as (data, f, indent=4)
 
 
             
