@@ -115,7 +115,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.dropdown = QComboBox()
         self.dropdown.setEditable(True)
         self.dropdown.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
-        # self.dropdown.lineEdit().editingFinished.connect.self(self.renamer)
+        self.dropdown.lineEdit().editingFinished.connect.self(self.renamer)
         # self.dropdown.addItems(eventsfolder)
 
         
@@ -222,7 +222,34 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
 
     def renamer(self):
-        pass
+        index = self.dropdown.currentIndex()
+        new_name = self.dropdown.currentText().strip()
+
+        if not new_name:
+            return
+
+        OldFileName = self.dropdown.itemData(index)
+        NewFileName = self.dropdown.with_name(new_name + ".json")
+
+        if OldFileName == NewFileName:
+            return
+
+        try:
+            OldFileName.rename(NewFileName)
+            self.dropdown.setItemData(index, NewFileName)
+            self.dropdown.setItemText(index, new_name)
+
+        except FileExistsError :
+            print(f"the file named {new_name} already exists")
+
+        except FileNotFoundError:
+            print("can't find this file")
+
+        pathtofile = self.dropdown.itemData(index)
+
+        with open(pathtofile, 'r') as file:
+            venter = json.load(file)
+            
 
     def date_fetcher(self):
         datewanted = self.calendardate.datefetcher()
