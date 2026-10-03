@@ -18,7 +18,8 @@ from Ida.dailylogin import DailyLogin
 from Ida.enteringsystem import LoginSystem
 from Yeejing.countdowntimer import CountdownTimer
 from Yeejing.study_statistics import StudyStatistics
-from Haikal.calendarsystem import Calendar
+from Haikal.calendarsystem import CalendarMainWindow
+from Haikal.MusicPlayer import *
 
 
 class Window(QDialog):
