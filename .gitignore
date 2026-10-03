@@ -1,0 +1,13 @@
+text
+
+# Ignore a specific file
+config.env
+
+# Ignore an entire folder (always end folder names with a trailing slash)
+node_modules/
+dist/
+
+# Ignore all files ending with a specific extension (using wildcards)
+*.log
+*.tmp
+*.pyc
