@@ -88,7 +88,6 @@ class CountdownTimer(QWidget):
         self.timer = QTimer(self)
         self.timer.setInterval(1000)
         self.timer.timeout.connect(self.countdown)
-
         self.setup_audio()
         self.setup_ui()
         self.setup_popup()
@@ -177,7 +176,6 @@ class CountdownTimer(QWidget):
         self.player = QMediaPlayer(self)
         self.player.setAudioOutput(self.audio_output)
         self.player.errorOccurred.connect(self.on_player_error)
-
         if os.path.exists(ALARM_FILE):
             self.player.setSource(QUrl.fromLocalFile(ALARM_FILE))
 
@@ -192,7 +190,6 @@ class CountdownTimer(QWidget):
     def setup_ui(self):
         main_layout = QVBoxLayout(self)
         main_layout.setSpacing(20)
-
         top_bar = QHBoxLayout()
         top_bar.addStretch()
 
@@ -247,7 +244,6 @@ class CountdownTimer(QWidget):
 
         hours_layout.addWidget(hours_label)
         hours_layout.addWidget(self.hours_spin)
-
         minutes_layout = QVBoxLayout()
         minutes_label = QLabel("Minutes")
         minutes_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -411,7 +407,6 @@ class CountdownTimer(QWidget):
         )
 
         card_layout.addWidget(self.popup_title)
-
         self.popup_message = QLabel("")
         self.popup_message.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.popup_message.setWordWrap(True)
@@ -528,7 +523,6 @@ class CountdownTimer(QWidget):
             self.popup_message.setText(
                 "Your current timer session is not completed.\n\nIf you leave now, this session will be saved as incomplete.\n\nDo you want to quit?"
             )
-
         # SHOW POPUP CORFIMATION
         self.popup_overlay.setGeometry(self.rect())
         self.popup_overlay.raise_()
@@ -562,7 +556,6 @@ class CountdownTimer(QWidget):
 
     def update_name(self):
         name = (self.name_input.text().strip())
-
         if not name:
             self.timer_name_label.setText("")
             self.timer_name_label.setToolTip("")
@@ -578,7 +571,6 @@ class CountdownTimer(QWidget):
 
         self.timer_name_label.setText(display_name)
         self.timer_name_label.setToolTip(name)
-
     def set_time(self):
         if self.timer_running:
             return
@@ -592,7 +584,6 @@ class CountdownTimer(QWidget):
         hours = (self.hours_spin.value())
         minutes = (self.minutes_spin.value())
         seconds = (self.seconds_spin.value())
-
         self.total_seconds = (hours * 3600 + minutes * 60 + seconds)
         self.remaining_seconds = (self.total_seconds)
         self.update_display()
@@ -628,7 +619,6 @@ class CountdownTimer(QWidget):
             self.timer.stop()
             self.timer_running = False
             self.start_button.setText("Start")
-
             return
 
         if self.remaining_seconds <= 0:
@@ -646,7 +636,6 @@ class CountdownTimer(QWidget):
         self.timer.start()
         self.timer_running = True
         self.start_button.setText("Pause")
-
     def countdown(self):
         if self.remaining_seconds > 0:
             self.remaining_seconds -= 1
@@ -767,13 +756,11 @@ class CountdownTimer(QWidget):
         self.start_button.setText("Start")
         self.start_button.setEnabled(True)
         self.reset_button.setEnabled(True)
-
         # CLEAR NAME
         self.name_input.clear()
         self.name_input.setReadOnly(False)
         self.timer_name_label.setText("")
         self.timer_name_label.setToolTip("")
-
         # RESET SPINBOX
 
         self.hours_spin.setValue(0)
