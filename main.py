@@ -126,7 +126,7 @@ class Window(QDialog):
         self.music = MusicController()
 
         # todo list
-        self.todolist_popup = TodoList()
+        """self.todolist_popup = TodoList()"""
 
         # CLOSE BUTTONS
         self.shop_page.close_button.clicked.connect(self.show_room)
