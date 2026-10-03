@@ -18,21 +18,30 @@ import json
 import pathlib
 from pathlib import Path
 
-event_folder_checker = Path.cwd()/"events"
+event_folder_checker = Path.cwd()/"Events"
 if (event_folder_checker.exists()): #check if the folder named "todolists" exist
 # print('this file exists') << old code, used and being kept for trouble shooting
     pass
 else : 
-    os.mkdir('events')
+    os.mkdir('Events')
 
-event_folder = Path.cwd()/"events"
+event_folder = Path.cwd()/"Events"
 json_file = event_folder/"My events.json" #PATHLIB : finds (or the intended use for this, create) a file with the name
 event_files = event_folder.iterdir() #PATHLIB : views the files in the directory
 empty_chker = not any(event_files) #PATHLIB : checks if the directory has any files
 
 
 if empty_chker :
-        json_file.write_text(json.dumps(['test']), encoding="utf-8")
+        json_file.write_text(json.dumps({
+    "Events": [
+        {
+        }
+    ]   
+        }), encoding="utf-8")
+        
+        
+        
+        
         print("File created using pathlib!") #Thank you Gemini for the help lol
 else :
         print('has files')
@@ -84,10 +93,14 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         "button that makes a new list"
         self.newlist = QPushButton('New Event list')
         self.newlist.setFont(QFont(font_family,20))
+        self.newlist.clicked.connect(self.new_event_file)
+        
 
         "button that deletes a list"
         self.byelist = QPushButton('Delete list')
         self.byelist.setFont(QFont(font_family,20))
+        self.byelist.clicked.connect(self.delete_event_file)
+        
 
         "MANUAL DATE SELECTOR >> this is for the date selector INSIDE this thing"
         self.manualdateselector = QDateEdit()
@@ -104,13 +117,15 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         "making....a dropdown for the events..."
         #THIS ONE IS FOR THE FILE/TYPE OF EVENTS\
-        eventsfolder = Path.cwd()/"events"
+        global eventsfolder
+        eventsfolder = Path.cwd()/"Events"
         # print(f"eventsfolder is {eventsfolder}") << used for troubleshooting
         jsononly = list(eventsfolder.glob("*json"))
         for file in eventsfolder.iterdir():
             print(file.name)
         print(jsononly)
 
+        
         names = [file.stem for file in eventsfolder.glob("*.json")]
         print(names)
 
@@ -120,8 +135,11 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.dropdown.setFont(QFont(font_family, 20))
         self.dropdown.setEditable(True)
         self.dropdown.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
-        # self.dropdown.lineEdit().editingFinished.connect.self(self.renamer)
+        self.dropdown.currentIndexChanged.connect(self.beforerename)
+        self.dropdown.lineEdit().editingFinished.connect(self.renamer)
         self.dropdown.addItems(names)
+
+        self.originalname = self.dropdown.currentText()
 
         
         # self.dropdown = 
@@ -281,7 +299,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
     def selected_event_file(self):
         currentfile = self.dropdown.currentText()
-        PathToFile = Path.cwd()/"events"/f"{currentfile}".json
+        PathToFile = Path.cwd()/"Events"/f"{currentfile}".json
 
         with open(PathToFile, 'r') as file:
             data = json.load(file)
@@ -291,9 +309,70 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         with open(PathToFile, 'w') as file :
             json.dump(data, indent=4) #rewrite as (data, f, indent=4)
 
+    def refreshdropdownlist(self):
+        names = [file.stem for file in eventsfolder.glob("*.json")]
 
-            
+       # block currentindexchanged from returning anything during this process
+        self.dropdown.clear()
+        self.dropdown.addItems(names)
+        
+        
+
+    def new_event_file(self, name: str):
+        defaultname = "New Event file"
+        name = defaultname
+        counter = 1
+        
+        while (eventsfolder/f"{name}.json").exists():
+            name = f"{defaultname} ({counter})"
+            counter += 1
+
+        the_path =  eventsfolder/f"{name}.json"
+        the_path.write_text(json.dumps([]))
+
+        self.dropdown.blockSignals(True)
+        self.refreshdropdownlist()
+        self.dropdown.setCurrentText(name)
+        self.dropdown.blockSignals(False)
+
+        self.oldname= name
+
+    def delete_event_file(self):
+        selectedfile = self.dropdown.currentText()
+        pathtofile = eventsfolder/f"{selectedfile}.json"
+
+        if pathtofile.exists():
+            pathtofile.unlink() #UNLINK is pathlib's way to delete files
+        self.refreshdropdownlist()
+
+    def beforerename(self):
+            self.originalname = self.dropdown.currentText()
+
+    def renamer(self):
+        new_name = self.dropdown.currentText()
+        old_name = self.originalname
+
+        if new_name == old_name or not new_name.strip(): return
+
+        old_path = eventsfolder/f"{old_name}.json"
+        new_path = eventsfolder/f"{new_name}.json"
+
+        if not old_path.exists():
+            return
+        if new_path.exists():
+            return
+
+        old_path.rename(new_path)
+
+        self.dropdown.blockSignals(True)
+        self.refreshdropdownlist()
+        self.dropdown.setCurrentText(new_name)
+        self.dropdown.blockSignals(False)
+
+        self.originalname = new_name
+
     
+
 
 class FakeCalendar:
     def datefetcher(self):
