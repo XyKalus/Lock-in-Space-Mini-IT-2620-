@@ -10,9 +10,9 @@ from datetime import timedelta
 import calendar
 import sys, os
 import PyQt6
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QGridLayout, QPushButton, QLineEdit, QComboBox, QDateEdit, QTimeEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QGridLayout, QPushButton, QLineEdit, QComboBox, QDateEdit, QTimeEdit, QDateTimeEdit
 from PyQt6.QtGui import QIcon, QFont, QFontDatabase
-from PyQt6.QtCore import Qt, QDate, QTime #Qt is used for alignment
+from PyQt6.QtCore import Qt, QDate, QTime, QDateTime #Qt is used for alignment
 
 import json
 import pathlib
@@ -75,11 +75,19 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         # label.setAlignment(Qt.AlignHCenter | Qt.AlignTop) # controls the alignment of the label, the | is used to label 2 css properties at once
 
         "button that adds the input"
-        self.event_button = QPushButton('+', self)
+        self.event_button = QPushButton('Save Event', self)
         USEREVENT = self.event_button
         # self.event_button.setGeometry (150,200,400,200) #(x,y,width,height)
         self.event_button.setFont(QFont(font_family,25))
         self.event_button.clicked.connect(self.on_click)
+
+        "button that makes a new list"
+        self.newlist = QPushButton('New Event list')
+        self.newlist.setFont(QFont(font_family,20))
+
+        "button that deletes a list"
+        self.byelist = QPushButton('Delete list')
+        self.byelist.setFont(QFont(font_family,20))
 
         "MANUAL DATE SELECTOR >> this is for the date selector INSIDE this thing"
         self.manualdateselector = QDateEdit()
@@ -97,13 +105,18 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         "making....a dropdown for the events..."
         #THIS ONE IS FOR THE FILE/TYPE OF EVENTS
         eventsfolder = Path.cwd()/"events"
-        eventjsons = list(eventsfolder.glob("*.json"))
-        names = [filename.stem for filename in eventjsons]
+        jsononly = list(eventsfolder.glob("*json"))
+        for file in eventsfolder.iterdir():
+            print(file.name)
+        print(jsononly)
 
+        self.dropdownlabel = QLabel('Save to:')
+        self.dropdownlabel.setFont(QFont(font_family,20))
         self.dropdown = QComboBox()
         self.dropdown.setEditable(True)
         self.dropdown.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
         # self.dropdown.lineEdit().editingFinished.connect.self(self.renamer)
+        # self.dropdown.addItems(eventsfolder)
 
         
         # self.dropdown = 
@@ -117,10 +130,26 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         self.recurrence = QComboBox()
         self.recurrence.setFont(QFont(font_family, 20))
-        self.recurrence.addItems(['No','weekly','monthly', 'yearly'])
+        pry = self.recurrence.addItems(['No','Weekly','Monthly', 'Yearly', 'Custom'])
+        self.recurrence.currentTextChanged.connect(self.customEnable)
 
 
-        self.customrecurrence = QDateEdit
+        self.customrecurrencelabel = QLabel('From:')
+        self.customrecurrencelabel.setFont(QFont(font_family,20))
+        self.customrecurrence = QDateTimeEdit()
+        self.customrecurrence.setFont(QFont(font_family,20))
+        self.customrecurrence.setEnabled(False)
+        self.customrecurrence.setCalendarPopup(True)
+        self.customrecurrence.setDate(QDate.currentDate())
+
+        self.customrecurrenceEndlabel = QLabel('To:')
+        self.customrecurrenceEndlabel.setFont(QFont(font_family,20))
+        self.customrecurrenceEnd = QDateTimeEdit()
+        self.customrecurrenceEnd.setFont(QFont(font_family,20))
+        self.customrecurrenceEnd.setEnabled(False)
+        self.customrecurrenceEnd.setCalendarPopup(True)
+        self.customrecurrenceEnd.setDate(QDate.currentDate())
+
 
         # =======================================================
         # THIS ONE IS FOR FETCHING THE SELECTED DATE FROM CALENDAR
@@ -136,25 +165,29 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         "All layouts  down here"
 
         layout = QVBoxLayout() #<<<< MAIN LAYOUT
-        horizontal = QHBoxLayout() #<<< FOR LABEL AND ADDING BUTTON
         DateAndTime = QHBoxLayout() #<<<<< FOR THE EVENT AND TIME SELECTOR THINGY 
         RepeatOrNO = QFormLayout() # <<<< FOR THE RECURRENCE SETTER 
+        horizontal = QHBoxLayout() #<<< FOR MAKING AND DELETING LISTS BUTTON
 
-        horizontal.addWidget(self.label)
-        horizontal.addWidget(self.event_button)
+        horizontal.addWidget(self.newlist)
+        horizontal.addWidget(self.byelist)
 
         DateAndTime.addWidget(self.manualdateselector)
         DateAndTime.addWidget(self.hourselector)
 
         RepeatOrNO.addRow(self.recurrencelabel, self.recurrence)
-        RepeatOrNO.addRow(self.customrecurrence)
 
-        layout.addLayout(horizontal)
+        RepeatOrNO.addRow(self.customrecurrencelabel, self.customrecurrence)
+        RepeatOrNO.addRow(self.customrecurrenceEndlabel, self.customrecurrenceEnd)
+        RepeatOrNO.addRow(self.dropdownlabel, self.dropdown)
+
+        layout.addWidget(self.label)
         layout.addLayout(DateAndTime)
         layout.addLayout(RepeatOrNO)
-        layout.addWidget(self.dropdown)
         # layout.addWidget(self.tester)
-        layout.addWidget(self.button_test)
+        # layout.addWidget(self.button_test)
+        layout.addLayout(horizontal)
+        layout.addWidget(self.event_button)
         
 
 
@@ -200,6 +233,13 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         current_time = self.hourselector.time()
         self.manualdateselector.setDate(QDate(selected_qdate))
         self.hourselector.setTime(QTime(current_time))
+
+    def customEnable(self):
+        textwanted = 'Custom'
+        recurrentselection = self.recurrence.currentText(
+        )
+        self.customrecurrence.setEnabled(textwanted == recurrentselection)
+        self.customrecurrenceEnd.setEnabled(textwanted == recurrentselection)
 
     def dateselectorgetter(self):
         return self.manualdateselector.date()
