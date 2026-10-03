@@ -48,7 +48,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         self.calendardate = calendardate
 
-        self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
+        # self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
         
         print(type(calendardate))
         
@@ -101,13 +101,27 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         names = [filename.stem for filename in eventjsons]
 
         self.dropdown = QComboBox()
+        self.dropdown.setEditable(True)
+        self.dropdown.setInsertPolicy(QComboBox.InsertPolicy.NoInsert)
+        # self.dropdown.lineEdit().editingFinished.connect.self(self.renamer)
+
         
         # self.dropdown = 
+
+
+        "This one here is for the recurrence"
+        self.recurrencelabel =  QLabel('Repeats?')
+        self.recurrencelabel.setFont(QFont(font_family,20))
+        self.recurrencelabel.setGeometry(0,10,0,0)
+
+
+        self.recurrence = QComboBox()
+        self.recurrence.setFont(QFont(font_family, 20))
+        self.recurrence.addItems(['No','weekly','monthly', 'yearly'])
 
         # =======================================================
         # THIS ONE IS FOR FETCHING THE SELECTED DATE FROM CALENDAR
         # ========================================================
-
         self.tester = QLabel()
         self.button_test = QPushButton('get date')
 
@@ -121,16 +135,21 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         layout = QVBoxLayout() #<<<< MAIN LAYOUT
         horizontal = QHBoxLayout() #<<< FOR LABEL AND ADDING BUTTON
         DateAndTime = QHBoxLayout() #<<<<< FOR THE EVENT AND TIME SELECTOR THINGY 
+        RepeatOrNO = QFormLayout() # <<<< FOR THE RECURRENCE SETTER 
 
         horizontal.addWidget(self.label)
         horizontal.addWidget(self.event_button)
 
         DateAndTime.addWidget(self.manualdateselector)
         DateAndTime.addWidget(self.hourselector)
-        
+
+        RepeatOrNO.addWidget(self.recurrencelabel)
+        RepeatOrNO.addWidget(self.recurrence)
+        RepeatOrNO.addRow(self.recurrencelabel)
 
         layout.addLayout(horizontal)
         layout.addLayout(DateAndTime)
+        layout.addLayout(RepeatOrNO)
         layout.addWidget(self.dropdown)
         # layout.addWidget(self.tester)
         layout.addWidget(self.button_test)
@@ -156,6 +175,19 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         # with open(file_path,'w') as f:
         #         json.dump(todo, f, indent=4)
+
+    def eventfilefinder(self):
+        FolderWhereYouKeepTheEventFiles = Path.cwd()/"events"
+        index = self.dropdown.currentText()
+        pathtofile = self.dropdown.itemData(index)
+
+        
+
+        
+
+
+    def renamer(self):
+        pass
 
     def date_fetcher(self):
         datewanted = self.calendardate.datefetcher()
