@@ -32,15 +32,7 @@ empty_chker = not any(event_files) #PATHLIB : checks if the directory has any fi
 
 
 if empty_chker :
-        json_file.write_text(json.dumps({
-    "Events": [
-        {
-        }
-    ]   
-        }), encoding="utf-8")
-        
-        
-        
+        json_file.write_text(json.dumps([]), encoding="utf-8")
         
         print("File created using pathlib!") #Thank you Gemini for the help lol
 else :
@@ -57,7 +49,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         self.calendardate = calendardate
 
-        self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
+        # self.calendardate.calendar.selectionChanged.connect(self.on_calendar_date_changed)
         
         print(type(calendardate))
         
@@ -157,6 +149,15 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.recurrence.currentTextChanged.connect(self.customEnable)
 
 
+        self.recurrenceEndlabel = QLabel('Goes on:')
+        self.recurrenceEndlabel.setFont(QFont(font_family, 20))
+        self.recurrenceEndlabel.setVisible(False)
+        self.recurrenceEnd = QComboBox()
+        self.recurrenceEnd.setFont(QFont(font_family, 20))
+        self.recurrenceEnd.addItems(["Forever", "Until a date"])
+        self.recurrenceEnd.setVisible(False)
+        self.recurrenceEnd.currentTextChanged.connect(self.toggleEndDateField)
+
         self.customrecurrencelabel = QLabel('From:')
         self.customrecurrencelabel.setFont(QFont(font_family,20))
         self.customrecurrence = QDateTimeEdit()
@@ -176,7 +177,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
         # =======================================================
         # THIS ONE IS FOR FETCHING THE SELECTED DATE FROM CALENDAR
-        # ========================================================
+        # ========================================================   why did i write it like this lmao?
         self.tester = QLabel()
         self.button_test = QPushButton('get date')
 
@@ -199,6 +200,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         DateAndTime.addWidget(self.hourselector)
 
         RepeatOrNO.addRow(self.recurrencelabel, self.recurrence)
+        RepeatOrNO.addRow(self.recurrenceEndlabel, self.recurrenceEnd)
 
         RepeatOrNO.addRow(self.customrecurrencelabel, self.customrecurrence)
         RepeatOrNO.addRow(self.customrecurrenceEndlabel, self.customrecurrenceEnd)
@@ -218,21 +220,72 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
 
     def on_click(self): #<<< make this save the input 
         print('event added!')
-        ayamgepuk = self.label.text()
-        print(ayamgepuk)
 
-        # file_path = Path.cwd()/"events"/"My events.json"
+        event_name = self.label.text().strip()
+        if not event_name:
+            print("No event name entered — nothing saved.")
+            return
 
-        # with open(file_path, 'r') as f:
-        #         todo = json.load(f)
+        selected_file = self.dropdown.currentText()
+        if not selected_file:
+            print("No category selected — nothing saved.")
+            return
 
-        # todo['test'].append({
-        #         "task" : todo,
-        #         "completed" : False,
-        # })
+        # event_start = self.date_picker.dateTime().toPyDateTime()   # ORIGINAL -- self.date_picker doesn't exist, left here commented out
 
-        # with open(file_path,'w') as f:
-        #         json.dump(todo, f, indent=4)
+        # self.customrecurrence.dateTime().toPyDateTime   # ORIGINAL -- left untouched, does nothing (no parentheses)
+
+        # --- ADDED: pull recurrence choice, map it to a stored value ---
+        recurrence_choice = self.recurrence.currentText()
+        recurrence_map = {
+            "No": "none",
+            "Weekly": "weekly",
+            "Monthly": "monthly",
+            "Yearly": "yearly",
+            "Custom": "daily",   # Custom = repeats daily, bounded by From/To
+        }
+        recurrence_value = recurrence_map.get(recurrence_choice, "none")
+
+        # --- ADDED: decide where the date/recurrence_end come from, based on the choice above ---
+        if recurrence_choice == "Custom":
+            start_qdate = self.customrecurrence.date()
+            end_qdate = self.customrecurrenceEnd.date()
+
+            if start_qdate > end_qdate:   # ADDED: basic sanity check
+                print("Custom 'From' date is after 'To' date — nothing saved.")
+                return
+
+            event_date_str = start_qdate.toString("ddMMyyyy")
+            recurrence_end_str = end_qdate.toString("ddMMyyyy")
+        else:
+            event_date_str = self.manualdateselector.date().toString("ddMMyyyy")
+            recurrence_end_str = None
+
+        event_time_str = self.hourselector.time().toString("HH:mm")
+        # --- END ADDED ---
+
+        event_data = {
+            "event_name": event_name,
+            "event_date": event_date_str,          # CHANGED: built above, not from date_picker
+            "event_time": event_time_str,          # CHANGED: built above, not from date_picker
+            "duration_minutes": 0,       # TODO: pull from a duration input once one exists
+            "recurrence": recurrence_value,        # CHANGED: now pulled from self.recurrence
+            "recurrence_end": recurrence_end_str,  # CHANGED: now pulled from custom From/To when applicable
+        }
+
+        file_path = eventsfolder / f"{selected_file}.json"
+
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+        data.append(event_data)
+        with open(file_path, 'w') as f:
+            json.dump(data, f, indent=4)
+
+        print(f"Saved '{event_name}' to {selected_file}.json")
+        self.label.clear()
+
+        if hasattr(self, "load_events_into_list"):   # CHANGED: guarded -- this method isn't defined in your current file yet
+            self.load_events_into_list()
 
     def eventfilefinder(self):
         FolderWhereYouKeepTheEventFiles = Path.cwd()/"events"
@@ -285,11 +338,35 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.hourselector.setTime(QTime(current_time))
 
     def customEnable(self):
-        textwanted = 'Custom'
-        recurrentselection = self.recurrence.currentText(
-        )
-        self.customrecurrence.setEnabled(textwanted == recurrentselection)
-        self.customrecurrenceEnd.setEnabled(textwanted == recurrentselection)
+        # textwanted = 'Custom'
+        # recurrentselection = self.recurrence.currentText(
+        # )
+        # self.customrecurrence.setEnabled(textwanted == recurrentselection)
+        # self.customrecurrenceEnd.setEnabled(textwanted == recurrentselection)
+
+        userchoice = self.recurrence.currentText()
+        textwanted = (userchoice == "Custom")
+
+        self.customrecurrence.setEnabled(textwanted)
+
+        if textwanted:
+            self.customrecurrenceEnd.setEnabled(True)
+            self.recurrenceEnd.setVisible(False)
+            self.recurrenceEndlabel.setVisible(False)
+        elif userchoice == "No":
+            self.customrecurrenceEnd.setEnabled(False)
+            self.recurrenceEnd.setVisible(False)
+            self.recurrenceEndlabel.setVisible(False)
+        else:  # Weekly / Monthly / Yearly
+            self.recurrenceEnd.setVisible(True)
+            self.recurrenceEndlabel.setVisible(True)
+            self.customrecurrenceEnd.setEnabled(self.recurrenceEnd.currentText() == "Until a date")
+
+    def toggleEndDateField(self):
+        choice = self.recurrence.currentText()
+        if choice not in ("No", "Custom"):
+            self.customrecurrenceEnd.setEnabled(self.recurrenceEnd.currentText() == "Until a date")
+
 
     def dateselectorgetter(self):
         return self.manualdateselector.date()
@@ -370,6 +447,7 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.dropdown.blockSignals(False)
 
         self.originalname = new_name
+
 
     
 
