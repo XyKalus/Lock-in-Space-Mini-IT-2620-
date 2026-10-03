@@ -119,6 +119,9 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         self.recurrence.setFont(QFont(font_family, 20))
         self.recurrence.addItems(['No','weekly','monthly', 'yearly'])
 
+
+        self.customrecurrence = QDateEdit
+
         # =======================================================
         # THIS ONE IS FOR FETCHING THE SELECTED DATE FROM CALENDAR
         # ========================================================
@@ -143,8 +146,8 @@ class Events(QMainWindow): #self in the entire function refers to the "MainWindo
         DateAndTime.addWidget(self.manualdateselector)
         DateAndTime.addWidget(self.hourselector)
 
-        RepeatOrNO.addWidget(self.recurrencelabel)
-        RepeatOrNO.addWidget(self.recurrence)
+        RepeatOrNO.addRow(self.recurrencelabel, self.recurrence)
+        RepeatOrNO.addRow(self.customrecurrence)
 
         layout.addLayout(horizontal)
         layout.addLayout(DateAndTime)
