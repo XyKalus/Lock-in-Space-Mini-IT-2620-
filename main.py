@@ -19,8 +19,8 @@ from Ida.enteringsystem import LoginSystem
 from Yeejing.countdowntimer import CountdownTimer
 from Yeejing.study_statistics import StudyStatistics
 from Haikal.calendarsystem import CalendarMainWindow
-from Haikal.todo_list import *
-from Haikal.MusicPlayer import *
+"""from Haikal.todo_list import *
+from Haikal.MusicPlayer import *"""
 
 class Window(QDialog):
 
@@ -122,11 +122,11 @@ class Window(QDialog):
         self.calendar_page = CalendarMainWindow()
         self.pages.addWidget(self.calendar_page)
 
-        # MUSIC 
+        """ # MUSIC 
         self.music = MusicController()
 
         # todo list
-        self.todolist_popup = TodoList()
+        self.todolist_popup = TodoList()"""
 
         # CLOSE BUTTONS
         self.shop_page.close_button.clicked.connect(self.show_room)
